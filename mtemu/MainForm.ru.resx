@@ -1,0 +1,602 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="listLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>197, 13</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="listLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="saveButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="arText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>53, 39</value>
+  </data>
+  <data name="arText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="caCombo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>53, 73</value>
+  </data>
+  <data name="caCombo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="caCombo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 28</value>
+  </data>
+  <data name="currentLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>314, 7</value>
+  </data>
+  <data name="currentLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="currentLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>197, 23</value>
+  </data>
+  <data name="outputPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="outputPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="outputPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 207</value>
+  </data>
+  <data name="spLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 7, 5, 2</value>
+  </data>
+  <data name="spLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 19</value>
+  </data>
+  <data name="spText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 151</value>
+  </data>
+  <data name="spText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 2, 5, 13</value>
+  </data>
+  <data name="pcLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 128</value>
+  </data>
+  <data name="pcLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 7, 5, 2</value>
+  </data>
+  <data name="pcLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 19</value>
+  </data>
+  <data name="pcText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 151</value>
+  </data>
+  <data name="pcText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 2, 5, 13</value>
+  </data>
+  <data name="fLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 7, 5, 2</value>
+  </data>
+  <data name="fLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 19</value>
+  </data>
+  <data name="fText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 151</value>
+  </data>
+  <data name="fText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 2, 5, 13</value>
+  </data>
+  <data name="pText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>166, 80</value>
+  </data>
+  <data name="pText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 7, 6, 7</value>
+  </data>
+  <data name="gText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>56, 80</value>
+  </data>
+  <data name="gText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 7, 6, 7</value>
+  </data>
+  <data name="zText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>213, 41</value>
+  </data>
+  <data name="zText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 7, 6, 7</value>
+  </data>
+  <data name="zText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 27</value>
+  </data>
+  <data name="f3Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 7, 6, 7</value>
+  </data>
+  <data name="c4Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 7, 6, 7</value>
+  </data>
+  <data name="ovrText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 7, 6, 7</value>
+  </data>
+  <data name="yLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 7, 5, 2</value>
+  </data>
+  <data name="yLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 19</value>
+  </data>
+  <data name="yText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 151</value>
+  </data>
+  <data name="yText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 2, 5, 13</value>
+  </data>
+  <data name="outputLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 7</value>
+  </data>
+  <data name="outputLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="currentPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 592</value>
+  </data>
+  <data name="currentPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 3, 5, 3</value>
+  </data>
+  <data name="currentPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="currentPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>826, 149</value>
+  </data>
+  <data name="addButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="i35ComboLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>619, 77</value>
+  </data>
+  <data name="i35ComboLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="i35ComboLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="i35Combo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>664, 73</value>
+  </data>
+  <data name="i35Combo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="i35Combo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 28</value>
+  </data>
+  <data name="i02ComboLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="i02ComboLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="i02Combo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>459, 73</value>
+  </data>
+  <data name="i02Combo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="i02Combo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 28</value>
+  </data>
+  <data name="i68ComboLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>213, 77</value>
+  </data>
+  <data name="i68ComboLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="i68ComboLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="i68Combo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>256, 73</value>
+  </data>
+  <data name="i68Combo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="i68Combo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 28</value>
+  </data>
+  <data name="caComboLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="caComboLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="dTextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>722, 41</value>
+  </data>
+  <data name="dTextLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="dTextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="bTextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>619, 41</value>
+  </data>
+  <data name="bTextLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="bTextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="aTextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>518, 41</value>
+  </data>
+  <data name="aTextLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="aTextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="i35TextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>416, 41</value>
+  </data>
+  <data name="i35TextLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="i35TextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="dText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="i02TextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>314, 41</value>
+  </data>
+  <data name="i02TextLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="i02TextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="bText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="i68TextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>213, 41</value>
+  </data>
+  <data name="i68TextLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="i68TextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="aText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="caTextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 41</value>
+  </data>
+  <data name="caTextLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="caTextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="i35Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>459, 39</value>
+  </data>
+  <data name="i35Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="arTextLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 41</value>
+  </data>
+  <data name="arTextLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="arTextLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="i02Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="i68Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="caText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 3, 5, 3</value>
+  </data>
+  <data name="removeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 13</value>
+  </data>
+  <data name="removeButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 3, 5, 3</value>
+  </data>
+  <data name="memoryPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>568, 263</value>
+  </data>
+  <data name="memoryPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 2, 3</value>
+  </data>
+  <data name="memoryPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="memoryPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>269, 319</value>
+  </data>
+  <data name="r15Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 275</value>
+  </data>
+  <data name="r15Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 11, 3</value>
+  </data>
+  <data name="r14Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 275</value>
+  </data>
+  <data name="r14Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="r13Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 275</value>
+  </data>
+  <data name="r13Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="r12Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 275</value>
+  </data>
+  <data name="r12Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>11, 3, 6, 3</value>
+  </data>
+  <data name="r11Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 240</value>
+  </data>
+  <data name="r11Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 11, 3</value>
+  </data>
+  <data name="r10Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 240</value>
+  </data>
+  <data name="r10Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="r9Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 240</value>
+  </data>
+  <data name="r9Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="r8Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 240</value>
+  </data>
+  <data name="r8Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>11, 3, 6, 3</value>
+  </data>
+  <data name="pqLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 73</value>
+  </data>
+  <data name="pqLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="pqLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 23</value>
+  </data>
+  <data name="pqText.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="stekLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 7</value>
+  </data>
+  <data name="stekLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="stekLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 23</value>
+  </data>
+  <data name="s3Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 11, 3</value>
+  </data>
+  <data name="s2Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 39</value>
+  </data>
+  <data name="s2Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="s1Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="s0Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>11, 3, 6, 3</value>
+  </data>
+  <data name="rLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 141</value>
+  </data>
+  <data name="rLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="rLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 23</value>
+  </data>
+  <data name="r7Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 11, 3</value>
+  </data>
+  <data name="r6Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 206</value>
+  </data>
+  <data name="r6Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="r5Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="r4Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>11, 3, 6, 3</value>
+  </data>
+  <data name="r3Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 170</value>
+  </data>
+  <data name="r3Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 11, 3</value>
+  </data>
+  <data name="r2Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 170</value>
+  </data>
+  <data name="r2Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="r1Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 170</value>
+  </data>
+  <data name="r1Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 3, 6, 3</value>
+  </data>
+  <data name="r0Text.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 170</value>
+  </data>
+  <data name="r0Text.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>11, 3, 6, 3</value>
+  </data>
+  <data name="commandList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 50</value>
+  </data>
+  <data name="commandList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 3, 2, 3</value>
+  </data>
+  <data name="commandList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>548, 532</value>
+  </data>
+  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>664, 13</value>
+  </data>
+  <data name="button1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>758, 13</value>
+  </data>
+  <data name="button2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="button3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>568, 13</value>
+  </data>
+  <data name="button3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 3, 5, 3</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>850, 752</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 3, 2, 3</value>
+  </data>
+</root>
