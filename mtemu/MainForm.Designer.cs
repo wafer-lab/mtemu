@@ -1159,7 +1159,7 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(1360, 28);
+            this.menu.Size = new System.Drawing.Size(1577, 28);
             this.menu.TabIndex = 0;
             this.menu.Text = "menu";
             // 
@@ -1419,7 +1419,7 @@
             this.ptListView.FullRowSelect = true;
             this.ptListView.GridLines = true;
             this.ptListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ptListView.Location = new System.Drawing.Point(750, 632);
+            this.ptListView.Location = new System.Drawing.Point(1312, 40);
             this.ptListView.Margin = new System.Windows.Forms.Padding(4);
             this.ptListView.MultiSelect = false;
             this.ptListView.Name = "ptListView";
@@ -1463,7 +1463,7 @@
             this.psListView.FullRowSelect = true;
             this.psListView.GridLines = true;
             this.psListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.psListView.Location = new System.Drawing.Point(954, 691);
+            this.psListView.Location = new System.Drawing.Point(1312, 175);
             this.psListView.Margin = new System.Windows.Forms.Padding(4);
             this.psListView.MultiSelect = false;
             this.psListView.Name = "psListView";
@@ -1497,7 +1497,7 @@
             this.bitPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bitPanel.Controls.Add(this.m1CheckBox);
             this.bitPanel.Controls.Add(this.m0CheckBox);
-            this.bitPanel.Location = new System.Drawing.Point(1158, 691);
+            this.bitPanel.Location = new System.Drawing.Point(1312, 263);
             this.bitPanel.Margin = new System.Windows.Forms.Padding(4);
             this.bitPanel.Name = "bitPanel";
             this.bitPanel.Padding = new System.Windows.Forms.Padding(8);
@@ -1579,7 +1579,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1360, 779);
+            this.ClientSize = new System.Drawing.Size(1577, 779);
             this.Controls.Add(this.deviceListView);
             this.Controls.Add(this.bitPanel);
             this.Controls.Add(this.psListView);

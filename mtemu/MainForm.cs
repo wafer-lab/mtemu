@@ -21,7 +21,7 @@ namespace mtemu
 
         private Label[] textLabels_;
         private TextBox[] textBoxes_;
-        private ListView[] listViewes_;
+        private Dictionary<ListType, ListView> listViewes_;
 
         private void UpdateLabels_()
         {
@@ -174,22 +174,22 @@ namespace mtemu
                 cc8Text,
                 cc9Text,
             };
-            listViewes_ = new ListView[] {
-                caListView,
-                i68ListView,
-                i02ListView,
-                i35ListView,
-                ptListView,
-                psListView,
-                deviceListView,
+            listViewes_ = new Dictionary<ListType, ListView> {
+                { ListType.CA, caListView },
+                { ListType.I68, i68ListView },
+                { ListType.I02, i02ListView },
+                { ListType.I35, i35ListView },
+                { ListType.PT, ptListView },
+                { ListType.PS, psListView },
+                { ListType.Device, deviceListView },
             };
 
             // Init lists with values
-            for (int i = 0; i < listViewes_.Length; ++i) {
-                listViewes_[i].Items.Clear();
-                string[][] lists = MtCommand.GetList((ListType) i);
+            foreach (KeyValuePair<ListType, ListView> listView in listViewes_) {
+                listView.Value.Items.Clear();
+                string[][] lists = MtCommand.GetList(listView.Key);
                 foreach (string[] list in lists) {
-                    listViewes_[i].Items.Add(new ListViewItem(list));
+                    listView.Value.Items.Add(new ListViewItem(list));
                 }
             }
 
@@ -588,7 +588,7 @@ namespace mtemu
 
         private void DefaultListIndexChanged_(ListType listIndex)
         {
-            ListView listView = listViewes_[(int) listIndex];
+            ListView listView = listViewes_[listIndex];
 
             // If no selection
             if (listView.SelectedIndices.Count < 1) {

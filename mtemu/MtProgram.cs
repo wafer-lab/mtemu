@@ -12,6 +12,7 @@ namespace mtemu
         MemoryPointer,
         DevicePointer,
         LoadCommand,
+        LoadSmallCommand,
         Unknown = 255,
     }
 
@@ -58,144 +59,170 @@ namespace mtemu
     {
         private static int length_ = 10;
 
-        private static string[][] labels_ = new string[][] {
-            new string[] {
-                "AR",
-                "CA",
-                "M1|I6-I8",
-                "M0|I0-I2",
-                "C0|I3-I5",
-                "A",
-                "B",
-                "D",
+        private static Dictionary<CommandType, string[]> labels_ =
+            new Dictionary<CommandType, string[]> {
+            {
+                CommandType.MtCommand, new string[] {
+                    "AR",
+                    "CA",
+                    "M1|I6-I8",
+                    "M0|I0-I2",
+                    "C0|I3-I5",
+                    "A",
+                    "B",
+                    "D",
+                }
             },
-            new string[] {
-                "AR",
-                "CA",
-                "",
-                "PT|Inc",
-                "F",
-                "RA",
-                "RB",
-                "",
+            {
+                CommandType.MemoryPointer, new string[] {
+                    "AR",
+                    "CA",
+                    "",
+                    "PT|Inc",
+                    "F",
+                    "RA",
+                    "RB",
+                    "",
+                }
             },
-            new string[] {
-                "AR",
-                "CA",
-                "",
-                "PT",
-                "F",
-                "RA",
-                "RB",
-                "",
+            {
+                CommandType.DevicePointer, new string[] {
+                    "AR",
+                    "CA",
+                    "",
+                    "PT",
+                    "F",
+                    "RA",
+                    "RB",
+                    "",
+                }
             },
-            new string[] {
-                "AR",
-                "CA",
-                "",
-                "PS",
-                "F",
-                "RA",
-                "RB",
-                "",
+            {
+                CommandType.LoadCommand, new string[] {
+                    "AR",
+                    "CA",
+                    "",
+                    "PS",
+                    "F",
+                    "RA",
+                    "RB",
+                    "",
+                }
             },
-            new string[] {
-                "AR",
-                "CA",
-                "",
-                "PS",
-                "F",
-                "",
-                "RB",
-                "",
+            {
+                CommandType.LoadSmallCommand, new string[] {
+                    "AR",
+                    "CA",
+                    "",
+                    "PS",
+                    "F",
+                    "",
+                    "RB",
+                    "",
+                }
             },
         };
 
-        private static string[][][] items_ = new string[][][] {
-            new string[][] {
-                new string[] {"","0000","JNZ"},
-                new string[] {"","0001","JMP"},
-                new string[] {"","0010","JNXT"},
-                new string[] {"","0011","JADR"},
-                new string[] {"","0100","CLNZ"},
-                new string[] {"","0101","CALL"},
-                new string[] {"","0110","RET"},
-                new string[] {"","0111","JSP"},
-                new string[] {"","1000","JSNZ"},
-                new string[] {"","1001","PUSH"},
-                new string[] {"","1010","POP"},
-                new string[] {"","1011","JSNC4"},
-                new string[] {"","1100","JZ"},
-                new string[] {"","1101","JF3"},
-                new string[] {"","1110","JOVR"},
-                new string[] {"","1111","JC4"},
+        private static Dictionary<ListType, string[][]> items_ = 
+            new Dictionary<ListType, string[][]> {
+            {
+                ListType.CA, new string[][] {
+                    new string[] {"","0000","JNZ"},
+                    new string[] {"","0001","JMP"},
+                    new string[] {"","0010","JNXT"},
+                    new string[] {"","0011","JADR"},
+                    new string[] {"","0100","CLNZ"},
+                    new string[] {"","0101","CALL"},
+                    new string[] {"","0110","RET"},
+                    new string[] {"","0111","JSP"},
+                    new string[] {"","1000","JSNZ"},
+                    new string[] {"","1001","PUSH"},
+                    new string[] {"","1010","POP"},
+                    new string[] {"","1011","JSNC4"},
+                    new string[] {"","1100","JZ"},
+                    new string[] {"","1101","JF3"},
+                    new string[] {"","1110","JOVR"},
+                    new string[] {"","1111","JC4"},
+                }
             },
-            new string[][] {
-                new string[] {"","000","F->PQ"},
-                new string[] {"","001","Нет загрузки"},
-                new string[] {"","010","F->РОН(B)"},
-                new string[] {"","011","F->РОН(B)"},
-                new string[] {"","100","F/2->РОН(B),Q/2->PQ"},
-                new string[] {"","101","F/2->РОН(B)"},
-                new string[] {"","110","2F->РОН(B),2Q->PQ"},
-                new string[] {"","111","2F->РОН(B)"},
+            {
+                ListType.I68, new string[][] {
+                    new string[] {"","000","F->PQ"},
+                    new string[] {"","001","Нет загрузки"},
+                    new string[] {"","010","F->РОН(B)"},
+                    new string[] {"","011","F->РОН(B)"},
+                    new string[] {"","100","F/2->РОН(B),Q/2->PQ"},
+                    new string[] {"","101","F/2->РОН(B)"},
+                    new string[] {"","110","2F->РОН(B),2Q->PQ"},
+                    new string[] {"","111","2F->РОН(B)"},
+                }
             },
-            new string[][] {
-                new string[] {"","000","РОН(A)","PQ"},
-                new string[] {"","001","РОН(A)","РОН(B)"},
-                new string[] {"","010","0","PQ"},
-                new string[] {"","011","0","РОН(B)"},
-                new string[] {"","100","0","РОН(A)"},
-                new string[] {"","101","D","РОН(A)"},
-                new string[] {"","110","D","PQ"},
-                new string[] {"","111","D","0"},
+            {
+                ListType.I02, new string[][] {
+                    new string[] {"","000","РОН(A)","PQ"},
+                    new string[] {"","001","РОН(A)","РОН(B)"},
+                    new string[] {"","010","0","PQ"},
+                    new string[] {"","011","0","РОН(B)"},
+                    new string[] {"","100","0","РОН(A)"},
+                    new string[] {"","101","D","РОН(A)"},
+                    new string[] {"","110","D","PQ"},
+                    new string[] {"","111","D","0"},
+                }
             },
-            new string[][] {
-                new string[] {"","0000","R+S+C0","0"},
-                new string[] {"","0001","S-R-1+C0","0"},
-                new string[] {"","0010","R-S-1+C0","0"},
-                new string[] {"","0011","R∨S","-"},
-                new string[] {"","0100","R∧S","-"},
-                new string[] {"","0101","¬R∧S","-"},
-                new string[] {"","0110","R⊕S","-"},
-                new string[] {"","0111","¬(R⊕S)","-"},
-                new string[] {"","1000","R+S+C0","1"},
-                new string[] {"","1001","S-R-1+C0","1"},
-                new string[] {"","1010","R-S-1+C0","1"},
-                new string[] {"","1011","","-"},
-                new string[] {"","1100","","-"},
-                new string[] {"","1101","","-"},
-                new string[] {"","1110","","-"},
-                new string[] {"","1111","","-"},
+            {
+                ListType.I35, new string[][] {
+                    new string[] {"","0000","R+S+C0","0"},
+                    new string[] {"","0001","S-R-1+C0","0"},
+                    new string[] {"","0010","R-S-1+C0","0"},
+                    new string[] {"","0011","R∨S","-"},
+                    new string[] {"","0100","R∧S","-"},
+                    new string[] {"","0101","¬R∧S","-"},
+                    new string[] {"","0110","R⊕S","-"},
+                    new string[] {"","0111","¬(R⊕S)","-"},
+                    new string[] {"","1000","R+S+C0","1"},
+                    new string[] {"","1001","S-R-1+C0","1"},
+                    new string[] {"","1010","R-S-1+C0","1"},
+                    new string[] {"","1011","","-"},
+                    new string[] {"","1100","","-"},
+                    new string[] {"","1101","","-"},
+                    new string[] {"","1110","","-"},
+                    new string[] {"","1111","","-"},
+                }
             },
-            new string[][] {
-                new string[] {"","0000","Память; P=P"},
-                new string[] {"","0001","Память; P=P+1"},
-                new string[] {"","0010","Память; P=P-1"},
-                new string[] {"","1000","Регистр устр."},
+            {
+                ListType.PT, new string[][] {
+                    new string[] {"","0000","Память; P=P"},
+                    new string[] {"","0001","Память; P=P+1"},
+                    new string[] {"","0010","Память; P=P-1"},
+                    new string[] {"","1000","Регистр устр."},
+                }
             },
-            new string[][] {
-                new string[] {"","0000","4 бита"},
-                new string[] {"","0001","8 бит"},
+            {
+                ListType.PS, new string[][] {
+                    new string[] {"","0000","4 бита"},
+                    new string[] {"","0001","8 бит"},
+                }
             },
-            new string[][] {
-                new string[] {"","0000","GPIO0"},
-                new string[] {"","0001","GPIO1"},
-                new string[] {"","0010","GPIO2"},
-                new string[] {"","0011","GPIO3"},
-                new string[] {"","0100","UART0"},
-                new string[] {"","0101","UART1"},
-                new string[] {"","0110","SPI0"},
-                new string[] {"","0111","SPI1"},
-                new string[] {"","1000","I2C0"},
-                new string[] {"","1001","I2C1"},
-                new string[] {"","1010","TIM0"},
-                new string[] {"","1011",""},
-                new string[] {"","1100",""},
-                new string[] {"","1101",""},
-                new string[] {"","1110",""},
-                new string[] {"","1111",""},
-            }
+            {
+                ListType.Device, new string[][] {
+                    new string[] {"","0000","GPIO0"},
+                    new string[] {"","0001","GPIO1"},
+                    new string[] {"","0010","GPIO2"},
+                    new string[] {"","0011","GPIO3"},
+                    new string[] {"","0100","UART0"},
+                    new string[] {"","0101","UART1"},
+                    new string[] {"","0110","SPI0"},
+                    new string[] {"","0111","SPI1"},
+                    new string[] {"","1000","I2C0"},
+                    new string[] {"","1001","I2C1"},
+                    new string[] {"","1010","TIM0"},
+                    new string[] {"","1011",""},
+                    new string[] {"","1100",""},
+                    new string[] {"","1101",""},
+                    new string[] {"","1110",""},
+                    new string[] {"","1111",""},
+                }
+            },
         };
 
         private int[] words_;
@@ -230,11 +257,12 @@ namespace mtemu
         {
             if (words_[6] <= 10) {
                 return CommandType.MtCommand;
-            } 
+            }
             else if (words_[6] == 11) {
                 if (words_[5] <= 7) {
                     return CommandType.MemoryPointer;
-                } else {
+                }
+                else {
                     return CommandType.DevicePointer;
                 }
             }
@@ -250,18 +278,6 @@ namespace mtemu
             get { return words_[i]; }
             set { words_[i] = value; }
         }
-
-        //public ListType GetListByTextIndex(int index)
-        //{
-        //    switch (GetCommandType()) {
-        //    case CommandType.MtCommand:
-        //        if (3 <= index && index <= 6) {
-        //            return (ListType) (index - 3);
-        //        }
-        //        break;
-        //    }
-        //    return ListType.NoList;
-        //}
 
         public int GetTextIndexByList(ListType listIndex)
         {
@@ -297,32 +313,13 @@ namespace mtemu
 
         public static string[][] GetList(ListType listIndex)
         {
-            return items_[(int)listIndex];
+            return items_[listIndex];
         }
 
         public string GetLabel(int textIndex)
         {
-            return labels_[(int) GetCommandType()][textIndex];
+            return labels_[GetCommandType()][textIndex];
         }
-
-        //public int GetSelectedIndex(ListType listIndex)
-        //{
-        //    int textIndex = GetTextIndexByList(listIndex);
-        //    if (textIndex == -1) {
-        //        return 0;
-        //    }
-
-        //    switch (GetCommandType()) {
-        //    case CommandType.MtCommand:
-        //        if (listIndex == ListType.I02 || listIndex == ListType.I68) {
-        //            return words_[textIndex] % 8;
-        //        }
-        //        else {
-        //            return words_[textIndex];
-        //        }
-        //    }
-        //    return 0;
-        //}
 
         public void SetBinary(ListType listIndex, int selIndex)
         {
