@@ -43,6 +43,7 @@ namespace mtemu
         I35 = 3,
         PT = 4,
         PS = 5,
+        Device = 6,
         Unknown = 255,
     }
 
@@ -171,12 +172,30 @@ namespace mtemu
                 new string[] {"","0000","Память; P=P"},
                 new string[] {"","0001","Память; P=P+1"},
                 new string[] {"","0010","Память; P=P-1"},
-                new string[] {"","1000","Регистр"},
+                new string[] {"","1000","Регистр устр."},
             },
             new string[][] {
                 new string[] {"","0000","4 бита"},
                 new string[] {"","0001","8 бит"},
             },
+            new string[][] {
+                new string[] {"","0000","GPIO0"},
+                new string[] {"","0001","GPIO1"},
+                new string[] {"","0010","GPIO2"},
+                new string[] {"","0011","GPIO3"},
+                new string[] {"","0100","UART0"},
+                new string[] {"","0101","UART1"},
+                new string[] {"","0110","SPI0"},
+                new string[] {"","0111","SPI1"},
+                new string[] {"","1000","I2C0"},
+                new string[] {"","1001","I2C1"},
+                new string[] {"","1010","TIM0"},
+                new string[] {"","1011",""},
+                new string[] {"","1100",""},
+                new string[] {"","1101",""},
+                new string[] {"","1110",""},
+                new string[] {"","1111",""},
+            }
         };
 
         private int[] words_;
@@ -246,12 +265,21 @@ namespace mtemu
 
         public int GetTextIndexByList(ListType listIndex)
         {
-            int index = (int) listIndex;
-            if (0 <= index && index <= 3) {
-                return 3 + index;
-            }
-            if (listIndex == ListType.PT || listIndex == ListType.PS) {
+            switch (listIndex) {
+            case ListType.CA:
+                return 3;
+            case ListType.I68:
+                return 4;
+            case ListType.I02:
                 return 5;
+            case ListType.I35:
+                return 6;
+            case ListType.PT:
+                return 5;
+            case ListType.PS:
+                return 5;
+            case ListType.Device:
+                return 7;
             }
             return -1;
         }
@@ -306,6 +334,14 @@ namespace mtemu
             if (listIndex == ListType.I02 || listIndex == ListType.I68) {
                 int oldHigh = words_[textIndex] / 8;
                 words_[textIndex] = oldHigh * 8 + selIndex;
+            }
+            if (listIndex == ListType.PT) {
+                if (selIndex == 3) {
+                    words_[textIndex] = 8;
+                }
+                else {
+                    words_[textIndex] = selIndex;
+                }
             }
             else {
                 words_[textIndex] = selIndex;

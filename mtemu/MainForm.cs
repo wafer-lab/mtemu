@@ -37,53 +37,89 @@ namespace mtemu
             }
         }
 
+        private void EnableObject_(Control obj)
+        {
+            obj.Enabled = true;
+            obj.BackColor = System.Drawing.SystemColors.Window;
+            obj.ForeColor = System.Drawing.SystemColors.WindowText;
+            obj.Cursor = System.Windows.Forms.Cursors.Default;
+        }
+
+        private void DisableObject_(Control obj)
+        {
+            obj.Enabled = false;
+            obj.BackColor = System.Drawing.SystemColors.Control;
+            obj.ForeColor = System.Drawing.SystemColors.GrayText;
+            obj.Cursor = System.Windows.Forms.Cursors.No;
+        }
+
         private void UpdateLists_()
         {
             switch (currentCommand_.GetCommandType()) {
             case CommandType.MtCommand:
-                m0CheckBox.Enabled = true;
-                i02ListView.Enabled = true;
-                m1CheckBox.Enabled = true;
-                i68ListView.Enabled = true;
-                cc4Text.Enabled = true;
-                cc9Text.Enabled = true;
+                EnableObject_(bitPanel);
+                //EnableObject_(m0CheckBox);
+                //EnableObject_(m1CheckBox);
+                EnableObject_(i02ListView);
+                EnableObject_(i68ListView);
+                EnableObject_(cc4Text);
+                EnableObject_(cc9Text);
 
-                ptListView.Enabled = false;
-                psListView.Enabled = false;
+                DisableObject_(ptListView);
+                DisableObject_(deviceListView);
+                DisableObject_(psListView);
                 break;
             case CommandType.MemoryPointer:
-            case CommandType.DevicePointer:
-                m0CheckBox.Enabled = false;
-                i02ListView.Enabled = false;
-                m1CheckBox.Enabled = false;
-                i68ListView.Enabled = false;
-                cc4Text.Enabled = false;
-                cc9Text.Enabled = false;
+                DisableObject_(bitPanel);
+                //DisableObject_(m0CheckBox);
+                //DisableObject_(m1CheckBox);
+                DisableObject_(i02ListView);
+                DisableObject_(i68ListView);
+                DisableObject_(cc4Text);
+                DisableObject_(cc9Text);
 
-                ptListView.Enabled = true;
-                psListView.Enabled = false;
+                EnableObject_(ptListView);
+                DisableObject_(deviceListView);
+                DisableObject_(psListView);
+                break;
+            case CommandType.DevicePointer:
+                DisableObject_(bitPanel);
+                //DisableObject_(m0CheckBox);
+                //DisableObject_(m1CheckBox);
+                DisableObject_(i02ListView);
+                DisableObject_(i68ListView);
+                DisableObject_(cc4Text);
+                DisableObject_(cc9Text);
+
+                EnableObject_(ptListView);
+                EnableObject_(deviceListView);
+                DisableObject_(psListView);
                 break;
             case CommandType.LoadCommand:
-                m0CheckBox.Enabled = false;
-                i02ListView.Enabled = false;
-                m1CheckBox.Enabled = false;
-                i68ListView.Enabled = false;
-                cc4Text.Enabled = false;
-                cc9Text.Enabled = false;
+                DisableObject_(bitPanel);
+                //DisableObject_(m0CheckBox);
+                //DisableObject_(m1CheckBox);
+                DisableObject_(i02ListView);
+                DisableObject_(i68ListView);
+                DisableObject_(cc4Text);
+                DisableObject_(cc9Text);
 
-                ptListView.Enabled = false;
-                psListView.Enabled = true;
+                DisableObject_(ptListView);
+                DisableObject_(deviceListView);
+                EnableObject_(psListView);
                 break;
             default:
-                m0CheckBox.Enabled = true;
-                i02ListView.Enabled = true;
-                m1CheckBox.Enabled = true;
-                i68ListView.Enabled = true;
-                cc4Text.Enabled = true;
-                cc9Text.Enabled = true;
+                EnableObject_(bitPanel);
+                //EnableObject_(m0CheckBox);
+                //EnableObject_(m1CheckBox);
+                EnableObject_(i02ListView);
+                EnableObject_(i68ListView);
+                EnableObject_(cc4Text);
+                EnableObject_(cc9Text);
 
-                ptListView.Enabled = true;
-                psListView.Enabled = true;
+                EnableObject_(ptListView);
+                EnableObject_(deviceListView);
+                EnableObject_(psListView);
                 break;
             }
         }
@@ -145,6 +181,7 @@ namespace mtemu
                 i35ListView,
                 ptListView,
                 psListView,
+                deviceListView,
             };
 
             // Init lists with values
@@ -599,6 +636,11 @@ namespace mtemu
         private void PsListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
             DefaultListIndexChanged_(ListType.PS);
+        }
+
+        private void DeviceListViewSelectedIndexChanged_(object sender, EventArgs e)
+        {
+            DefaultListIndexChanged_(ListType.Device);
         }
 
         private void DefaultCheckBoxChanged_(FlagType flagIndex, bool value)

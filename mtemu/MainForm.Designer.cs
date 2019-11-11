@@ -134,6 +134,10 @@
             this.bitPanel = new System.Windows.Forms.Panel();
             this.m1CheckBox = new System.Windows.Forms.CheckBox();
             this.m0CheckBox = new System.Windows.Forms.CheckBox();
+            this.deviceListView = new System.Windows.Forms.ListView();
+            this.deviceFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.deviceCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.deviceNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
             this.memoryPanel.SuspendLayout();
@@ -1415,7 +1419,7 @@
             this.ptListView.FullRowSelect = true;
             this.ptListView.GridLines = true;
             this.ptListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ptListView.Location = new System.Drawing.Point(1158, 40);
+            this.ptListView.Location = new System.Drawing.Point(750, 632);
             this.ptListView.Margin = new System.Windows.Forms.Padding(4);
             this.ptListView.MultiSelect = false;
             this.ptListView.Name = "ptListView";
@@ -1449,6 +1453,7 @@
             // psListView
             // 
             this.psListView.AutoArrange = false;
+            this.psListView.BackColor = System.Drawing.SystemColors.Window;
             this.psListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.psListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.psFirstColumn,
@@ -1458,7 +1463,7 @@
             this.psListView.FullRowSelect = true;
             this.psListView.GridLines = true;
             this.psListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.psListView.Location = new System.Drawing.Point(1158, 175);
+            this.psListView.Location = new System.Drawing.Point(954, 691);
             this.psListView.Margin = new System.Windows.Forms.Padding(4);
             this.psListView.MultiSelect = false;
             this.psListView.Name = "psListView";
@@ -1472,29 +1477,27 @@
             // 
             // psFirstColumn
             // 
-            this.psFirstColumn.DisplayIndex = 2;
             this.psFirstColumn.Width = 0;
             // 
             // psCodeColumn
             // 
-            this.psCodeColumn.DisplayIndex = 0;
             this.psCodeColumn.Text = "Код";
             this.psCodeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.psCodeColumn.Width = 40;
             // 
             // psSizeColumn
             // 
-            this.psSizeColumn.DisplayIndex = 1;
             this.psSizeColumn.Text = "Размер указ.";
             this.psSizeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.psSizeColumn.Width = 115;
             // 
             // bitPanel
             // 
+            this.bitPanel.BackColor = System.Drawing.SystemColors.Window;
             this.bitPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bitPanel.Controls.Add(this.m1CheckBox);
             this.bitPanel.Controls.Add(this.m0CheckBox);
-            this.bitPanel.Location = new System.Drawing.Point(1158, 263);
+            this.bitPanel.Location = new System.Drawing.Point(1158, 691);
             this.bitPanel.Margin = new System.Windows.Forms.Padding(4);
             this.bitPanel.Name = "bitPanel";
             this.bitPanel.Padding = new System.Windows.Forms.Padding(8);
@@ -1527,12 +1530,57 @@
             this.m0CheckBox.UseVisualStyleBackColor = true;
             this.m0CheckBox.CheckedChanged += new System.EventHandler(this.M0CheckBoxCheckedChanged_);
             // 
+            // deviceListView
+            // 
+            this.deviceListView.AutoArrange = false;
+            this.deviceListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.deviceListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.deviceFirstColumn,
+            this.deviceCodeColumn,
+            this.deviceNameColumn});
+            this.deviceListView.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.deviceListView.FullRowSelect = true;
+            this.deviceListView.GridLines = true;
+            this.deviceListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.deviceListView.Location = new System.Drawing.Point(1158, 40);
+            this.deviceListView.Margin = new System.Windows.Forms.Padding(4);
+            this.deviceListView.MultiSelect = false;
+            this.deviceListView.Name = "deviceListView";
+            this.deviceListView.Scrollable = false;
+            this.deviceListView.Size = new System.Drawing.Size(146, 412);
+            this.deviceListView.TabIndex = 0;
+            this.deviceListView.TabStop = false;
+            this.deviceListView.UseCompatibleStateImageBehavior = false;
+            this.deviceListView.View = System.Windows.Forms.View.Details;
+            this.deviceListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
+            this.deviceListView.SelectedIndexChanged += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
+            // 
+            // deviceFirstColumn
+            // 
+            this.deviceFirstColumn.DisplayIndex = 2;
+            this.deviceFirstColumn.Width = 0;
+            // 
+            // deviceCodeColumn
+            // 
+            this.deviceCodeColumn.DisplayIndex = 0;
+            this.deviceCodeColumn.Text = "Код";
+            this.deviceCodeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.deviceCodeColumn.Width = 40;
+            // 
+            // deviceNameColumn
+            // 
+            this.deviceNameColumn.DisplayIndex = 1;
+            this.deviceNameColumn.Text = "Интерфейс";
+            this.deviceNameColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.deviceNameColumn.Width = 75;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1360, 779);
+            this.Controls.Add(this.deviceListView);
             this.Controls.Add(this.bitPanel);
             this.Controls.Add(this.psListView);
             this.Controls.Add(this.ptListView);
@@ -1694,6 +1742,10 @@
         private System.Windows.Forms.CheckBox m0CheckBox;
         private System.Windows.Forms.TextBox cc2Text;
         private System.Windows.Forms.TextBox cc1Text;
+        private System.Windows.Forms.ListView deviceListView;
+        private System.Windows.Forms.ColumnHeader deviceFirstColumn;
+        private System.Windows.Forms.ColumnHeader deviceCodeColumn;
+        private System.Windows.Forms.ColumnHeader deviceNameColumn;
     }
 }
 
