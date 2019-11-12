@@ -214,18 +214,18 @@
             this.outputPanel.Controls.Add(this.yLabel);
             this.outputPanel.Controls.Add(this.yText);
             this.outputPanel.Controls.Add(this.outputLabel);
-            this.outputPanel.Location = new System.Drawing.Point(573, 78);
+            this.outputPanel.Location = new System.Drawing.Point(573, 62);
             this.outputPanel.Margin = new System.Windows.Forms.Padding(4);
             this.outputPanel.Name = "outputPanel";
             this.outputPanel.Padding = new System.Windows.Forms.Padding(8);
-            this.outputPanel.Size = new System.Drawing.Size(269, 207);
+            this.outputPanel.Size = new System.Drawing.Size(250, 233);
             this.outputPanel.TabIndex = 0;
             // 
             // spLabel
             // 
             this.spLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.spLabel.Location = new System.Drawing.Point(138, 138);
-            this.spLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.spLabel.Location = new System.Drawing.Point(168, 111);
+            this.spLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
             this.spLabel.Name = "spLabel";
             this.spLabel.Size = new System.Drawing.Size(50, 19);
             this.spLabel.TabIndex = 0;
@@ -235,8 +235,8 @@
             // spText
             // 
             this.spText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.spText.Location = new System.Drawing.Point(138, 165);
-            this.spText.Margin = new System.Windows.Forms.Padding(4);
+            this.spText.Location = new System.Drawing.Point(168, 134);
+            this.spText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.spText.MaxLength = 4;
             this.spText.Name = "spText";
             this.spText.ReadOnly = true;
@@ -250,8 +250,8 @@
             // pcLabel
             // 
             this.pcLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.pcLabel.Location = new System.Drawing.Point(44, 138);
-            this.pcLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.pcLabel.Location = new System.Drawing.Point(99, 169);
+            this.pcLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
             this.pcLabel.Name = "pcLabel";
             this.pcLabel.Size = new System.Drawing.Size(50, 19);
             this.pcLabel.TabIndex = 0;
@@ -261,8 +261,8 @@
             // pcText
             // 
             this.pcText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.pcText.Location = new System.Drawing.Point(12, 165);
-            this.pcText.Margin = new System.Windows.Forms.Padding(4);
+            this.pcText.Location = new System.Drawing.Point(65, 192);
+            this.pcText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.pcText.MaxLength = 4;
             this.pcText.Name = "pcText";
             this.pcText.ReadOnly = true;
@@ -276,8 +276,8 @@
             // fLabel
             // 
             this.fLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.fLabel.Location = new System.Drawing.Point(70, 76);
-            this.fLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.fLabel.Location = new System.Drawing.Point(99, 111);
+            this.fLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
             this.fLabel.Name = "fLabel";
             this.fLabel.Size = new System.Drawing.Size(50, 19);
             this.fLabel.TabIndex = 0;
@@ -287,8 +287,8 @@
             // fText
             // 
             this.fText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.fText.Location = new System.Drawing.Point(70, 103);
-            this.fText.Margin = new System.Windows.Forms.Padding(4);
+            this.fText.Location = new System.Drawing.Point(99, 134);
+            this.fText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.fText.MaxLength = 4;
             this.fText.Name = "fText";
             this.fText.ReadOnly = true;
@@ -302,7 +302,7 @@
             // pText
             // 
             this.pText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.pText.Location = new System.Drawing.Point(186, 76);
+            this.pText.Location = new System.Drawing.Point(148, 76);
             this.pText.Margin = new System.Windows.Forms.Padding(4);
             this.pText.MaxLength = 4;
             this.pText.Name = "pText";
@@ -317,7 +317,7 @@
             // gText
             // 
             this.gText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.gText.Location = new System.Drawing.Point(128, 76);
+            this.gText.Location = new System.Drawing.Point(50, 76);
             this.gText.Margin = new System.Windows.Forms.Padding(4);
             this.gText.MaxLength = 4;
             this.gText.Name = "gText";
@@ -396,8 +396,8 @@
             // yLabel
             // 
             this.yLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.yLabel.Location = new System.Drawing.Point(12, 76);
-            this.yLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.yLabel.Location = new System.Drawing.Point(30, 111);
+            this.yLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
             this.yLabel.Name = "yLabel";
             this.yLabel.Size = new System.Drawing.Size(50, 19);
             this.yLabel.TabIndex = 0;
@@ -407,8 +407,8 @@
             // yText
             // 
             this.yText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.yText.Location = new System.Drawing.Point(12, 103);
-            this.yText.Margin = new System.Windows.Forms.Padding(4);
+            this.yText.Location = new System.Drawing.Point(30, 134);
+            this.yText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.yText.MaxLength = 4;
             this.yText.Name = "yText";
             this.yText.ReadOnly = true;
@@ -1098,10 +1098,10 @@
             // 
             // commandList
             // 
-            this.commandList.Font = new System.Drawing.Font("Consolas", 12F);
+            this.commandList.Font = new System.Drawing.Font("Consolas", 10F);
             this.commandList.FormattingEnabled = true;
             this.commandList.IntegralHeight = false;
-            this.commandList.ItemHeight = 23;
+            this.commandList.ItemHeight = 20;
             this.commandList.Location = new System.Drawing.Point(13, 80);
             this.commandList.Margin = new System.Windows.Forms.Padding(4);
             this.commandList.Name = "commandList";
@@ -1159,7 +1159,7 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(1577, 28);
+            this.menu.Size = new System.Drawing.Size(1714, 28);
             this.menu.TabIndex = 0;
             this.menu.Text = "menu";
             // 
@@ -1230,7 +1230,7 @@
             this.i35ListView.FullRowSelect = true;
             this.i35ListView.GridLines = true;
             this.i35ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.i35ListView.Location = new System.Drawing.Point(982, 40);
+            this.i35ListView.Location = new System.Drawing.Point(998, 39);
             this.i35ListView.Margin = new System.Windows.Forms.Padding(4);
             this.i35ListView.MultiSelect = false;
             this.i35ListView.Name = "i35ListView";
@@ -1280,7 +1280,7 @@
             this.caListView.FullRowSelect = true;
             this.caListView.GridLines = true;
             this.caListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.caListView.Location = new System.Drawing.Point(846, 41);
+            this.caListView.Location = new System.Drawing.Point(862, 40);
             this.caListView.Margin = new System.Windows.Forms.Padding(4);
             this.caListView.MultiSelect = false;
             this.caListView.Name = "caListView";
@@ -1325,7 +1325,7 @@
             this.i02ListView.FullRowSelect = true;
             this.i02ListView.GridLines = true;
             this.i02ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.i02ListView.Location = new System.Drawing.Point(846, 461);
+            this.i02ListView.Location = new System.Drawing.Point(862, 460);
             this.i02ListView.Margin = new System.Windows.Forms.Padding(4);
             this.i02ListView.MultiSelect = false;
             this.i02ListView.Name = "i02ListView";
@@ -1376,7 +1376,7 @@
             this.i68ListView.FullRowSelect = true;
             this.i68ListView.GridLines = true;
             this.i68ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.i68ListView.Location = new System.Drawing.Point(1104, 461);
+            this.i68ListView.Location = new System.Drawing.Point(1120, 460);
             this.i68ListView.Margin = new System.Windows.Forms.Padding(4);
             this.i68ListView.MultiSelect = false;
             this.i68ListView.Name = "i68ListView";
@@ -1419,7 +1419,7 @@
             this.ptListView.FullRowSelect = true;
             this.ptListView.GridLines = true;
             this.ptListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ptListView.Location = new System.Drawing.Point(1312, 40);
+            this.ptListView.Location = new System.Drawing.Point(1328, 39);
             this.ptListView.Margin = new System.Windows.Forms.Padding(4);
             this.ptListView.MultiSelect = false;
             this.ptListView.Name = "ptListView";
@@ -1463,7 +1463,7 @@
             this.psListView.FullRowSelect = true;
             this.psListView.GridLines = true;
             this.psListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.psListView.Location = new System.Drawing.Point(1312, 175);
+            this.psListView.Location = new System.Drawing.Point(1328, 174);
             this.psListView.Margin = new System.Windows.Forms.Padding(4);
             this.psListView.MultiSelect = false;
             this.psListView.Name = "psListView";
@@ -1497,7 +1497,7 @@
             this.bitPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bitPanel.Controls.Add(this.m1CheckBox);
             this.bitPanel.Controls.Add(this.m0CheckBox);
-            this.bitPanel.Location = new System.Drawing.Point(1312, 263);
+            this.bitPanel.Location = new System.Drawing.Point(1328, 262);
             this.bitPanel.Margin = new System.Windows.Forms.Padding(4);
             this.bitPanel.Name = "bitPanel";
             this.bitPanel.Padding = new System.Windows.Forms.Padding(8);
@@ -1542,7 +1542,7 @@
             this.deviceListView.FullRowSelect = true;
             this.deviceListView.GridLines = true;
             this.deviceListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.deviceListView.Location = new System.Drawing.Point(1158, 40);
+            this.deviceListView.Location = new System.Drawing.Point(1174, 39);
             this.deviceListView.Margin = new System.Windows.Forms.Padding(4);
             this.deviceListView.MultiSelect = false;
             this.deviceListView.Name = "deviceListView";
@@ -1579,7 +1579,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1577, 779);
+            this.ClientSize = new System.Drawing.Size(1714, 779);
             this.Controls.Add(this.deviceListView);
             this.Controls.Add(this.bitPanel);
             this.Controls.Add(this.psListView);

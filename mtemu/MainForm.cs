@@ -21,7 +21,7 @@ namespace mtemu
 
         private Label[] textLabels_;
         private TextBox[] textBoxes_;
-        private Dictionary<ListType, ListView> listViewes_;
+        private Dictionary<WordType, ListView> listViewes_;
 
         private void UpdateLabels_()
         {
@@ -174,36 +174,46 @@ namespace mtemu
                 cc8Text,
                 cc9Text,
             };
-            listViewes_ = new Dictionary<ListType, ListView> {
-                { ListType.CA, caListView },
-                { ListType.I68, i68ListView },
-                { ListType.I02, i02ListView },
-                { ListType.I35, i35ListView },
-                { ListType.PT, ptListView },
-                { ListType.PS, psListView },
-                { ListType.Device, deviceListView },
+            listViewes_ = new Dictionary<WordType, ListView> {
+                { WordType.CA, caListView },
+                { WordType.I68, i68ListView },
+                { WordType.I02, i02ListView },
+                { WordType.I35, i35ListView },
+                { WordType.PT, ptListView },
+                { WordType.PS, psListView },
+                { WordType.Device, deviceListView },
             };
 
             // Init lists with values
-            foreach (KeyValuePair<ListType, ListView> listView in listViewes_) {
+            foreach (KeyValuePair<WordType, ListView> listView in listViewes_) {
                 listView.Value.Items.Clear();
-                string[][] lists = MtCommand.GetList(listView.Key);
+                string[][] lists = MtCommand.GetItems(listView.Key);
                 foreach (string[] list in lists) {
                     listView.Value.Items.Add(new ListViewItem(list));
                 }
             }
 
             LoadCommand_(new MtCommand(new string[] {
-                "0000",
-                "0000",
-                "0000",
-                "0010",
-                "0001",
-                "0111",
-                "0000",
-                "0000",
-                "0000",
-                "0000",
+                //"0000",
+                //"0000",
+                //"0000",
+                //"0010",
+                //"0001",
+                //"0111",
+                //"0000",
+                //"0000",
+                //"0000",
+                //"0000",
+                "1111",
+                "1111",
+                "1111",
+                "0101",
+                "1100",
+                "1001",
+                "1000",
+                "1111",
+                "1111",
+                "1111",
             }));
         }
 
@@ -586,9 +596,9 @@ namespace mtemu
             e.Cancel = true;
         }
 
-        private void DefaultListIndexChanged_(ListType listIndex)
+        private void DefaultListIndexChanged_(WordType type)
         {
-            ListView listView = listViewes_[listIndex];
+            ListView listView = listViewes_[type];
 
             // If no selection
             if (listView.SelectedIndices.Count < 1) {
@@ -596,13 +606,13 @@ namespace mtemu
             }
 
             // Get text box for selected list
-            int textIndex = currentCommand_.GetTextIndexByList(listIndex);
+            int textIndex = MtCommand.GetTextIndexByType(type);
             if (textIndex != -1) {
                 TextBox textBox = textBoxes_[textIndex];
 
                 // Copy value in textbox
                 isCommandSaved_ = false;
-                currentCommand_.SetBinary(listIndex, listView.SelectedIndices[0]);
+                currentCommand_.SetValue(type, listView.SelectedIndices[0]);
                 textBox.Text = Helpers.IntToBinary(currentCommand_[textIndex], 4);
                 UpdateCommandHandler_();
             }
@@ -610,43 +620,43 @@ namespace mtemu
 
         private void I35ListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
-            DefaultListIndexChanged_(ListType.I35);
+            DefaultListIndexChanged_(WordType.I35);
         }
 
         private void CaListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
-            DefaultListIndexChanged_(ListType.CA);
+            DefaultListIndexChanged_(WordType.CA);
         }
 
         private void I02ListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
-            DefaultListIndexChanged_(ListType.I02);
+            DefaultListIndexChanged_(WordType.I02);
         }
 
         private void I68ListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
-            DefaultListIndexChanged_(ListType.I68);
+            DefaultListIndexChanged_(WordType.I68);
         }
 
         private void PtListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
-            DefaultListIndexChanged_(ListType.PT);
+            DefaultListIndexChanged_(WordType.PT);
         }
 
         private void PsListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
-            DefaultListIndexChanged_(ListType.PS);
+            DefaultListIndexChanged_(WordType.PS);
         }
 
         private void DeviceListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
-            DefaultListIndexChanged_(ListType.Device);
+            DefaultListIndexChanged_(WordType.Device);
         }
 
         private void DefaultCheckBoxChanged_(FlagType flagIndex, bool value)
         {
             // Get text box for checkbox
-            int textIndex = currentCommand_.GetTextIndexByFlag(flagIndex);
+            int textIndex = MtCommand.GetTextIndexByFlag(flagIndex);
             if (textIndex != -1) {
                 TextBox textBox = textBoxes_[textIndex];
 

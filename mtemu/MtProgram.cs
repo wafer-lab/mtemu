@@ -36,15 +36,21 @@ namespace mtemu
         JC4,
     }
 
-    enum ListType : byte
+    enum WordType : byte
     {
-        CA = 0,
-        I68 = 1,
-        I02 = 2,
-        I35 = 3,
-        PT = 4,
-        PS = 5,
-        Device = 6,
+        ArHigh,
+        ArMid,
+        ArLow,
+        CA,
+        I68,
+        I02,
+        I35,
+        A,
+        B,
+        D,
+        PT,
+        PS,
+        Device,
         Unknown = 255,
     }
 
@@ -59,8 +65,28 @@ namespace mtemu
     {
         private static int length_ = 10;
 
+        // Numbers of text boxes
+        private static Dictionary<WordType, int> wordIndexes_ =
+            new Dictionary<WordType, int>
+        {
+            { WordType.ArHigh, 0 },
+            { WordType.ArMid, 1 },
+            { WordType.ArLow, 2 },
+            { WordType.CA, 3 },
+            { WordType.I68, 4 },
+            { WordType.I02, 5 },
+            { WordType.I35, 6 },
+            { WordType.A, 7 },
+            { WordType.B, 8 },
+            { WordType.D, 9 },
+            { WordType.PT, 5 },
+            { WordType.PS, 5 },
+            { WordType.Device, 7 },
+        };
+
         private static Dictionary<CommandType, string[]> labels_ =
-            new Dictionary<CommandType, string[]> {
+            new Dictionary<CommandType, string[]>
+        {
             {
                 CommandType.MtCommand, new string[] {
                     "AR",
@@ -123,10 +149,11 @@ namespace mtemu
             },
         };
 
-        private static Dictionary<ListType, string[][]> items_ = 
-            new Dictionary<ListType, string[][]> {
+        private static Dictionary<WordType, string[][]> items_ =
+            new Dictionary<WordType, string[][]>
+        {
             {
-                ListType.CA, new string[][] {
+                WordType.CA, new string[][] {
                     new string[] {"","0000","JNZ"},
                     new string[] {"","0001","JMP"},
                     new string[] {"","0010","JNXT"},
@@ -146,19 +173,19 @@ namespace mtemu
                 }
             },
             {
-                ListType.I68, new string[][] {
-                    new string[] {"","000","F->PQ"},
+                WordType.I68, new string[][] {
+                    new string[] {"","000","PQ=F"},
                     new string[] {"","001","Нет загрузки"},
-                    new string[] {"","010","F->РОН(B)"},
-                    new string[] {"","011","F->РОН(B)"},
-                    new string[] {"","100","F/2->РОН(B),Q/2->PQ"},
-                    new string[] {"","101","F/2->РОН(B)"},
-                    new string[] {"","110","2F->РОН(B),2Q->PQ"},
-                    new string[] {"","111","2F->РОН(B)"},
+                    new string[] {"","010","РОН(B)=F"},
+                    new string[] {"","011","РОН(B)=F"},
+                    new string[] {"","100","PQ=Q/2,РОН(B)=F/2"},
+                    new string[] {"","101","РОН(B)=F/2"},
+                    new string[] {"","110","PQ=2Q,РОН(B)=2F"},
+                    new string[] {"","111","РОН(B)=2F"},
                 }
             },
             {
-                ListType.I02, new string[][] {
+                WordType.I02, new string[][] {
                     new string[] {"","000","РОН(A)","PQ"},
                     new string[] {"","001","РОН(A)","РОН(B)"},
                     new string[] {"","010","0","PQ"},
@@ -170,7 +197,7 @@ namespace mtemu
                 }
             },
             {
-                ListType.I35, new string[][] {
+                WordType.I35, new string[][] {
                     new string[] {"","0000","R+S+C0","0"},
                     new string[] {"","0001","S-R-1+C0","0"},
                     new string[] {"","0010","R-S-1+C0","0"},
@@ -190,7 +217,7 @@ namespace mtemu
                 }
             },
             {
-                ListType.PT, new string[][] {
+                WordType.PT, new string[][] {
                     new string[] {"","0000","Память; P=P"},
                     new string[] {"","0001","Память; P=P+1"},
                     new string[] {"","0010","Память; P=P-1"},
@@ -198,13 +225,13 @@ namespace mtemu
                 }
             },
             {
-                ListType.PS, new string[][] {
+                WordType.PS, new string[][] {
                     new string[] {"","0000","4 бита"},
                     new string[] {"","0001","8 бит"},
                 }
             },
             {
-                ListType.Device, new string[][] {
+                WordType.Device, new string[][] {
                     new string[] {"","0000","GPIO0"},
                     new string[] {"","0001","GPIO1"},
                     new string[] {"","0010","GPIO2"},
@@ -244,29 +271,72 @@ namespace mtemu
             Array.Copy(other.words_, words_, length_);
         }
 
+        private string[] GetItem_(WordType type)
+        {
+            return items_[type][GetSelIndex_(type)];
+        }
+
         public string GetName(int index)
         {
             string res = "#" + index + "; ";
-            foreach (int word in words_) {
-                res += Helpers.IntToBinary(word, 4) + " ";
+            switch (GetCommandType()) {
+            case CommandType.MtCommand:
+                if (GetRawValue_(WordType.I68) == 1) {
+                    // Without saving
+                    res += "Y=F=";
+                }
+                else {
+                    string to = GetItem_(WordType.I68)[2] + "=";
+                    to = to.Replace("F/2=", "F/2;F=");
+                    to = to.Replace("2F=", "2F;F=");
+                    to = to.Replace(";", "; ");
+                    res += to;
+                }
+
+                string command = GetItem_(WordType.I35)[2];
+                command = command.Replace("R", GetItem_(WordType.I02)[2]);
+                command = command.Replace("S", GetItem_(WordType.I02)[3]);
+                command = command.Replace("C0", GetItem_(WordType.I35)[3]);
+                res += command;
+
+                res = res.Replace("A", GetRawValue_(WordType.A).ToString());
+                res = res.Replace("B", GetRawValue_(WordType.B).ToString());
+                res = res.Replace("D", GetRawValue_(WordType.D).ToString());
+                res = res.Replace("+0", "");
+                res = res.Replace("-0", "");
+                res = res.Replace("-1+1", "");
+
+                res += "; M=" + (GetFlag(FlagType.M1) ? "1" : "0") 
+                    + (GetFlag(FlagType.M0) ? "1" : "0");
+                break;
+            default:
+                res += String.Join(" ", words_);
+                break;
+            }
+            res += "; " + GetItem_(WordType.CA)[2];
+            JumpType jt = GetJumpType();
+            if (jt == JumpType.JNZ || jt == JumpType.JMP || jt == JumpType.CLNZ
+                || jt == JumpType.CALL || jt == JumpType.JZ || jt == JumpType.JF3
+                || jt == JumpType.JOVR || jt == JumpType.JC4) {
+                res += " " + GetNext();
             }
             return res;
         }
 
         public CommandType GetCommandType()
         {
-            if (words_[6] <= 10) {
+            if (GetRawValue_(WordType.I35) <= 10) {
                 return CommandType.MtCommand;
             }
-            else if (words_[6] == 11) {
-                if (words_[5] <= 7) {
+            else if (GetRawValue_(WordType.I35) == 11) {
+                if (GetRawValue_(WordType.PT) <= 7) {
                     return CommandType.MemoryPointer;
                 }
                 else {
                     return CommandType.DevicePointer;
                 }
             }
-            else if (12 <= words_[6] && words_[6] <= 15) {
+            else if (12 <= GetRawValue_(WordType.I35) && GetRawValue_(WordType.I35) <= 15) {
                 return CommandType.LoadCommand;
             }
             else {
@@ -279,39 +349,26 @@ namespace mtemu
             set { words_[i] = value; }
         }
 
-        public int GetTextIndexByList(ListType listIndex)
+        public static int GetTextIndexByType(WordType type)
         {
-            switch (listIndex) {
-            case ListType.CA:
-                return 3;
-            case ListType.I68:
-                return 4;
-            case ListType.I02:
-                return 5;
-            case ListType.I35:
-                return 6;
-            case ListType.PT:
-                return 5;
-            case ListType.PS:
-                return 5;
-            case ListType.Device:
-                return 7;
+            if (wordIndexes_.ContainsKey(type)) {
+                return wordIndexes_[type];
             }
             return -1;
         }
 
-        public int GetTextIndexByFlag(FlagType flagIndex)
+        public static int GetTextIndexByFlag(FlagType type)
         {
-            switch (flagIndex) {
+            switch (type) {
             case FlagType.M0:
-                return 5;
+                return wordIndexes_[WordType.I02];
             case FlagType.M1:
-                return 4;
+                return wordIndexes_[WordType.I68];
             }
             return -1;
         }
 
-        public static string[][] GetList(ListType listIndex)
+        public static string[][] GetItems(WordType listIndex)
         {
             return items_[listIndex];
         }
@@ -321,18 +378,53 @@ namespace mtemu
             return labels_[GetCommandType()][textIndex];
         }
 
-        public void SetBinary(ListType listIndex, int selIndex)
+        private int GetRawValue_(WordType type)
         {
-            int textIndex = GetTextIndexByList(listIndex);
+            int textIndex = GetTextIndexByType(type);
+            if (textIndex == -1) {
+                return -1;
+            }
+            return words_[textIndex];
+        }
+
+        private int GetSelIndex_(WordType type)
+        {
+            int raw = GetRawValue_(type);
+            if (raw == -1) {
+                return -1;
+            }
+
+            if (type == WordType.I02 || type == WordType.I68) {
+                return raw % 8;
+            }
+            else if (type == WordType.PT) {
+                if (raw == 8) {
+                    return 3;
+                }
+                else if (raw < 3){
+                    return raw;
+                }
+                else {
+                    return -1;
+                }
+            }
+            else {
+                return raw;
+            }
+        }
+
+        public void SetValue(WordType type, int selIndex)
+        {
+            int textIndex = GetTextIndexByType(type);
             if (textIndex == -1) {
                 return;
             }
 
-            if (listIndex == ListType.I02 || listIndex == ListType.I68) {
+            if (type == WordType.I02 || type == WordType.I68) {
                 int oldHigh = words_[textIndex] / 8;
                 words_[textIndex] = oldHigh * 8 + selIndex;
             }
-            if (listIndex == ListType.PT) {
+            else if (type == WordType.PT) {
                 if (selIndex == 3) {
                     words_[textIndex] = 8;
                 }
@@ -367,12 +459,14 @@ namespace mtemu
 
         public JumpType GetJumpType()
         {
-            return (JumpType) words_[1];
+            return (JumpType) GetRawValue_(WordType.CA);
         }
 
         public int GetNext()
         {
-            return words_[0];
+            return (GetRawValue_(WordType.ArHigh) << 8)
+                + (GetRawValue_(WordType.ArMid) << 4)
+                + GetRawValue_(WordType.ArLow);
         }
     }
 
