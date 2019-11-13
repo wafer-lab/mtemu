@@ -12,11 +12,11 @@ namespace mtemu
 {
     public partial class MainForm : Form
     {
-        private bool isProgramSaved_ = true;
-        private bool isCommandSaved_ = true;
-        private int prevSelected_ = -1;
+        private bool isProgramSaved_;
+        private bool isCommandSaved_;
+        private int prevSelected_;
 
-        private Processor program_ = new Processor();
+        private Processor program_;
         private Command currentCommand_;
 
         private Label[] textLabels_;
@@ -24,6 +24,21 @@ namespace mtemu
         private Dictionary<WordType, ListView> listViewes_;
         private TextBox[] stackTexts_;
         private TextBox[] regTexts_;
+
+        private void Reset_()
+        {
+            isProgramSaved_ = true;
+            isCommandSaved_ = true;
+            prevSelected_ = -1;
+            program_ = new Processor();
+            commandList.Items.Clear();
+            saveButton.Enabled = false;
+            removeButton.Enabled = false;
+            LoadCommand_(new Command(new string[] {
+                "0000", "0000", "0000", "0010", "0001", "0111", "0000", "0000", "0000", "0000",
+                //"1111", "1111", "1111", "0101", "1100", "1001", "1000", "1111", "1111", "1111",
+            }));
+        }
 
         private void UpdateLabels_()
         {
@@ -269,10 +284,7 @@ namespace mtemu
                 }
             }
 
-            LoadCommand_(new Command(new string[] {
-                "0000", "0000", "0000", "0010", "0001", "0111", "0000", "0000", "0000", "0000",
-                //"1111", "1111", "1111", "0101", "1100", "1001", "1000", "1111", "1111", "1111",
-            }));
+            Reset_();
         }
 
         private void CommandListSelectedIndexChanged(object sender, EventArgs e)
@@ -397,17 +409,13 @@ namespace mtemu
 
         private void NewMenuItemClick_(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "It will be soon...",
-                "Ooops!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
+            BeforeCloseProgram_();
+            Reset_();
         }
 
         private void OpenMenuItemClick_(object sender, EventArgs e)
         {
+            BeforeCloseProgram_();
             MessageBox.Show(
                 "It will be soon...",
                 "Ooops!",
@@ -419,30 +427,12 @@ namespace mtemu
 
         private void SaveMenuItemClick_(object sender, EventArgs e)
         {
-            DialogResult saveRes = MessageBox.Show(
-                "Здесь должно быть сохранение",
-                "Сохранение",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
-            if (saveRes == DialogResult.OK) {
-                isProgramSaved_ = true;
-            }
+            SaveDialog_();
         }
 
         private void SaveAsMenuItemClick_(object sender, EventArgs e)
         {
-            DialogResult saveRes = MessageBox.Show(
-                "Здесь должно быть сохранение",
-                "Сохранение",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
-            if (saveRes == DialogResult.OK) {
-                isProgramSaved_ = true;
-            }
+            SaveDialog_(true);
         }
 
         private void HelpMenuItemClick_(object sender, EventArgs e)
@@ -456,12 +446,23 @@ namespace mtemu
             );
         }
 
-        private void ExitMenuItemClick_(object sender, EventArgs e)
+        private bool SaveDialog_(bool asNew = false)
         {
-            Close();
+            DialogResult saveRes = MessageBox.Show(
+                "Здесь должно быть сохранение",
+                "Сохранение",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1
+            );
+            if (saveRes == DialogResult.OK) {
+                isProgramSaved_ = true;
+                return true;
+            }
+            return false;
         }
 
-        private void MainFormClosing_(object sender, FormClosingEventArgs e)
+        private bool BeforeCloseProgram_()
         {
             if (!isProgramSaved_) {
                 DialogResult res = MessageBox.Show(
@@ -472,22 +473,26 @@ namespace mtemu
                     MessageBoxDefaultButton.Button1
                 );
                 if (res == DialogResult.Yes) {
-                    DialogResult saveRes = MessageBox.Show(
-                        "Здесь должно быть сохранение",
-                        "Сохранение",
-                        MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Information,
-                        MessageBoxDefaultButton.Button1
-                    );
-                    if (saveRes == DialogResult.OK) {
-                        return;
+                    if (SaveDialog_()) {
+                        return true;
                     }
                 }
                 if (res == DialogResult.No) {
-                    return;
+                    return true;
                 }
-                e.Cancel = true;
+                return false;
             }
+            return true;
+        }
+
+        private void ExitMenuItemClick_(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void MainFormClosing_(object sender, FormClosingEventArgs e)
+        {
+            BeforeCloseProgram_();
         }
 
         private bool DefaultTextChanged_(int textIndex)

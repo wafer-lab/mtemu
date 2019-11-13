@@ -297,6 +297,7 @@ namespace mtemu
                 res = res.Replace("D", GetRawValue(WordType.D).ToString());
                 res = res.Replace("+0", "");
                 res = res.Replace("-0", "");
+                res = res.Replace("0+", "");
                 res = res.Replace("-1+1", "");
 
                 res += "; M1=" + (GetFlag(FlagType.M1) ? "1" : "0");
