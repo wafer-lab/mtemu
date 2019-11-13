@@ -234,20 +234,6 @@ namespace mtemu
                 WordType.Device, new string[][] {
                     new string[] {"","0000","GPIO0"},
                     new string[] {"","0001","GPIO1"},
-                    new string[] {"","0010","GPIO2"},
-                    new string[] {"","0011","GPIO3"},
-                    new string[] {"","0100","UART0"},
-                    new string[] {"","0101","UART1"},
-                    new string[] {"","0110","SPI0"},
-                    new string[] {"","0111","SPI1"},
-                    new string[] {"","1000","I2C0"},
-                    new string[] {"","1001","I2C1"},
-                    new string[] {"","1010","TIM0"},
-                    new string[] {"","1011",""},
-                    new string[] {"","1100",""},
-                    new string[] {"","1101",""},
-                    new string[] {"","1110",""},
-                    new string[] {"","1111",""},
                 }
             },
         };
@@ -278,7 +264,13 @@ namespace mtemu
 
         public string GetName(int index)
         {
-            string res = "#" + index + "; ";
+            string res = "#";
+            string number = index.ToString();
+            for (int i = 0; i < 4 - number.Length; ++i) {
+                res += "0";
+            }
+            res += number + "; ";
+
             switch (GetCommandType()) {
             case CommandType.MtCommand:
                 if (GetRawValue_(WordType.I68) == 1) {
@@ -306,8 +298,8 @@ namespace mtemu
                 res = res.Replace("-0", "");
                 res = res.Replace("-1+1", "");
 
-                res += "; M=" + (GetFlag(FlagType.M1) ? "1" : "0") 
-                    + (GetFlag(FlagType.M0) ? "1" : "0");
+                res += "; M1=" + (GetFlag(FlagType.M1) ? "1" : "0");
+                res += "; M0=" + (GetFlag(FlagType.M0) ? "1" : "0");
                 break;
             default:
                 res += String.Join(" ", words_);
@@ -407,6 +399,12 @@ namespace mtemu
                 else {
                     return -1;
                 }
+            }
+            else if (type == WordType.Device) {
+                return raw % 2;
+            }
+            else if (type == WordType.PS) {
+                return raw % 2;
             }
             else {
                 return raw;

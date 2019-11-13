@@ -57,7 +57,7 @@ namespace mtemu
         {
             switch (currentCommand_.GetCommandType()) {
             case CommandType.MtCommand:
-                EnableObject_(bitPanel);
+                EnableObject_(flagPanel);
                 //EnableObject_(m0CheckBox);
                 //EnableObject_(m1CheckBox);
                 EnableObject_(i02ListView);
@@ -70,7 +70,7 @@ namespace mtemu
                 DisableObject_(psListView);
                 break;
             case CommandType.MemoryPointer:
-                DisableObject_(bitPanel);
+                DisableObject_(flagPanel);
                 //DisableObject_(m0CheckBox);
                 //DisableObject_(m1CheckBox);
                 DisableObject_(i02ListView);
@@ -83,7 +83,7 @@ namespace mtemu
                 DisableObject_(psListView);
                 break;
             case CommandType.DevicePointer:
-                DisableObject_(bitPanel);
+                DisableObject_(flagPanel);
                 //DisableObject_(m0CheckBox);
                 //DisableObject_(m1CheckBox);
                 DisableObject_(i02ListView);
@@ -96,7 +96,7 @@ namespace mtemu
                 DisableObject_(psListView);
                 break;
             case CommandType.LoadCommand:
-                DisableObject_(bitPanel);
+                DisableObject_(flagPanel);
                 //DisableObject_(m0CheckBox);
                 //DisableObject_(m1CheckBox);
                 DisableObject_(i02ListView);
@@ -109,7 +109,7 @@ namespace mtemu
                 EnableObject_(psListView);
                 break;
             default:
-                EnableObject_(bitPanel);
+                EnableObject_(flagPanel);
                 //EnableObject_(m0CheckBox);
                 //EnableObject_(m1CheckBox);
                 EnableObject_(i02ListView);

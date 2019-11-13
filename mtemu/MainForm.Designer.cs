@@ -131,25 +131,28 @@
             this.psFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.psCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.psSizeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.bitPanel = new System.Windows.Forms.Panel();
+            this.flagPanel = new System.Windows.Forms.Panel();
+            this.flagLabel = new System.Windows.Forms.Label();
             this.m1CheckBox = new System.Windows.Forms.CheckBox();
             this.m0CheckBox = new System.Windows.Forms.CheckBox();
             this.deviceListView = new System.Windows.Forms.ListView();
             this.deviceFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.deviceCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.deviceNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.debugLabel = new System.Windows.Forms.Label();
+            this.infoLabel = new System.Windows.Forms.Label();
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
             this.memoryPanel.SuspendLayout();
             this.menu.SuspendLayout();
-            this.bitPanel.SuspendLayout();
+            this.flagPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // listLabel
             // 
             this.listLabel.AutoSize = true;
             this.listLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Bold);
-            this.listLabel.Location = new System.Drawing.Point(197, 40);
+            this.listLabel.Location = new System.Drawing.Point(291, 40);
             this.listLabel.Margin = new System.Windows.Forms.Padding(4);
             this.listLabel.Name = "listLabel";
             this.listLabel.Size = new System.Drawing.Size(181, 28);
@@ -214,7 +217,7 @@
             this.outputPanel.Controls.Add(this.yLabel);
             this.outputPanel.Controls.Add(this.yText);
             this.outputPanel.Controls.Add(this.outputLabel);
-            this.outputPanel.Location = new System.Drawing.Point(573, 62);
+            this.outputPanel.Location = new System.Drawing.Point(758, 155);
             this.outputPanel.Margin = new System.Windows.Forms.Padding(4);
             this.outputPanel.Name = "outputPanel";
             this.outputPanel.Padding = new System.Windows.Forms.Padding(8);
@@ -422,7 +425,7 @@
             // outputLabel
             // 
             this.outputLabel.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
-            this.outputLabel.Location = new System.Drawing.Point(96, 7);
+            this.outputLabel.Location = new System.Drawing.Point(85, 7);
             this.outputLabel.Margin = new System.Windows.Forms.Padding(4);
             this.outputLabel.Name = "outputLabel";
             this.outputLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -449,13 +452,14 @@
             this.currentPanel.Controls.Add(this.cc1TextLabel);
             this.currentPanel.Controls.Add(this.cc6Text);
             this.currentPanel.Controls.Add(this.cc0TextLabel);
+            this.currentPanel.Controls.Add(this.removeButton);
             this.currentPanel.Controls.Add(this.cc5Text);
             this.currentPanel.Controls.Add(this.saveButton);
             this.currentPanel.Controls.Add(this.cc4Text);
             this.currentPanel.Controls.Add(this.currentLabel);
             this.currentPanel.Controls.Add(this.cc3Text);
             this.currentPanel.Controls.Add(this.cc0Text);
-            this.currentPanel.Location = new System.Drawing.Point(13, 619);
+            this.currentPanel.Location = new System.Drawing.Point(12, 575);
             this.currentPanel.Margin = new System.Windows.Forms.Padding(4);
             this.currentPanel.Name = "currentPanel";
             this.currentPanel.Padding = new System.Windows.Forms.Padding(8);
@@ -701,7 +705,7 @@
             // 
             this.removeButton.Enabled = false;
             this.removeButton.Font = new System.Drawing.Font("Consolas", 10F);
-            this.removeButton.Location = new System.Drawing.Point(12, 40);
+            this.removeButton.Location = new System.Drawing.Point(12, 101);
             this.removeButton.Margin = new System.Windows.Forms.Padding(3, 4, 4, 4);
             this.removeButton.Name = "removeButton";
             this.removeButton.Size = new System.Drawing.Size(120, 30);
@@ -738,7 +742,7 @@
             this.memoryPanel.Controls.Add(this.r2Text);
             this.memoryPanel.Controls.Add(this.r1Text);
             this.memoryPanel.Controls.Add(this.r0Text);
-            this.memoryPanel.Location = new System.Drawing.Point(573, 290);
+            this.memoryPanel.Location = new System.Drawing.Point(758, 399);
             this.memoryPanel.Margin = new System.Windows.Forms.Padding(4);
             this.memoryPanel.Name = "memoryPanel";
             this.memoryPanel.Padding = new System.Windows.Forms.Padding(8);
@@ -1098,14 +1102,14 @@
             // 
             // commandList
             // 
-            this.commandList.Font = new System.Drawing.Font("Consolas", 10F);
+            this.commandList.Font = new System.Drawing.Font("Consolas", 11.5F);
             this.commandList.FormattingEnabled = true;
             this.commandList.IntegralHeight = false;
-            this.commandList.ItemHeight = 20;
-            this.commandList.Location = new System.Drawing.Point(13, 80);
+            this.commandList.ItemHeight = 22;
+            this.commandList.Location = new System.Drawing.Point(13, 78);
             this.commandList.Margin = new System.Windows.Forms.Padding(4);
             this.commandList.Name = "commandList";
-            this.commandList.Size = new System.Drawing.Size(551, 531);
+            this.commandList.Size = new System.Drawing.Size(737, 489);
             this.commandList.TabIndex = 0;
             this.commandList.TabStop = false;
             this.commandList.SelectedIndexChanged += new System.EventHandler(this.CommandListSelectedIndexChanged);
@@ -1113,10 +1117,10 @@
             // stepButton
             // 
             this.stepButton.Font = new System.Drawing.Font("Consolas", 10F);
-            this.stepButton.Location = new System.Drawing.Point(664, 40);
+            this.stepButton.Location = new System.Drawing.Point(844, 78);
             this.stepButton.Margin = new System.Windows.Forms.Padding(4);
             this.stepButton.Name = "stepButton";
-            this.stepButton.Size = new System.Drawing.Size(80, 30);
+            this.stepButton.Size = new System.Drawing.Size(78, 69);
             this.stepButton.TabIndex = 0;
             this.stepButton.TabStop = false;
             this.stepButton.Text = "Шаг";
@@ -1126,10 +1130,10 @@
             // autoButton
             // 
             this.autoButton.Font = new System.Drawing.Font("Consolas", 10F);
-            this.autoButton.Location = new System.Drawing.Point(758, 40);
+            this.autoButton.Location = new System.Drawing.Point(930, 78);
             this.autoButton.Margin = new System.Windows.Forms.Padding(4);
             this.autoButton.Name = "autoButton";
-            this.autoButton.Size = new System.Drawing.Size(80, 30);
+            this.autoButton.Size = new System.Drawing.Size(78, 69);
             this.autoButton.TabIndex = 0;
             this.autoButton.TabStop = false;
             this.autoButton.Text = "Авто";
@@ -1139,10 +1143,10 @@
             // stopButton
             // 
             this.stopButton.Font = new System.Drawing.Font("Consolas", 10F);
-            this.stopButton.Location = new System.Drawing.Point(568, 40);
+            this.stopButton.Location = new System.Drawing.Point(758, 78);
             this.stopButton.Margin = new System.Windows.Forms.Padding(4);
             this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(80, 30);
+            this.stopButton.Size = new System.Drawing.Size(78, 69);
             this.stopButton.TabIndex = 0;
             this.stopButton.TabStop = false;
             this.stopButton.Text = "Стоп";
@@ -1159,7 +1163,7 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(1714, 28);
+            this.menu.Size = new System.Drawing.Size(1537, 28);
             this.menu.TabIndex = 0;
             this.menu.Text = "menu";
             // 
@@ -1230,7 +1234,7 @@
             this.i35ListView.FullRowSelect = true;
             this.i35ListView.GridLines = true;
             this.i35ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.i35ListView.Location = new System.Drawing.Point(998, 39);
+            this.i35ListView.Location = new System.Drawing.Point(1152, 78);
             this.i35ListView.Margin = new System.Windows.Forms.Padding(4);
             this.i35ListView.MultiSelect = false;
             this.i35ListView.Name = "i35ListView";
@@ -1280,7 +1284,7 @@
             this.caListView.FullRowSelect = true;
             this.caListView.GridLines = true;
             this.caListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.caListView.Location = new System.Drawing.Point(862, 40);
+            this.caListView.Location = new System.Drawing.Point(1016, 78);
             this.caListView.Margin = new System.Windows.Forms.Padding(4);
             this.caListView.MultiSelect = false;
             this.caListView.Name = "caListView";
@@ -1325,7 +1329,7 @@
             this.i02ListView.FullRowSelect = true;
             this.i02ListView.GridLines = true;
             this.i02ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.i02ListView.Location = new System.Drawing.Point(862, 460);
+            this.i02ListView.Location = new System.Drawing.Point(1016, 498);
             this.i02ListView.Margin = new System.Windows.Forms.Padding(4);
             this.i02ListView.MultiSelect = false;
             this.i02ListView.Name = "i02ListView";
@@ -1376,7 +1380,7 @@
             this.i68ListView.FullRowSelect = true;
             this.i68ListView.GridLines = true;
             this.i68ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.i68ListView.Location = new System.Drawing.Point(1120, 460);
+            this.i68ListView.Location = new System.Drawing.Point(1274, 498);
             this.i68ListView.Margin = new System.Windows.Forms.Padding(4);
             this.i68ListView.MultiSelect = false;
             this.i68ListView.Name = "i68ListView";
@@ -1419,7 +1423,7 @@
             this.ptListView.FullRowSelect = true;
             this.ptListView.GridLines = true;
             this.ptListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ptListView.Location = new System.Drawing.Point(1328, 39);
+            this.ptListView.Location = new System.Drawing.Point(1328, 78);
             this.ptListView.Margin = new System.Windows.Forms.Padding(4);
             this.ptListView.MultiSelect = false;
             this.ptListView.Name = "ptListView";
@@ -1463,7 +1467,7 @@
             this.psListView.FullRowSelect = true;
             this.psListView.GridLines = true;
             this.psListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.psListView.Location = new System.Drawing.Point(1328, 174);
+            this.psListView.Location = new System.Drawing.Point(1328, 301);
             this.psListView.Margin = new System.Windows.Forms.Padding(4);
             this.psListView.MultiSelect = false;
             this.psListView.Name = "psListView";
@@ -1491,23 +1495,36 @@
             this.psSizeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.psSizeColumn.Width = 115;
             // 
-            // bitPanel
+            // flagPanel
             // 
-            this.bitPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.bitPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bitPanel.Controls.Add(this.m1CheckBox);
-            this.bitPanel.Controls.Add(this.m0CheckBox);
-            this.bitPanel.Location = new System.Drawing.Point(1328, 262);
-            this.bitPanel.Margin = new System.Windows.Forms.Padding(4);
-            this.bitPanel.Name = "bitPanel";
-            this.bitPanel.Padding = new System.Windows.Forms.Padding(8);
-            this.bitPanel.Size = new System.Drawing.Size(196, 82);
-            this.bitPanel.TabIndex = 6;
+            this.flagPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.flagPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flagPanel.Controls.Add(this.flagLabel);
+            this.flagPanel.Controls.Add(this.m1CheckBox);
+            this.flagPanel.Controls.Add(this.m0CheckBox);
+            this.flagPanel.Location = new System.Drawing.Point(1328, 389);
+            this.flagPanel.Margin = new System.Windows.Forms.Padding(4);
+            this.flagPanel.Name = "flagPanel";
+            this.flagPanel.Padding = new System.Windows.Forms.Padding(8);
+            this.flagPanel.Size = new System.Drawing.Size(196, 101);
+            this.flagPanel.TabIndex = 6;
+            // 
+            // flagLabel
+            // 
+            this.flagLabel.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
+            this.flagLabel.Location = new System.Drawing.Point(60, 12);
+            this.flagLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.flagLabel.Name = "flagLabel";
+            this.flagLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.flagLabel.Size = new System.Drawing.Size(76, 23);
+            this.flagLabel.TabIndex = 1;
+            this.flagLabel.Text = "Флаги";
+            this.flagLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // m1CheckBox
             // 
             this.m1CheckBox.AutoSize = true;
-            this.m1CheckBox.Location = new System.Drawing.Point(12, 44);
+            this.m1CheckBox.Location = new System.Drawing.Point(117, 53);
             this.m1CheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.m1CheckBox.Name = "m1CheckBox";
             this.m1CheckBox.Size = new System.Drawing.Size(49, 24);
@@ -1520,7 +1537,7 @@
             // m0CheckBox
             // 
             this.m0CheckBox.AutoSize = true;
-            this.m0CheckBox.Location = new System.Drawing.Point(12, 12);
+            this.m0CheckBox.Location = new System.Drawing.Point(30, 53);
             this.m0CheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.m0CheckBox.Name = "m0CheckBox";
             this.m0CheckBox.Size = new System.Drawing.Size(49, 24);
@@ -1542,12 +1559,12 @@
             this.deviceListView.FullRowSelect = true;
             this.deviceListView.GridLines = true;
             this.deviceListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.deviceListView.Location = new System.Drawing.Point(1174, 39);
+            this.deviceListView.Location = new System.Drawing.Point(1328, 213);
             this.deviceListView.Margin = new System.Windows.Forms.Padding(4);
             this.deviceListView.MultiSelect = false;
             this.deviceListView.Name = "deviceListView";
             this.deviceListView.Scrollable = false;
-            this.deviceListView.Size = new System.Drawing.Size(146, 412);
+            this.deviceListView.Size = new System.Drawing.Size(196, 80);
             this.deviceListView.TabIndex = 0;
             this.deviceListView.TabStop = false;
             this.deviceListView.UseCompatibleStateImageBehavior = false;
@@ -1572,16 +1589,40 @@
             this.deviceNameColumn.DisplayIndex = 1;
             this.deviceNameColumn.Text = "Интерфейс";
             this.deviceNameColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.deviceNameColumn.Width = 75;
+            this.deviceNameColumn.Width = 115;
+            // 
+            // debugLabel
+            // 
+            this.debugLabel.AutoSize = true;
+            this.debugLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Bold);
+            this.debugLabel.Location = new System.Drawing.Point(832, 40);
+            this.debugLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.debugLabel.Name = "debugLabel";
+            this.debugLabel.Size = new System.Drawing.Size(103, 28);
+            this.debugLabel.TabIndex = 7;
+            this.debugLabel.Text = "Отладка";
+            // 
+            // infoLabel
+            // 
+            this.infoLabel.AutoSize = true;
+            this.infoLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Bold);
+            this.infoLabel.Location = new System.Drawing.Point(1218, 40);
+            this.infoLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(103, 28);
+            this.infoLabel.TabIndex = 8;
+            this.infoLabel.Text = "Справка";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1714, 779);
+            this.ClientSize = new System.Drawing.Size(1537, 733);
+            this.Controls.Add(this.infoLabel);
+            this.Controls.Add(this.debugLabel);
             this.Controls.Add(this.deviceListView);
-            this.Controls.Add(this.bitPanel);
+            this.Controls.Add(this.flagPanel);
             this.Controls.Add(this.psListView);
             this.Controls.Add(this.ptListView);
             this.Controls.Add(this.i68ListView);
@@ -1593,7 +1634,6 @@
             this.Controls.Add(this.stepButton);
             this.Controls.Add(this.commandList);
             this.Controls.Add(this.memoryPanel);
-            this.Controls.Add(this.removeButton);
             this.Controls.Add(this.currentPanel);
             this.Controls.Add(this.outputPanel);
             this.Controls.Add(this.listLabel);
@@ -1615,8 +1655,8 @@
             this.memoryPanel.PerformLayout();
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
-            this.bitPanel.ResumeLayout(false);
-            this.bitPanel.PerformLayout();
+            this.flagPanel.ResumeLayout(false);
+            this.flagPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1737,7 +1777,7 @@
         private System.Windows.Forms.ColumnHeader psFirstColumn;
         private System.Windows.Forms.ColumnHeader psCodeColumn;
         private System.Windows.Forms.ColumnHeader psSizeColumn;
-        private System.Windows.Forms.Panel bitPanel;
+        private System.Windows.Forms.Panel flagPanel;
         private System.Windows.Forms.CheckBox m1CheckBox;
         private System.Windows.Forms.CheckBox m0CheckBox;
         private System.Windows.Forms.TextBox cc2Text;
@@ -1746,6 +1786,9 @@
         private System.Windows.Forms.ColumnHeader deviceFirstColumn;
         private System.Windows.Forms.ColumnHeader deviceCodeColumn;
         private System.Windows.Forms.ColumnHeader deviceNameColumn;
+        private System.Windows.Forms.Label flagLabel;
+        private System.Windows.Forms.Label debugLabel;
+        private System.Windows.Forms.Label infoLabel;
     }
 }
 
