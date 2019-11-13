@@ -45,8 +45,6 @@
             this.f3Text = new System.Windows.Forms.TextBox();
             this.c4Text = new System.Windows.Forms.TextBox();
             this.ovrText = new System.Windows.Forms.TextBox();
-            this.yLabel = new System.Windows.Forms.Label();
-            this.yText = new System.Windows.Forms.TextBox();
             this.outputLabel = new System.Windows.Forms.Label();
             this.currentPanel = new System.Windows.Forms.Panel();
             this.cc2Text = new System.Windows.Forms.TextBox();
@@ -64,10 +62,10 @@
             this.cc1TextLabel = new System.Windows.Forms.Label();
             this.cc6Text = new System.Windows.Forms.TextBox();
             this.cc0TextLabel = new System.Windows.Forms.Label();
+            this.removeButton = new System.Windows.Forms.Button();
             this.cc5Text = new System.Windows.Forms.TextBox();
             this.cc4Text = new System.Windows.Forms.TextBox();
             this.cc3Text = new System.Windows.Forms.TextBox();
-            this.removeButton = new System.Windows.Forms.Button();
             this.memoryPanel = new System.Windows.Forms.Panel();
             this.r15Text = new System.Windows.Forms.TextBox();
             this.r14Text = new System.Windows.Forms.TextBox();
@@ -77,8 +75,8 @@
             this.r10Text = new System.Windows.Forms.TextBox();
             this.r9Text = new System.Windows.Forms.TextBox();
             this.r8Text = new System.Windows.Forms.TextBox();
-            this.pqLabel = new System.Windows.Forms.Label();
-            this.pqText = new System.Windows.Forms.TextBox();
+            this.rqLabel = new System.Windows.Forms.Label();
+            this.rqText = new System.Windows.Forms.TextBox();
             this.stekLabel = new System.Windows.Forms.Label();
             this.s3Text = new System.Windows.Forms.TextBox();
             this.s2Text = new System.Windows.Forms.TextBox();
@@ -96,7 +94,7 @@
             this.commandList = new System.Windows.Forms.ListBox();
             this.stepButton = new System.Windows.Forms.Button();
             this.autoButton = new System.Windows.Forms.Button();
-            this.stopButton = new System.Windows.Forms.Button();
+            this.resetButton = new System.Windows.Forms.Button();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -180,11 +178,12 @@
             this.cc0Text.MaxLength = 4;
             this.cc0Text.Name = "cc0Text";
             this.cc0Text.Size = new System.Drawing.Size(50, 27);
-            this.cc0Text.TabIndex = 1;
+            this.cc0Text.TabIndex = 10;
             this.cc0Text.Text = "0000";
             this.cc0Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.cc0Text.WordWrap = false;
             this.cc0Text.TextChanged += new System.EventHandler(this.Cc0TextChanged_);
+            this.cc0Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
             this.cc0Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc0TextKeyDown_);
             // 
             // currentLabel
@@ -214,8 +213,6 @@
             this.outputPanel.Controls.Add(this.f3Text);
             this.outputPanel.Controls.Add(this.c4Text);
             this.outputPanel.Controls.Add(this.ovrText);
-            this.outputPanel.Controls.Add(this.yLabel);
-            this.outputPanel.Controls.Add(this.yText);
             this.outputPanel.Controls.Add(this.outputLabel);
             this.outputPanel.Location = new System.Drawing.Point(758, 155);
             this.outputPanel.Margin = new System.Windows.Forms.Padding(4);
@@ -227,7 +224,7 @@
             // spLabel
             // 
             this.spLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.spLabel.Location = new System.Drawing.Point(168, 111);
+            this.spLabel.Location = new System.Drawing.Point(148, 111);
             this.spLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
             this.spLabel.Name = "spLabel";
             this.spLabel.Size = new System.Drawing.Size(50, 19);
@@ -237,8 +234,9 @@
             // 
             // spText
             // 
+            this.spText.BackColor = System.Drawing.SystemColors.Control;
             this.spText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.spText.Location = new System.Drawing.Point(168, 134);
+            this.spText.Location = new System.Drawing.Point(148, 134);
             this.spText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.spText.MaxLength = 4;
             this.spText.Name = "spText";
@@ -246,7 +244,7 @@
             this.spText.Size = new System.Drawing.Size(50, 27);
             this.spText.TabIndex = 0;
             this.spText.TabStop = false;
-            this.spText.Text = "????";
+            this.spText.Text = "0000";
             this.spText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.spText.WordWrap = false;
             // 
@@ -272,14 +270,14 @@
             this.pcText.Size = new System.Drawing.Size(118, 27);
             this.pcText.TabIndex = 0;
             this.pcText.TabStop = false;
-            this.pcText.Text = "123456789012";
+            this.pcText.Text = "000000000000";
             this.pcText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.pcText.WordWrap = false;
             // 
             // fLabel
             // 
             this.fLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.fLabel.Location = new System.Drawing.Point(99, 111);
+            this.fLabel.Location = new System.Drawing.Point(50, 111);
             this.fLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
             this.fLabel.Name = "fLabel";
             this.fLabel.Size = new System.Drawing.Size(50, 19);
@@ -289,8 +287,9 @@
             // 
             // fText
             // 
+            this.fText.BackColor = System.Drawing.SystemColors.Control;
             this.fText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.fText.Location = new System.Drawing.Point(99, 134);
+            this.fText.Location = new System.Drawing.Point(50, 134);
             this.fText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.fText.MaxLength = 4;
             this.fText.Name = "fText";
@@ -298,7 +297,7 @@
             this.fText.Size = new System.Drawing.Size(50, 27);
             this.fText.TabIndex = 0;
             this.fText.TabStop = false;
-            this.fText.Text = "????";
+            this.fText.Text = "0000";
             this.fText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.fText.WordWrap = false;
             // 
@@ -313,7 +312,7 @@
             this.pText.Size = new System.Drawing.Size(50, 27);
             this.pText.TabIndex = 0;
             this.pText.TabStop = false;
-            this.pText.Text = "/P=?";
+            this.pText.Text = "/P=0";
             this.pText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.pText.WordWrap = false;
             // 
@@ -328,7 +327,7 @@
             this.gText.Size = new System.Drawing.Size(50, 27);
             this.gText.TabIndex = 0;
             this.gText.TabStop = false;
-            this.gText.Text = "/G=?";
+            this.gText.Text = "/G=0";
             this.gText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.gText.WordWrap = false;
             // 
@@ -358,15 +357,15 @@
             this.f3Text.Size = new System.Drawing.Size(50, 27);
             this.f3Text.TabIndex = 0;
             this.f3Text.TabStop = false;
-            this.f3Text.Text = "F3=?";
+            this.f3Text.Text = "F3=0";
             this.f3Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.f3Text.WordWrap = false;
             // 
             // c4Text
             // 
-            this.c4Text.BackColor = System.Drawing.Color.Crimson;
+            this.c4Text.BackColor = System.Drawing.SystemColors.Control;
             this.c4Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.c4Text.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.c4Text.ForeColor = System.Drawing.SystemColors.WindowText;
             this.c4Text.Location = new System.Drawing.Point(80, 41);
             this.c4Text.Margin = new System.Windows.Forms.Padding(4);
             this.c4Text.MaxLength = 4;
@@ -375,15 +374,15 @@
             this.c4Text.Size = new System.Drawing.Size(50, 27);
             this.c4Text.TabIndex = 0;
             this.c4Text.TabStop = false;
-            this.c4Text.Text = "C4=?";
+            this.c4Text.Text = "C4=0";
             this.c4Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.c4Text.WordWrap = false;
             // 
             // ovrText
             // 
-            this.ovrText.BackColor = System.Drawing.Color.ForestGreen;
+            this.ovrText.BackColor = System.Drawing.SystemColors.Control;
             this.ovrText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.ovrText.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.ovrText.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ovrText.Location = new System.Drawing.Point(12, 41);
             this.ovrText.Margin = new System.Windows.Forms.Padding(4);
             this.ovrText.MaxLength = 0;
@@ -392,35 +391,9 @@
             this.ovrText.Size = new System.Drawing.Size(60, 27);
             this.ovrText.TabIndex = 0;
             this.ovrText.TabStop = false;
-            this.ovrText.Text = "OVR=?";
+            this.ovrText.Text = "OVR=0";
             this.ovrText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ovrText.WordWrap = false;
-            // 
-            // yLabel
-            // 
-            this.yLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.yLabel.Location = new System.Drawing.Point(30, 111);
-            this.yLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
-            this.yLabel.Name = "yLabel";
-            this.yLabel.Size = new System.Drawing.Size(50, 19);
-            this.yLabel.TabIndex = 0;
-            this.yLabel.Text = "Y";
-            this.yLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // yText
-            // 
-            this.yText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.yText.Location = new System.Drawing.Point(30, 134);
-            this.yText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
-            this.yText.MaxLength = 4;
-            this.yText.Name = "yText";
-            this.yText.ReadOnly = true;
-            this.yText.Size = new System.Drawing.Size(50, 27);
-            this.yText.TabIndex = 0;
-            this.yText.TabStop = false;
-            this.yText.Text = "????";
-            this.yText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.yText.WordWrap = false;
             // 
             // outputLabel
             // 
@@ -474,11 +447,12 @@
             this.cc2Text.MaxLength = 4;
             this.cc2Text.Name = "cc2Text";
             this.cc2Text.Size = new System.Drawing.Size(50, 27);
-            this.cc2Text.TabIndex = 3;
+            this.cc2Text.TabIndex = 8;
             this.cc2Text.Text = "0000";
             this.cc2Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.cc2Text.WordWrap = false;
             this.cc2Text.TextChanged += new System.EventHandler(this.Cc2TextChanged_);
+            this.cc2Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
             this.cc2Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc2TextKeyDown_);
             // 
             // cc1Text
@@ -489,11 +463,12 @@
             this.cc1Text.MaxLength = 4;
             this.cc1Text.Name = "cc1Text";
             this.cc1Text.Size = new System.Drawing.Size(50, 27);
-            this.cc1Text.TabIndex = 2;
+            this.cc1Text.TabIndex = 9;
             this.cc1Text.Text = "0000";
             this.cc1Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.cc1Text.WordWrap = false;
             this.cc1Text.TextChanged += new System.EventHandler(this.Cc1TextChanged_);
+            this.cc1Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
             this.cc1Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc1TextKeyDown_);
             // 
             // addButton
@@ -560,11 +535,12 @@
             this.cc9Text.MaxLength = 4;
             this.cc9Text.Name = "cc9Text";
             this.cc9Text.Size = new System.Drawing.Size(50, 27);
-            this.cc9Text.TabIndex = 10;
+            this.cc9Text.TabIndex = 1;
             this.cc9Text.Text = "0000";
             this.cc9Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.cc9Text.WordWrap = false;
             this.cc9Text.TextChanged += new System.EventHandler(this.Cc9TextChanged_);
+            this.cc9Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
             this.cc9Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc9TextKeyDown_);
             // 
             // cc3TextLabel
@@ -586,11 +562,12 @@
             this.cc8Text.MaxLength = 4;
             this.cc8Text.Name = "cc8Text";
             this.cc8Text.Size = new System.Drawing.Size(50, 27);
-            this.cc8Text.TabIndex = 9;
+            this.cc8Text.TabIndex = 2;
             this.cc8Text.Text = "0000";
             this.cc8Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.cc8Text.WordWrap = false;
             this.cc8Text.TextChanged += new System.EventHandler(this.Cc8TextChanged_);
+            this.cc8Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
             this.cc8Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc8TextKeyDown_);
             // 
             // cc2TextLabel
@@ -612,11 +589,12 @@
             this.cc7Text.MaxLength = 4;
             this.cc7Text.Name = "cc7Text";
             this.cc7Text.Size = new System.Drawing.Size(50, 27);
-            this.cc7Text.TabIndex = 8;
+            this.cc7Text.TabIndex = 3;
             this.cc7Text.Text = "0000";
             this.cc7Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.cc7Text.WordWrap = false;
             this.cc7Text.TextChanged += new System.EventHandler(this.Cc7TextChanged_);
+            this.cc7Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
             this.cc7Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc7TextKeyDown_);
             // 
             // cc1TextLabel
@@ -638,11 +616,12 @@
             this.cc6Text.MaxLength = 4;
             this.cc6Text.Name = "cc6Text";
             this.cc6Text.Size = new System.Drawing.Size(50, 27);
-            this.cc6Text.TabIndex = 7;
+            this.cc6Text.TabIndex = 4;
             this.cc6Text.Text = "0000";
             this.cc6Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.cc6Text.WordWrap = false;
             this.cc6Text.TextChanged += new System.EventHandler(this.Cc6TextChanged_);
+            this.cc6Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
             this.cc6Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc6TextKeyDown_);
             // 
             // cc0TextLabel
@@ -655,51 +634,6 @@
             this.cc0TextLabel.TabIndex = 0;
             this.cc0TextLabel.Text = "Type";
             this.cc0TextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // cc5Text
-            // 
-            this.cc5Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.cc5Text.Location = new System.Drawing.Point(362, 66);
-            this.cc5Text.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
-            this.cc5Text.MaxLength = 4;
-            this.cc5Text.Name = "cc5Text";
-            this.cc5Text.Size = new System.Drawing.Size(50, 27);
-            this.cc5Text.TabIndex = 6;
-            this.cc5Text.Text = "0111";
-            this.cc5Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.cc5Text.WordWrap = false;
-            this.cc5Text.TextChanged += new System.EventHandler(this.Cc5TextChanged_);
-            this.cc5Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc5TextKeyDown_);
-            // 
-            // cc4Text
-            // 
-            this.cc4Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.cc4Text.Location = new System.Drawing.Point(284, 66);
-            this.cc4Text.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
-            this.cc4Text.MaxLength = 4;
-            this.cc4Text.Name = "cc4Text";
-            this.cc4Text.Size = new System.Drawing.Size(50, 27);
-            this.cc4Text.TabIndex = 5;
-            this.cc4Text.Text = "0001";
-            this.cc4Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.cc4Text.WordWrap = false;
-            this.cc4Text.TextChanged += new System.EventHandler(this.Cc4TextChanged_);
-            this.cc4Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc4TextKeyDown_);
-            // 
-            // cc3Text
-            // 
-            this.cc3Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.cc3Text.Location = new System.Drawing.Point(206, 66);
-            this.cc3Text.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
-            this.cc3Text.MaxLength = 4;
-            this.cc3Text.Name = "cc3Text";
-            this.cc3Text.Size = new System.Drawing.Size(50, 27);
-            this.cc3Text.TabIndex = 4;
-            this.cc3Text.Text = "0010";
-            this.cc3Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.cc3Text.WordWrap = false;
-            this.cc3Text.TextChanged += new System.EventHandler(this.Cc3TextChanged_);
-            this.cc3Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc3TextKeyDown_);
             // 
             // removeButton
             // 
@@ -715,6 +649,54 @@
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.RemoveButtonClick_);
             // 
+            // cc5Text
+            // 
+            this.cc5Text.Font = new System.Drawing.Font("Consolas", 10F);
+            this.cc5Text.Location = new System.Drawing.Point(362, 66);
+            this.cc5Text.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
+            this.cc5Text.MaxLength = 4;
+            this.cc5Text.Name = "cc5Text";
+            this.cc5Text.Size = new System.Drawing.Size(50, 27);
+            this.cc5Text.TabIndex = 5;
+            this.cc5Text.Text = "0111";
+            this.cc5Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.cc5Text.WordWrap = false;
+            this.cc5Text.TextChanged += new System.EventHandler(this.Cc5TextChanged_);
+            this.cc5Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
+            this.cc5Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc5TextKeyDown_);
+            // 
+            // cc4Text
+            // 
+            this.cc4Text.Font = new System.Drawing.Font("Consolas", 10F);
+            this.cc4Text.Location = new System.Drawing.Point(284, 66);
+            this.cc4Text.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
+            this.cc4Text.MaxLength = 4;
+            this.cc4Text.Name = "cc4Text";
+            this.cc4Text.Size = new System.Drawing.Size(50, 27);
+            this.cc4Text.TabIndex = 6;
+            this.cc4Text.Text = "0001";
+            this.cc4Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.cc4Text.WordWrap = false;
+            this.cc4Text.TextChanged += new System.EventHandler(this.Cc4TextChanged_);
+            this.cc4Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
+            this.cc4Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc4TextKeyDown_);
+            // 
+            // cc3Text
+            // 
+            this.cc3Text.Font = new System.Drawing.Font("Consolas", 10F);
+            this.cc3Text.Location = new System.Drawing.Point(206, 66);
+            this.cc3Text.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
+            this.cc3Text.MaxLength = 4;
+            this.cc3Text.Name = "cc3Text";
+            this.cc3Text.Size = new System.Drawing.Size(50, 27);
+            this.cc3Text.TabIndex = 7;
+            this.cc3Text.Text = "0010";
+            this.cc3Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.cc3Text.WordWrap = false;
+            this.cc3Text.TextChanged += new System.EventHandler(this.Cc3TextChanged_);
+            this.cc3Text.Enter += new System.EventHandler(this.DefaultTextEnter_);
+            this.cc3Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cc3TextKeyDown_);
+            // 
             // memoryPanel
             // 
             this.memoryPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -726,8 +708,8 @@
             this.memoryPanel.Controls.Add(this.r10Text);
             this.memoryPanel.Controls.Add(this.r9Text);
             this.memoryPanel.Controls.Add(this.r8Text);
-            this.memoryPanel.Controls.Add(this.pqLabel);
-            this.memoryPanel.Controls.Add(this.pqText);
+            this.memoryPanel.Controls.Add(this.rqLabel);
+            this.memoryPanel.Controls.Add(this.rqText);
             this.memoryPanel.Controls.Add(this.stekLabel);
             this.memoryPanel.Controls.Add(this.s3Text);
             this.memoryPanel.Controls.Add(this.s2Text);
@@ -760,7 +742,7 @@
             this.r15Text.Size = new System.Drawing.Size(50, 27);
             this.r15Text.TabIndex = 0;
             this.r15Text.TabStop = false;
-            this.r15Text.Text = "????";
+            this.r15Text.Text = "0000";
             this.r15Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r15Text.WordWrap = false;
             // 
@@ -775,7 +757,7 @@
             this.r14Text.Size = new System.Drawing.Size(50, 27);
             this.r14Text.TabIndex = 0;
             this.r14Text.TabStop = false;
-            this.r14Text.Text = "????";
+            this.r14Text.Text = "0000";
             this.r14Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r14Text.WordWrap = false;
             // 
@@ -790,7 +772,7 @@
             this.r13Text.Size = new System.Drawing.Size(50, 27);
             this.r13Text.TabIndex = 0;
             this.r13Text.TabStop = false;
-            this.r13Text.Text = "????";
+            this.r13Text.Text = "0000";
             this.r13Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r13Text.WordWrap = false;
             // 
@@ -805,7 +787,7 @@
             this.r12Text.Size = new System.Drawing.Size(50, 27);
             this.r12Text.TabIndex = 0;
             this.r12Text.TabStop = false;
-            this.r12Text.Text = "????";
+            this.r12Text.Text = "0000";
             this.r12Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r12Text.WordWrap = false;
             // 
@@ -820,7 +802,7 @@
             this.r11Text.Size = new System.Drawing.Size(50, 27);
             this.r11Text.TabIndex = 0;
             this.r11Text.TabStop = false;
-            this.r11Text.Text = "????";
+            this.r11Text.Text = "0000";
             this.r11Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r11Text.WordWrap = false;
             // 
@@ -835,7 +817,7 @@
             this.r10Text.Size = new System.Drawing.Size(50, 27);
             this.r10Text.TabIndex = 0;
             this.r10Text.TabStop = false;
-            this.r10Text.Text = "????";
+            this.r10Text.Text = "0000";
             this.r10Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r10Text.WordWrap = false;
             // 
@@ -850,7 +832,7 @@
             this.r9Text.Size = new System.Drawing.Size(50, 27);
             this.r9Text.TabIndex = 0;
             this.r9Text.TabStop = false;
-            this.r9Text.Text = "????";
+            this.r9Text.Text = "0000";
             this.r9Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r9Text.WordWrap = false;
             // 
@@ -865,36 +847,36 @@
             this.r8Text.Size = new System.Drawing.Size(50, 27);
             this.r8Text.TabIndex = 0;
             this.r8Text.TabStop = false;
-            this.r8Text.Text = "????";
+            this.r8Text.Text = "0000";
             this.r8Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r8Text.WordWrap = false;
             // 
-            // pqLabel
+            // rqLabel
             // 
-            this.pqLabel.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
-            this.pqLabel.Location = new System.Drawing.Point(95, 78);
-            this.pqLabel.Margin = new System.Windows.Forms.Padding(4);
-            this.pqLabel.Name = "pqLabel";
-            this.pqLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.pqLabel.Size = new System.Drawing.Size(60, 23);
-            this.pqLabel.TabIndex = 0;
-            this.pqLabel.Text = "PQ";
-            this.pqLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rqLabel.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
+            this.rqLabel.Location = new System.Drawing.Point(95, 78);
+            this.rqLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.rqLabel.Name = "rqLabel";
+            this.rqLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.rqLabel.Size = new System.Drawing.Size(60, 23);
+            this.rqLabel.TabIndex = 0;
+            this.rqLabel.Text = "PQ";
+            this.rqLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pqText
+            // rqText
             // 
-            this.pqText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.pqText.Location = new System.Drawing.Point(100, 109);
-            this.pqText.Margin = new System.Windows.Forms.Padding(4);
-            this.pqText.MaxLength = 4;
-            this.pqText.Name = "pqText";
-            this.pqText.ReadOnly = true;
-            this.pqText.Size = new System.Drawing.Size(50, 27);
-            this.pqText.TabIndex = 0;
-            this.pqText.TabStop = false;
-            this.pqText.Text = "????";
-            this.pqText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.pqText.WordWrap = false;
+            this.rqText.Font = new System.Drawing.Font("Consolas", 10F);
+            this.rqText.Location = new System.Drawing.Point(100, 109);
+            this.rqText.Margin = new System.Windows.Forms.Padding(4);
+            this.rqText.MaxLength = 4;
+            this.rqText.Name = "rqText";
+            this.rqText.ReadOnly = true;
+            this.rqText.Size = new System.Drawing.Size(50, 27);
+            this.rqText.TabIndex = 0;
+            this.rqText.TabStop = false;
+            this.rqText.Text = "0000";
+            this.rqText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rqText.WordWrap = false;
             // 
             // stekLabel
             // 
@@ -919,7 +901,7 @@
             this.s3Text.Size = new System.Drawing.Size(50, 27);
             this.s3Text.TabIndex = 0;
             this.s3Text.TabStop = false;
-            this.s3Text.Text = "????";
+            this.s3Text.Text = "0000";
             this.s3Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.s3Text.WordWrap = false;
             // 
@@ -934,7 +916,7 @@
             this.s2Text.Size = new System.Drawing.Size(50, 27);
             this.s2Text.TabIndex = 0;
             this.s2Text.TabStop = false;
-            this.s2Text.Text = "????";
+            this.s2Text.Text = "0000";
             this.s2Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.s2Text.WordWrap = false;
             // 
@@ -949,7 +931,7 @@
             this.s1Text.Size = new System.Drawing.Size(50, 27);
             this.s1Text.TabIndex = 0;
             this.s1Text.TabStop = false;
-            this.s1Text.Text = "????";
+            this.s1Text.Text = "0000";
             this.s1Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.s1Text.WordWrap = false;
             // 
@@ -964,7 +946,7 @@
             this.s0Text.Size = new System.Drawing.Size(50, 27);
             this.s0Text.TabIndex = 0;
             this.s0Text.TabStop = false;
-            this.s0Text.Text = "????";
+            this.s0Text.Text = "0000";
             this.s0Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.s0Text.WordWrap = false;
             // 
@@ -991,7 +973,7 @@
             this.r7Text.Size = new System.Drawing.Size(50, 27);
             this.r7Text.TabIndex = 0;
             this.r7Text.TabStop = false;
-            this.r7Text.Text = "????";
+            this.r7Text.Text = "0000";
             this.r7Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r7Text.WordWrap = false;
             // 
@@ -1006,7 +988,7 @@
             this.r6Text.Size = new System.Drawing.Size(50, 27);
             this.r6Text.TabIndex = 0;
             this.r6Text.TabStop = false;
-            this.r6Text.Text = "????";
+            this.r6Text.Text = "0000";
             this.r6Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r6Text.WordWrap = false;
             // 
@@ -1021,7 +1003,7 @@
             this.r5Text.Size = new System.Drawing.Size(50, 27);
             this.r5Text.TabIndex = 0;
             this.r5Text.TabStop = false;
-            this.r5Text.Text = "????";
+            this.r5Text.Text = "0000";
             this.r5Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r5Text.WordWrap = false;
             // 
@@ -1036,7 +1018,7 @@
             this.r4Text.Size = new System.Drawing.Size(50, 27);
             this.r4Text.TabIndex = 0;
             this.r4Text.TabStop = false;
-            this.r4Text.Text = "????";
+            this.r4Text.Text = "0000";
             this.r4Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r4Text.WordWrap = false;
             // 
@@ -1051,7 +1033,7 @@
             this.r3Text.Size = new System.Drawing.Size(50, 27);
             this.r3Text.TabIndex = 0;
             this.r3Text.TabStop = false;
-            this.r3Text.Text = "????";
+            this.r3Text.Text = "0000";
             this.r3Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r3Text.WordWrap = false;
             // 
@@ -1066,7 +1048,7 @@
             this.r2Text.Size = new System.Drawing.Size(50, 27);
             this.r2Text.TabIndex = 0;
             this.r2Text.TabStop = false;
-            this.r2Text.Text = "????";
+            this.r2Text.Text = "0000";
             this.r2Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r2Text.WordWrap = false;
             // 
@@ -1081,7 +1063,7 @@
             this.r1Text.Size = new System.Drawing.Size(50, 27);
             this.r1Text.TabIndex = 0;
             this.r1Text.TabStop = false;
-            this.r1Text.Text = "????";
+            this.r1Text.Text = "0000";
             this.r1Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r1Text.WordWrap = false;
             // 
@@ -1096,7 +1078,7 @@
             this.r0Text.Size = new System.Drawing.Size(50, 27);
             this.r0Text.TabIndex = 0;
             this.r0Text.TabStop = false;
-            this.r0Text.Text = "????";
+            this.r0Text.Text = "0000";
             this.r0Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r0Text.WordWrap = false;
             // 
@@ -1140,18 +1122,18 @@
             this.autoButton.UseVisualStyleBackColor = true;
             this.autoButton.Click += new System.EventHandler(this.AutoButtonClick_);
             // 
-            // stopButton
+            // resetButton
             // 
-            this.stopButton.Font = new System.Drawing.Font("Consolas", 10F);
-            this.stopButton.Location = new System.Drawing.Point(758, 78);
-            this.stopButton.Margin = new System.Windows.Forms.Padding(4);
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(78, 69);
-            this.stopButton.TabIndex = 0;
-            this.stopButton.TabStop = false;
-            this.stopButton.Text = "Стоп";
-            this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.StopButtonClick_);
+            this.resetButton.Font = new System.Drawing.Font("Consolas", 10F);
+            this.resetButton.Location = new System.Drawing.Point(758, 78);
+            this.resetButton.Margin = new System.Windows.Forms.Padding(4);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(78, 69);
+            this.resetButton.TabIndex = 0;
+            this.resetButton.TabStop = false;
+            this.resetButton.Text = "Сброс";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.ResetButtonClick_);
             // 
             // menu
             // 
@@ -1290,7 +1272,7 @@
             this.caListView.Name = "caListView";
             this.caListView.Scrollable = false;
             this.caListView.Size = new System.Drawing.Size(128, 412);
-            this.caListView.TabIndex = 1;
+            this.caListView.TabIndex = 0;
             this.caListView.TabStop = false;
             this.caListView.UseCompatibleStateImageBehavior = false;
             this.caListView.View = System.Windows.Forms.View.Details;
@@ -1335,7 +1317,7 @@
             this.i02ListView.Name = "i02ListView";
             this.i02ListView.Scrollable = false;
             this.i02ListView.Size = new System.Drawing.Size(250, 222);
-            this.i02ListView.TabIndex = 2;
+            this.i02ListView.TabIndex = 0;
             this.i02ListView.TabStop = false;
             this.i02ListView.UseCompatibleStateImageBehavior = false;
             this.i02ListView.View = System.Windows.Forms.View.Details;
@@ -1386,7 +1368,7 @@
             this.i68ListView.Name = "i68ListView";
             this.i68ListView.Scrollable = false;
             this.i68ListView.Size = new System.Drawing.Size(250, 222);
-            this.i68ListView.TabIndex = 3;
+            this.i68ListView.TabIndex = 0;
             this.i68ListView.TabStop = false;
             this.i68ListView.UseCompatibleStateImageBehavior = false;
             this.i68ListView.View = System.Windows.Forms.View.Details;
@@ -1428,7 +1410,7 @@
             this.ptListView.MultiSelect = false;
             this.ptListView.Name = "ptListView";
             this.ptListView.Size = new System.Drawing.Size(196, 127);
-            this.ptListView.TabIndex = 4;
+            this.ptListView.TabIndex = 0;
             this.ptListView.TabStop = false;
             this.ptListView.UseCompatibleStateImageBehavior = false;
             this.ptListView.View = System.Windows.Forms.View.Details;
@@ -1472,7 +1454,7 @@
             this.psListView.MultiSelect = false;
             this.psListView.Name = "psListView";
             this.psListView.Size = new System.Drawing.Size(196, 80);
-            this.psListView.TabIndex = 5;
+            this.psListView.TabIndex = 0;
             this.psListView.TabStop = false;
             this.psListView.UseCompatibleStateImageBehavior = false;
             this.psListView.View = System.Windows.Forms.View.Details;
@@ -1507,7 +1489,7 @@
             this.flagPanel.Name = "flagPanel";
             this.flagPanel.Padding = new System.Windows.Forms.Padding(8);
             this.flagPanel.Size = new System.Drawing.Size(196, 101);
-            this.flagPanel.TabIndex = 6;
+            this.flagPanel.TabIndex = 0;
             // 
             // flagLabel
             // 
@@ -1517,14 +1499,14 @@
             this.flagLabel.Name = "flagLabel";
             this.flagLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.flagLabel.Size = new System.Drawing.Size(76, 23);
-            this.flagLabel.TabIndex = 1;
+            this.flagLabel.TabIndex = 0;
             this.flagLabel.Text = "Флаги";
             this.flagLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // m1CheckBox
             // 
             this.m1CheckBox.AutoSize = true;
-            this.m1CheckBox.Location = new System.Drawing.Point(117, 53);
+            this.m1CheckBox.Location = new System.Drawing.Point(30, 53);
             this.m1CheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.m1CheckBox.Name = "m1CheckBox";
             this.m1CheckBox.Size = new System.Drawing.Size(49, 24);
@@ -1537,7 +1519,7 @@
             // m0CheckBox
             // 
             this.m0CheckBox.AutoSize = true;
-            this.m0CheckBox.Location = new System.Drawing.Point(30, 53);
+            this.m0CheckBox.Location = new System.Drawing.Point(117, 53);
             this.m0CheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.m0CheckBox.Name = "m0CheckBox";
             this.m0CheckBox.Size = new System.Drawing.Size(49, 24);
@@ -1599,7 +1581,7 @@
             this.debugLabel.Margin = new System.Windows.Forms.Padding(4);
             this.debugLabel.Name = "debugLabel";
             this.debugLabel.Size = new System.Drawing.Size(103, 28);
-            this.debugLabel.TabIndex = 7;
+            this.debugLabel.TabIndex = 0;
             this.debugLabel.Text = "Отладка";
             // 
             // infoLabel
@@ -1610,7 +1592,7 @@
             this.infoLabel.Margin = new System.Windows.Forms.Padding(4);
             this.infoLabel.Name = "infoLabel";
             this.infoLabel.Size = new System.Drawing.Size(103, 28);
-            this.infoLabel.TabIndex = 8;
+            this.infoLabel.TabIndex = 0;
             this.infoLabel.Text = "Справка";
             // 
             // MainForm
@@ -1629,7 +1611,7 @@
             this.Controls.Add(this.i02ListView);
             this.Controls.Add(this.caListView);
             this.Controls.Add(this.i35ListView);
-            this.Controls.Add(this.stopButton);
+            this.Controls.Add(this.resetButton);
             this.Controls.Add(this.autoButton);
             this.Controls.Add(this.stepButton);
             this.Controls.Add(this.commandList);
@@ -1700,9 +1682,6 @@
         private System.Windows.Forms.TextBox zText;
         private System.Windows.Forms.TextBox gText;
         private System.Windows.Forms.TextBox pText;
-
-        private System.Windows.Forms.Label yLabel;
-        private System.Windows.Forms.TextBox yText;
         private System.Windows.Forms.Label fLabel;
         private System.Windows.Forms.TextBox fText;
         private System.Windows.Forms.Label pcLabel;
@@ -1718,8 +1697,8 @@
         private System.Windows.Forms.TextBox s2Text;
         private System.Windows.Forms.TextBox s3Text;
 
-        private System.Windows.Forms.Label pqLabel;
-        private System.Windows.Forms.TextBox pqText;
+        private System.Windows.Forms.Label rqLabel;
+        private System.Windows.Forms.TextBox rqText;
 
         private System.Windows.Forms.Label rLabel;
         private System.Windows.Forms.TextBox r0Text;
@@ -1741,7 +1720,7 @@
 
         private System.Windows.Forms.Button stepButton;
         private System.Windows.Forms.Button autoButton;
-        private System.Windows.Forms.Button stopButton;
+        private System.Windows.Forms.Button resetButton;
 
         private System.Windows.Forms.MenuStrip menu;
         private System.Windows.Forms.ToolStripMenuItem fileMenuItem;

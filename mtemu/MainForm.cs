@@ -16,12 +16,14 @@ namespace mtemu
         private bool isCommandSaved_ = true;
         private int prevSelected_ = -1;
 
-        private MtProgram program_ = new MtProgram();
-        private MtCommand currentCommand_;
+        private Processor program_ = new Processor();
+        private Command currentCommand_;
 
         private Label[] textLabels_;
         private TextBox[] textBoxes_;
         private Dictionary<WordType, ListView> listViewes_;
+        private TextBox[] stackTexts_;
+        private TextBox[] regTexts_;
 
         private void UpdateLabels_()
         {
@@ -34,6 +36,61 @@ namespace mtemu
                     textLabels_[i].Font = new Font("Consolas", 10F - newLabel.Length + 6);
                 }
                 textLabels_[i].Text = newLabel;
+            }
+        }
+
+        private void UpdateCheckboxes_()
+        {
+            m0CheckBox.Checked = currentCommand_.GetFlag(FlagType.M0);
+            m1CheckBox.Checked = currentCommand_.GetFlag(FlagType.M1);
+        }
+
+        private void SetFlag_(TextBox textBox, string prefix, bool value)
+        {
+            textBox.Text = prefix + (value ? "1" : "0");
+            if (value) {
+                textBox.BackColor = System.Drawing.Color.LightGreen;
+            }
+            else {
+                textBox.BackColor = System.Drawing.SystemColors.Control;
+            }
+        }
+
+        private void SetOut_(TextBox textBox, int value, int minLen = 4)
+        {
+            string oldValue = textBox.Text;
+            textBox.Text = Helpers.IntToBinary(value, minLen);
+            if (textBox.Text != oldValue) {
+                textBox.BackColor = System.Drawing.Color.Wheat;
+            }
+            else {
+                textBox.BackColor = System.Drawing.SystemColors.Control;
+            }
+        }
+
+        private void UpdateOutput_()
+        {
+            SetFlag_(ovrText, "OVR=", program_.GetOvr());
+            SetFlag_(c4Text, "C4=", program_.GetC4());
+            SetFlag_(f3Text, "F3=", program_.GetF3());
+            SetFlag_(zText, "Z=", program_.GetZ());
+            SetFlag_(gText, "/G=", program_.GetG());
+            SetFlag_(pText, "/P=", program_.GetP());
+
+            SetOut_(fText, program_.GetF());
+            SetOut_(spText, program_.GetSP());
+            SetOut_(pcText, program_.GetPC(), 12);
+
+            for (int i = 0; i < Processor.GetStackSize(); ++i) {
+                SetOut_(stackTexts_[i], program_.GetStackValue(i));
+            }
+            SetOut_(rqText, program_.GetRegQ());
+            for (int i = 0; i < Processor.GetRegSize(); ++i) {
+                SetOut_(regTexts_[i], program_.GetRegValue(i));
+            }
+
+            if (program_.Count() > 0) {
+                commandList.SelectedIndex = program_.GetPrevPC();
             }
         }
 
@@ -124,11 +181,6 @@ namespace mtemu
             }
         }
 
-        private void UpdateCheckboxes_() {
-            m0CheckBox.Checked = currentCommand_.GetFlag(FlagType.M0);
-            m1CheckBox.Checked = currentCommand_.GetFlag(FlagType.M1);
-        }
-
         private void UpdateCommandHandler_()
         {
             UpdateLabels_();
@@ -142,7 +194,7 @@ namespace mtemu
                 textBoxes_[i].Text = Helpers.IntToBinary(currentCommand_[i], 4);
             }
         }
-        private void LoadCommand_(MtCommand command)
+        private void LoadCommand_(Command command)
         {
             currentCommand_ = command;
             LoadTexts_();
@@ -183,37 +235,43 @@ namespace mtemu
                 { WordType.PS, psListView },
                 { WordType.Device, deviceListView },
             };
+            stackTexts_ = new TextBox[] {
+                s0Text,
+                s1Text,
+                s2Text,
+                s3Text,
+            };
+            regTexts_ = new TextBox[] {
+                r0Text,
+                r1Text,
+                r2Text,
+                r3Text,
+                r4Text,
+                r5Text,
+                r6Text,
+                r7Text,
+                r8Text,
+                r9Text,
+                r10Text,
+                r11Text,
+                r12Text,
+                r13Text,
+                r14Text,
+                r15Text,
+            };
 
             // Init lists with values
             foreach (KeyValuePair<WordType, ListView> listView in listViewes_) {
                 listView.Value.Items.Clear();
-                string[][] lists = MtCommand.GetItems(listView.Key);
+                string[][] lists = Command.GetItems(listView.Key);
                 foreach (string[] list in lists) {
                     listView.Value.Items.Add(new ListViewItem(list));
                 }
             }
 
-            LoadCommand_(new MtCommand(new string[] {
-                //"0000",
-                //"0000",
-                //"0000",
-                //"0010",
-                //"0001",
-                //"0111",
-                //"0000",
-                //"0000",
-                //"0000",
-                //"0000",
-                "1111",
-                "1111",
-                "1111",
-                "0101",
-                "1100",
-                "1001",
-                "1000",
-                "1111",
-                "1111",
-                "1111",
+            LoadCommand_(new Command(new string[] {
+                "0000", "0000", "0000", "0010", "0001", "0111", "0000", "0000", "0000", "0000",
+                //"1111", "1111", "1111", "0101", "1100", "1001", "1000", "1111", "1111", "1111",
             }));
         }
 
@@ -244,8 +302,7 @@ namespace mtemu
                 }
                 prevSelected_ = listBox.SelectedIndex;
 
-                currentCommand_ = new MtCommand(program_[listBox.SelectedIndex]);
-                UpdateCommandHandler_();
+                LoadCommand_(new Command(program_[listBox.SelectedIndex]));
                 isCommandSaved_ = true;
             }
         }
@@ -256,7 +313,7 @@ namespace mtemu
             saveButton.Enabled = true;
             removeButton.Enabled = true;
 
-            program_.AddCommand(new MtCommand(currentCommand_));
+            program_.AddCommand(new Command(currentCommand_));
 
             int number = commandList.Items.Count;
             commandList.Items.Add(currentCommand_.GetName(number));
@@ -270,7 +327,7 @@ namespace mtemu
 
             int number = commandList.SelectedIndex;
             if (number != -1) {
-                program_[number] = new MtCommand(currentCommand_);
+                program_[number] = new Command(currentCommand_);
                 commandList.Items[number] = currentCommand_.GetName(number);
             }
         }
@@ -307,37 +364,35 @@ namespace mtemu
             }
         }
 
-        private void StopButtonClick_(object sender, EventArgs e)
+        private void ResetButtonClick_(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "It will be soon...",
-                "Ooops!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
+            program_.Reset();
+            UpdateOutput_();
+        }
+
+        private void StepProgram_()
+        {
+            program_.ExecOne();
+            UpdateOutput_();
         }
 
         private void StepButtonClick_(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "It will be soon...",
-                "Ooops!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
+            StepProgram_();
         }
 
         private void AutoButtonClick_(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "It will be soon...",
-                "Ooops!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
+            if (!program_.ExecAll()) {
+                MessageBox.Show(
+                    "Не удалось определить, где заканчивается программа!",
+                    "Залупа!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1
+                );
+            }
+            UpdateOutput_();
         }
 
         private void NewMenuItemClick_(object sender, EventArgs e)
@@ -439,7 +494,7 @@ namespace mtemu
         {
             TextBox textBox = textBoxes_[textIndex];
 
-           // Clear from wrong chars
+            // Clear from wrong chars
             int selPos = textBox.SelectionStart;
             int selLen = textBox.SelectionLength;
             textBox.Text = Helpers.ClearBinary(textBox.Text, ref selPos);
@@ -606,7 +661,7 @@ namespace mtemu
             }
 
             // Get text box for selected list
-            int textIndex = MtCommand.GetTextIndexByType(type);
+            int textIndex = Command.GetTextIndexByType(type);
             if (textIndex != -1) {
                 TextBox textBox = textBoxes_[textIndex];
 
@@ -656,7 +711,7 @@ namespace mtemu
         private void DefaultCheckBoxChanged_(FlagType flagIndex, bool value)
         {
             // Get text box for checkbox
-            int textIndex = MtCommand.GetTextIndexByFlag(flagIndex);
+            int textIndex = Command.GetTextIndexByFlag(flagIndex);
             if (textIndex != -1) {
                 TextBox textBox = textBoxes_[textIndex];
 
@@ -676,6 +731,13 @@ namespace mtemu
         private void M1CheckBoxCheckedChanged_(object sender, EventArgs e)
         {
             DefaultCheckBoxChanged_(FlagType.M1, ((CheckBox) sender).Checked);
+        }
+
+        private void DefaultTextEnter_(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox) sender;
+            textBox.SelectionStart = 0;
+            textBox.SelectionLength = textBox.TextLength;
         }
     }
 }
