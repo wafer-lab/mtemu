@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,6 +50,7 @@ namespace mtemu
         B,
         D,
         PT,
+        Inc,
         PS,
         Device,
         Unknown = 255,
@@ -60,6 +62,13 @@ namespace mtemu
         M1,
         C0,
         Unknown = 255,
+    }
+
+    enum IncType : byte
+    {
+        No = 0,
+        Plus,
+        Minus,
     }
 
     class Command
@@ -81,6 +90,7 @@ namespace mtemu
             { WordType.B, 8 },
             { WordType.D, 9 },
             { WordType.PT, 5 },
+            { WordType.Inc, 5 },
             { WordType.PS, 5 },
             { WordType.Device, 7 },
         };
@@ -210,11 +220,11 @@ namespace mtemu
                     new string[] {"","1000","R+S+C0","1"},
                     new string[] {"","1001","S-R-1+C0","1"},
                     new string[] {"","1010","R-S-1+C0","1"},
-                    new string[] {"","1011","","-"},
-                    new string[] {"","1100","","-"},
-                    new string[] {"","1101","","-"},
-                    new string[] {"","1110","","-"},
-                    new string[] {"","1111","","-"},
+                    new string[] {"","1011","Set Ptr","-"},
+                    new string[] {"","1100","Str Mem","-"},
+                    new string[] {"","1101","Load Mem","-"},
+                    new string[] {"","1110","Str Dev","-"},
+                    new string[] {"","1111","Load Dev","-"},
                 }
             },
             {
@@ -249,6 +259,17 @@ namespace mtemu
             words_ = new int[length_];
             for (int i = 0; i < length_; ++i) {
                 words_[i] = Helpers.BinaryToInt(strWords[i]) % 16;
+            }
+        }
+
+        public Command(int[] words)
+        {
+            if (words.Length != length_) {
+                throw new ArgumentException("Count of words must be equal 10!");
+            }
+            words_ = new int[length_];
+            for (int i = 0; i < length_; ++i) {
+                words_[i] = words[i] % 16;
             }
         }
 
@@ -297,11 +318,53 @@ namespace mtemu
                 res = res.Replace("D", GetRawValue(WordType.D).ToString());
                 res = res.Replace("+0", "");
                 res = res.Replace("-0", "");
-                res = res.Replace("0+", "");
                 res = res.Replace("-1+1", "");
 
                 res += "; M1=" + (GetFlag(FlagType.M1) ? "1" : "0");
                 res += "; M0=" + (GetFlag(FlagType.M0) ? "1" : "0");
+                break;
+            case CommandType.MemoryPointer:
+                res += "Memory Poiter = " + ((GetRawValue(WordType.A) << 4) + GetRawValue(WordType.B));
+                res += "; Incriment Type = ";
+                if (GetRawValue(WordType.Inc) == 1) {
+                    res += "+1";
+                }
+                else if (GetRawValue(WordType.Inc) == 2) {
+                    res += "-1";
+                }
+                else {
+                    res += "0";
+                }
+                break;
+            case CommandType.DevicePointer:
+                res += "Device Poiter = " + ((GetRawValue(WordType.A) << 4) + GetRawValue(WordType.B));
+                break;
+            case CommandType.LoadSmallCommand:
+            case CommandType.LoadCommand:
+                switch (GetRawValue(WordType.I35)) {
+                case 12:
+                    if (GetRawValue(WordType.PS) == 0) {
+                        res += "Memory(Ptr) = РОН(" + GetRawValue(WordType.A) + ")";
+                    }
+                    else {
+                        res += "Memory(Ptr) = РОН({" + GetRawValue(WordType.A) + "})";
+                        res += "; Memory(Ptr+1) = РОН(" + GetRawValue(WordType.B) + ")";
+                    }
+                    break;
+                case 13:
+                    if (GetRawValue(WordType.PS) == 0) {
+                        res += "РОН(" + GetRawValue(WordType.A) + ") = Memory(Ptr)";
+                    }
+                    else {
+                        res += "РОН(" + GetRawValue(WordType.A) + ") = Memory(Ptr)";
+                        res += "; РОН(" + GetRawValue(WordType.B) + ") = Memory(Ptr+1)";
+                    }
+                    break;
+                case 14:
+                case 15:
+                    // TODO: Maybe to do device registers
+                    break;
+                }
                 break;
             default:
                 res += String.Join(" ", words_);
@@ -331,11 +394,14 @@ namespace mtemu
                 }
             }
             else if (12 <= GetRawValue(WordType.I35) && GetRawValue(WordType.I35) <= 15) {
-                return CommandType.LoadCommand;
+                if (GetRawValue(WordType.PS) == 0) {
+                    return CommandType.LoadSmallCommand;
+                }
+                else {
+                    return CommandType.LoadCommand;
+                }
             }
-            else {
-                return CommandType.Unknown;
-            }
+            return CommandType.Unknown;
         }
 
         public int this[int i] {
@@ -474,8 +540,12 @@ namespace mtemu
 
     class Processor
     {
+        private static int commandSize_ = 5;
+        private static byte[] fileHeader_ = Encoding.ASCII.GetBytes("MTEM");
+
         private static int stackSize_ = 4;
-        private static int regSize_ = 16;
+        private static int regSize_ = 1 << 4;
+        private static int memSize_ = 1 << 8;
         private static int maxAutoCount_ = 1 << 14;
 
         private int prevPC_;
@@ -487,6 +557,10 @@ namespace mtemu
 
         private int regQ_;
         private int[] regCommon_ = new int[regSize_];
+
+        private IncType inc_;
+        private int mp_;
+        private int[] memory_ = new int[memSize_];
 
         private int f_;
 
@@ -505,6 +579,25 @@ namespace mtemu
         public static int GetRegSize()
         {
             return regSize_;
+        }
+
+        public void Reset()
+        {
+            prevPC_ = -1;
+            pc_ = 0;
+
+            sp_ = 0;
+            regQ_ = 0;
+            inc_ = IncType.No;
+            mp_ = 0;
+
+            f_ = 0;
+            z_ = false;
+            f3_ = false;
+            c4_ = false;
+            ovr_ = false;
+            g_ = false;
+            p_ = false;
         }
 
         public Processor()
@@ -529,21 +622,6 @@ namespace mtemu
         public Command this[int i] {
             get { return commands_[i]; }
             set { commands_[i] = value; }
-        }
-
-        public void Reset()
-        {
-            prevPC_ = -1;
-            pc_ = 0;
-            sp_ = 0;
-            regQ_ = 0;
-            f_ = 0;
-            z_ = false;
-            f3_ = false;
-            c4_ = false;
-            ovr_ = false;
-            g_ = false;
-            p_ = false;
         }
 
         private Command Current_()
@@ -797,6 +875,68 @@ namespace mtemu
             }
         }
 
+        private void SetMemPtr_()
+        {
+            switch (Current_().GetRawValue(WordType.PT) % 4) {
+            case 1:
+                inc_ = IncType.Plus;
+                break;
+            case 2:
+                inc_ = IncType.Minus;
+                break;
+            default:
+                inc_ = IncType.No;
+                break;
+            }
+
+            mp_ = (Current_().GetRawValue(WordType.A) << 4) + Current_().GetRawValue(WordType.B);
+        }
+
+        private void SetDevicePtr_()
+        {
+            // TODO: Maybe to do device registers
+        }
+
+        private void LoadData_(bool is8Bit)
+        {
+            int func = Current_().GetRawValue(WordType.I35);
+            int a = Current_().GetRawValue(WordType.A);
+            int b = Current_().GetRawValue(WordType.B);
+
+            switch (func) {
+            case 12:
+                if (is8Bit) {
+                    memory_[mp_ % memSize_] = regCommon_[a];
+                    memory_[(mp_ + 1) % memSize_] = regCommon_[b];
+                }
+                else {
+                    memory_[mp_ % memSize_] = regCommon_[b];
+                }
+                break;
+            case 13:
+                if (is8Bit) {
+                    regCommon_[a] = memory_[mp_ % memSize_];
+                    regCommon_[b] = memory_[(mp_ + 1) % memSize_];
+                }
+                else {
+                    regCommon_[b] = memory_[mp_ % memSize_];
+                }
+                break;
+            case 14:
+            case 15:
+                // TODO: Maybe to do device registers
+                break;
+            }
+            if (func == 12 || func == 13) {
+                if (inc_ == IncType.Plus) {
+                    ++mp_;
+                }
+                else if (inc_ == IncType.Minus) {
+                    --mp_;
+                }
+            }
+        }
+
         public void ExecOne()
         {
             if (commands_.Count() == 0) {
@@ -815,6 +955,18 @@ namespace mtemu
             switch (Current_().GetCommandType()) {
             case CommandType.MtCommand:
                 ExecMtCommand_();
+                break;
+            case CommandType.MemoryPointer:
+                SetMemPtr_();
+                break;
+            case CommandType.DevicePointer:
+                SetDevicePtr_();
+                break;
+            case CommandType.LoadSmallCommand:
+                LoadData_(false);
+                break;
+            case CommandType.LoadCommand:
+                LoadData_(true);
                 break;
             }
 
@@ -867,6 +1019,15 @@ namespace mtemu
             return stack_[index];
         }
 
+        public int GetMP()
+        {
+            return mp_;
+        }
+        public int GetMemValue(int index)
+        {
+            return memory_[index];
+        }
+
         public int GetRegQ()
         {
             return regQ_;
@@ -910,6 +1071,54 @@ namespace mtemu
         public bool GetP()
         {
             return p_;
+        }
+
+        public bool SaveFile(string filename)
+        {
+            using (FileStream fstream = new FileStream(filename, FileMode.OpenOrCreate)) {
+                int seek = 0;
+                byte[] output = new byte[fileHeader_.Length + Count() * commandSize_];
+                for(; seek < fileHeader_.Length; ++seek) {
+                    output[seek] = fileHeader_[seek];
+                }
+                Command[] commandsArr = commands_.ToArray();
+                for (int i = 0; i < commandsArr.Length; ++i) {
+                    for (int j = 0; j < commandSize_; ++j, ++seek) {
+                        output[seek] = (byte) ((commandsArr[i][2*j] << 4) + commandsArr[i][2*j + 1]);
+                    }
+                }
+                fstream.Write(output, 0, output.Length);
+                fstream.SetLength(fstream.Position);
+                return true;
+            }
+        }
+
+        public bool OpenFile(string filename)
+        {
+            using (FileStream fstream = File.OpenRead(filename)) {
+                byte[] input = new byte[fstream.Length];
+                fstream.Read(input, 0, input.Length);
+
+                int seek = 0;
+                for (; seek < fileHeader_.Length; ++seek) {
+                    if (input[seek] != fileHeader_[seek]) {
+                        return false;
+                    }
+                }
+
+                commands_.Clear();
+                Reset();
+                int commandsCount = (input.Length - seek) / commandSize_;
+                for (int i = 0; i < commandsCount; ++i) {
+                    int[] words = new int[commandSize_ * 2];
+                    for (int j = 0; j < commandSize_;  ++j, ++seek) {
+                        words[2*j] = input[seek] >> 4;
+                        words[2*j+1] = input[seek] % 16;
+                    }
+                    commands_.Add(new Command(words));
+                }
+                return true;
+            }
         }
     }
 }

@@ -33,6 +33,8 @@
             this.cc0Text = new System.Windows.Forms.TextBox();
             this.currentLabel = new System.Windows.Forms.Label();
             this.outputPanel = new System.Windows.Forms.Panel();
+            this.mpLabel = new System.Windows.Forms.Label();
+            this.mpText = new System.Windows.Forms.TextBox();
             this.spLabel = new System.Windows.Forms.Label();
             this.spText = new System.Windows.Forms.TextBox();
             this.pcLabel = new System.Windows.Forms.Label();
@@ -201,6 +203,8 @@
             // outputPanel
             // 
             this.outputPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.outputPanel.Controls.Add(this.mpLabel);
+            this.outputPanel.Controls.Add(this.mpText);
             this.outputPanel.Controls.Add(this.spLabel);
             this.outputPanel.Controls.Add(this.spText);
             this.outputPanel.Controls.Add(this.pcLabel);
@@ -221,10 +225,37 @@
             this.outputPanel.Size = new System.Drawing.Size(250, 233);
             this.outputPanel.TabIndex = 0;
             // 
+            // mpLabel
+            // 
+            this.mpLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
+            this.mpLabel.Location = new System.Drawing.Point(100, 111);
+            this.mpLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
+            this.mpLabel.Name = "mpLabel";
+            this.mpLabel.Size = new System.Drawing.Size(50, 19);
+            this.mpLabel.TabIndex = 1;
+            this.mpLabel.Text = "MP";
+            this.mpLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // mpText
+            // 
+            this.mpText.BackColor = System.Drawing.SystemColors.Control;
+            this.mpText.Font = new System.Drawing.Font("Consolas", 10F);
+            this.mpText.Location = new System.Drawing.Point(84, 134);
+            this.mpText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
+            this.mpText.MaxLength = 4;
+            this.mpText.Name = "mpText";
+            this.mpText.ReadOnly = true;
+            this.mpText.Size = new System.Drawing.Size(82, 27);
+            this.mpText.TabIndex = 2;
+            this.mpText.TabStop = false;
+            this.mpText.Text = "00000000";
+            this.mpText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.mpText.WordWrap = false;
+            // 
             // spLabel
             // 
             this.spLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.spLabel.Location = new System.Drawing.Point(148, 111);
+            this.spLabel.Location = new System.Drawing.Point(183, 111);
             this.spLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
             this.spLabel.Name = "spLabel";
             this.spLabel.Size = new System.Drawing.Size(50, 19);
@@ -236,7 +267,7 @@
             // 
             this.spText.BackColor = System.Drawing.SystemColors.Control;
             this.spText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.spText.Location = new System.Drawing.Point(148, 134);
+            this.spText.Location = new System.Drawing.Point(183, 134);
             this.spText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.spText.MaxLength = 4;
             this.spText.Name = "spText";
@@ -251,7 +282,7 @@
             // pcLabel
             // 
             this.pcLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.pcLabel.Location = new System.Drawing.Point(99, 169);
+            this.pcLabel.Location = new System.Drawing.Point(100, 169);
             this.pcLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
             this.pcLabel.Name = "pcLabel";
             this.pcLabel.Size = new System.Drawing.Size(50, 19);
@@ -262,12 +293,12 @@
             // pcText
             // 
             this.pcText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.pcText.Location = new System.Drawing.Point(65, 192);
+            this.pcText.Location = new System.Drawing.Point(66, 192);
             this.pcText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.pcText.MaxLength = 4;
             this.pcText.Name = "pcText";
             this.pcText.ReadOnly = true;
-            this.pcText.Size = new System.Drawing.Size(118, 27);
+            this.pcText.Size = new System.Drawing.Size(119, 27);
             this.pcText.TabIndex = 0;
             this.pcText.TabStop = false;
             this.pcText.Text = "000000000000";
@@ -277,7 +308,7 @@
             // fLabel
             // 
             this.fLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.fLabel.Location = new System.Drawing.Point(50, 111);
+            this.fLabel.Location = new System.Drawing.Point(17, 111);
             this.fLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 2);
             this.fLabel.Name = "fLabel";
             this.fLabel.Size = new System.Drawing.Size(50, 19);
@@ -289,7 +320,7 @@
             // 
             this.fText.BackColor = System.Drawing.SystemColors.Control;
             this.fText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.fText.Location = new System.Drawing.Point(50, 134);
+            this.fText.Location = new System.Drawing.Point(17, 134);
             this.fText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.fText.MaxLength = 4;
             this.fText.Name = "fText";
@@ -1768,6 +1799,8 @@
         private System.Windows.Forms.Label flagLabel;
         private System.Windows.Forms.Label debugLabel;
         private System.Windows.Forms.Label infoLabel;
+        private System.Windows.Forms.Label mpLabel;
+        private System.Windows.Forms.TextBox mpText;
     }
 }
 

@@ -25,12 +25,11 @@ namespace mtemu
         private TextBox[] stackTexts_;
         private TextBox[] regTexts_;
 
-        private void Reset_()
+        private bool Reset_(string filename = null)
         {
             isProgramSaved_ = true;
             isCommandSaved_ = true;
             prevSelected_ = -1;
-            program_ = new Processor();
             commandList.Items.Clear();
             saveButton.Enabled = false;
             removeButton.Enabled = false;
@@ -38,6 +37,20 @@ namespace mtemu
                 "0000", "0000", "0000", "0010", "0001", "0111", "0000", "0000", "0000", "0000",
                 //"1111", "1111", "1111", "0101", "1100", "1001", "1000", "1111", "1111", "1111",
             }));
+            program_ = new Processor();
+            if (filename != null) {
+                if (!program_.OpenFile(filename)) {
+                    return false;
+                }
+                for (int i = 0; i < program_.Count(); ++i) {
+                    commandList.Items.Add(program_[i].GetName(i));
+                }
+            }
+            if (program_.Count() > 0) {
+                saveButton.Enabled = true;
+                removeButton.Enabled = true;
+            }
+            return true;
         }
 
         private void UpdateLabels_()
@@ -94,6 +107,7 @@ namespace mtemu
 
             SetOut_(fText, program_.GetF());
             SetOut_(spText, program_.GetSP());
+            SetOut_(mpText, program_.GetMP(), 8);
             SetOut_(pcText, program_.GetPC(), 12);
 
             for (int i = 0; i < Processor.GetStackSize(); ++i) {
@@ -135,6 +149,7 @@ namespace mtemu
                 EnableObject_(i02ListView);
                 EnableObject_(i68ListView);
                 EnableObject_(cc4Text);
+                EnableObject_(cc7Text);
                 EnableObject_(cc9Text);
 
                 DisableObject_(ptListView);
@@ -148,6 +163,7 @@ namespace mtemu
                 DisableObject_(i02ListView);
                 DisableObject_(i68ListView);
                 DisableObject_(cc4Text);
+                EnableObject_(cc7Text);
                 DisableObject_(cc9Text);
 
                 EnableObject_(ptListView);
@@ -161,6 +177,7 @@ namespace mtemu
                 DisableObject_(i02ListView);
                 DisableObject_(i68ListView);
                 DisableObject_(cc4Text);
+                EnableObject_(cc7Text);
                 DisableObject_(cc9Text);
 
                 EnableObject_(ptListView);
@@ -174,6 +191,21 @@ namespace mtemu
                 DisableObject_(i02ListView);
                 DisableObject_(i68ListView);
                 DisableObject_(cc4Text);
+                EnableObject_(cc7Text);
+                DisableObject_(cc9Text);
+
+                DisableObject_(ptListView);
+                DisableObject_(deviceListView);
+                EnableObject_(psListView);
+                break;
+            case CommandType.LoadSmallCommand:
+                DisableObject_(flagPanel);
+                //DisableObject_(m0CheckBox);
+                //DisableObject_(m1CheckBox);
+                DisableObject_(i02ListView);
+                DisableObject_(i68ListView);
+                DisableObject_(cc4Text);
+                DisableObject_(cc7Text);
                 DisableObject_(cc9Text);
 
                 DisableObject_(ptListView);
@@ -187,6 +219,7 @@ namespace mtemu
                 EnableObject_(i02ListView);
                 EnableObject_(i68ListView);
                 EnableObject_(cc4Text);
+                EnableObject_(cc7Text);
                 EnableObject_(cc9Text);
 
                 EnableObject_(ptListView);
@@ -412,17 +445,35 @@ namespace mtemu
             BeforeCloseProgram_();
             Reset_();
         }
+        private bool OpenDialog_()
+        {
+            DialogResult openRes = MessageBox.Show(
+                "Здесь должен быть выбор файла...",
+                "Открытие",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button1
+            );
+            if (openRes == DialogResult.OK) {
+                if (!Reset_("test.mte")) {
+                    MessageBox.Show(
+                        "Выбран файл некорректного формата!",
+                        "Не удалось открыть файл!",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error,
+                        MessageBoxDefaultButton.Button1
+                    );
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
 
         private void OpenMenuItemClick_(object sender, EventArgs e)
         {
             BeforeCloseProgram_();
-            MessageBox.Show(
-                "It will be soon...",
-                "Ooops!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
+            OpenDialog_();
         }
 
         private void SaveMenuItemClick_(object sender, EventArgs e)
@@ -449,15 +500,26 @@ namespace mtemu
         private bool SaveDialog_(bool asNew = false)
         {
             DialogResult saveRes = MessageBox.Show(
-                "Здесь должно быть сохранение",
+                "Здесь должен быть выбор файла...",
                 "Сохранение",
                 MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Information,
                 MessageBoxDefaultButton.Button1
             );
             if (saveRes == DialogResult.OK) {
-                isProgramSaved_ = true;
-                return true;
+                if (program_.SaveFile("test.mte")) {
+                    isProgramSaved_ = true;
+                    return true;
+                }
+                else {
+                    MessageBox.Show(
+                        "Недостаточно прав для выполнения данного действия!",
+                        "Не удалось сохранить файл!",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error,
+                        MessageBoxDefaultButton.Button1
+                    );
+                }
             }
             return false;
         }
