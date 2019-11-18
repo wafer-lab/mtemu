@@ -280,6 +280,7 @@ namespace mtemu
         private static int commandSize_ = 5;
         private static byte[] fileHeader_ = Encoding.ASCII.GetBytes("MTEM");
 
+        private static int programSize_ = 1 << 12;
         private static int stackSize_ = 1 << 4;
         private static int regSize_ = 1 << 4;
         private static int memSize_ = 1 << 8;

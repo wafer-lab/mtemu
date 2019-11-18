@@ -76,6 +76,18 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Emulator\Emulator.cs" />
+    <Compile Include="MainForm\Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm\Debug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm\Info.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm\Commands.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MemoryForm.cs">
       <SubType>Form</SubType>
     </Compile>

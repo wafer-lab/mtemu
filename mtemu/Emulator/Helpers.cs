@@ -8,6 +8,13 @@ namespace mtemu
 {
     class Helpers
     {
+        public static void Swap<T>(ref T x, ref T y)
+        {
+            T temp = x;
+            x = y;
+            y = temp;
+        }
+
         public static string ClearBinary(string str, ref int pos)
         {
             string newStr = "";
