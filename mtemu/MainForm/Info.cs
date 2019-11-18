@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.ListView;
 
 namespace mtemu
 {
@@ -12,6 +14,25 @@ namespace mtemu
         ////////////////////
         //   LIST VIEWS   //
         ////////////////////
+
+        private void UpdateLists_()
+        {
+            foreach (KeyValuePair<WordType, ListView> listView in listViewes_) {
+                ListViewItemCollection items = listView.Value.Items;
+                for (int i = 0; i < items.Count; ++i) {
+                    if (i == currentCommand_.GetSelIndex(listView.Key)) {
+                        if (items[i].BackColor != selectedColor_) {
+                            items[i].BackColor = selectedColor_;
+                        }
+                    }
+                    else {
+                        if (items[i].BackColor == selectedColor_) {
+                            items[i].BackColor = enabledColor_;
+                        }
+                    }
+                }
+            }
+        }
 
         void ListViewColumnWidthChanging_(object list, ColumnWidthChangingEventArgs e)
         {
@@ -102,12 +123,18 @@ namespace mtemu
 
         private void M0CheckBoxCheckedChanged_(object sender, EventArgs e)
         {
-            DefaultCheckBoxChanged_(FlagType.M0, ((CheckBox) sender).Checked);
+            CheckBox checkBox = (CheckBox) sender;
+            if (checkBox.Focused) {
+                DefaultCheckBoxChanged_(FlagType.M0, checkBox.Checked);
+            }
         }
 
         private void M1CheckBoxCheckedChanged_(object sender, EventArgs e)
         {
-            DefaultCheckBoxChanged_(FlagType.M1, ((CheckBox) sender).Checked);
+            CheckBox checkBox = (CheckBox) sender;
+            if (checkBox.Focused) {
+                DefaultCheckBoxChanged_(FlagType.M1, checkBox.Checked);
+            }
         }
     }
 }

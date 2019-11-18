@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,28 +14,28 @@ namespace mtemu
         {
             textBox.Text = prefix + (value ? "1" : "0");
             if (value) {
-                textBox.BackColor = System.Drawing.Color.LightGreen;
+                textBox.BackColor = Color.LightGreen;
             }
             else {
-                textBox.BackColor = System.Drawing.SystemColors.Control;
+                textBox.BackColor = disabledColor_;
             }
         }
 
-        private void SetOut_(bool asNew, TextBox textBox, string value)
+        private void SetOut_(TextBox textBox, string value, bool asNew)
         {
             string oldValue = textBox.Text;
             textBox.Text = value;
             if (asNew || textBox.Text == oldValue) {
-                textBox.BackColor = System.Drawing.SystemColors.Control;
+                textBox.BackColor = disabledColor_;
             }
             else {
-                textBox.BackColor = System.Drawing.Color.Wheat;
+                textBox.BackColor = selectedColor_;
             }
         }
 
-        private void SetOut_(bool asNew, TextBox textBox, int value, int minLen = 4)
+        private void SetOut_(TextBox textBox, int value, bool asNew)
         {
-            SetOut_(asNew, textBox, Helpers.IntToBinary(value, minLen));
+            SetOut_(textBox, Helpers.IntToBinary(value, 4), asNew);
         }
 
         private void UpdateOutput_(bool asNew = false)
@@ -46,14 +47,14 @@ namespace mtemu
             SetFlag_(gText, "/G=", emulator_.GetG());
             SetFlag_(pText, "/P=", emulator_.GetP());
 
-            SetOut_(asNew, fText, emulator_.GetF());
-            SetOut_(asNew, spText, $"0x{emulator_.GetSP():X1}");
-            SetOut_(asNew, mpText, $"0x{emulator_.GetMP():X2}");
-            SetOut_(asNew, pcText, $"0x{emulator_.GetPC():X3}");
+            SetOut_(fText, emulator_.GetF(), asNew);
+            SetOut_(spText, $"0x{emulator_.GetSP():X1}", asNew);
+            SetOut_(mpText, $"0x{emulator_.GetMP():X2}", asNew);
+            SetOut_(pcText, $"0x{emulator_.GetPC():X3}", asNew);
 
-            SetOut_(asNew, rqText, emulator_.GetRegQ());
+            SetOut_(rqText, emulator_.GetRegQ(), asNew);
             for (int i = 0; i < Emulator.GetRegSize(); ++i) {
-                SetOut_(asNew, regTexts_[i], emulator_.GetRegValue(i));
+                SetOut_(regTexts_[i], emulator_.GetRegValue(i), asNew);
             }
 
             if (emulator_.Count() > 0) {
@@ -61,18 +62,32 @@ namespace mtemu
             }
 
             for (int i = 0; i < Emulator.GetStackSize(); ++i) {
-                ListViewItem.ListViewSubItem item = stackForm_.stackListView.Items[i].SubItems[2];
+                ListViewItem item = stackForm_.stackListView.Items[i];
+                ListViewItem.ListViewSubItem subitem = item.SubItems[2];
                 string newText = Helpers.IntToBinary(emulator_.GetStackValue(i), 4);
-                if (item.Text != newText) {
-                    item.Text = newText;
+                if (item.BackColor != enabledColor_) {
+                    item.BackColor = enabledColor_;
+                }
+                if (subitem.Text != newText) {
+                    subitem.Text = newText;
+                    if (!asNew) {
+                        item.BackColor = selectedColor_;
+                    }
                 }
             }
 
             for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
-                ListViewItem.ListViewSubItem item = memoryForm_.memoryListView.Items[i].SubItems[2];
+                ListViewItem item = memoryForm_.memoryListView.Items[i];
+                ListViewItem.ListViewSubItem subitem = item.SubItems[2];
                 string newText = Helpers.IntToBinary(emulator_.GetMemValue(i), 8, 4);
-                if (item.Text != newText) {
-                    item.Text = newText;
+                if (item.BackColor != enabledColor_) {
+                    item.BackColor = enabledColor_;
+                }
+                if (subitem.Text != newText) {
+                    subitem.Text = newText;
+                    if (!asNew) {
+                        item.BackColor = selectedColor_;
+                    }
                 }
             }
         }

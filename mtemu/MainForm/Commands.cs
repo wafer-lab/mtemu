@@ -28,7 +28,7 @@ namespace mtemu
         {
             for (int i = 0; i < textBoxes_.Length; ++i) {
                 textBoxes_[i].Text = Helpers.IntToBinary(currentCommand_[i], 4);
-                textBoxes_[i].BackColor = SystemColors.Window;
+                textBoxes_[i].BackColor = enabledColor_;
             }
         }
 

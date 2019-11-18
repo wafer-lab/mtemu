@@ -40,7 +40,7 @@ namespace mtemu
 
         private string[] GetItem_(WordType type)
         {
-            return items_[type][GetSelIndex_(type)];
+            return items_[type][GetSelIndex(type)];
         }
 
         public string GetName(int index)
@@ -179,7 +179,7 @@ namespace mtemu
             return words_[textIndex];
         }
 
-        private int GetSelIndex_(WordType type)
+        public int GetSelIndex(WordType type)
         {
             int raw = GetRawValue(type);
             if (raw == -1) {
@@ -201,10 +201,20 @@ namespace mtemu
                 }
             }
             else if (type == WordType.Device) {
-                return raw % 2;
+                if (raw < 2) {
+                    return raw;
+                }
+                else {
+                    return -1;
+                }
             }
             else if (type == WordType.PS) {
-                return raw % 2;
+                if (raw < 2) {
+                    return raw;
+                }
+                else {
+                    return -1;
+                }
             }
             else {
                 return raw;

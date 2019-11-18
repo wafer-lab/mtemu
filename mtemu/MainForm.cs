@@ -12,6 +12,10 @@ namespace mtemu
 {
     public partial class MainForm : Form
     {
+        private static Color enabledColor_ = SystemColors.Window;
+        private static Color enabledTextColor_ = SystemColors.WindowText;
+        private static Color disabledColor_ = SystemColors.Control;
+        private static Color disabledTextColor_ = SystemColors.GrayText;
         private static Color selectedColor_ = Color.Wheat;
 
         private string filenamePrivate_;
@@ -183,16 +187,16 @@ namespace mtemu
         private void EnableObject_(Control obj)
         {
             obj.Enabled = true;
-            obj.BackColor = SystemColors.Window;
-            obj.ForeColor = SystemColors.WindowText;
+            obj.BackColor = enabledColor_;
+            obj.ForeColor = enabledTextColor_;
             obj.Cursor = Cursors.Default;
         }
 
         private void DisableObject_(Control obj)
         {
             obj.Enabled = false;
-            obj.BackColor = SystemColors.Control;
-            obj.ForeColor = SystemColors.GrayText;
+            obj.BackColor = disabledColor_;
+            obj.ForeColor = disabledTextColor_;
             obj.Cursor = Cursors.No;
         }
 
@@ -280,6 +284,7 @@ namespace mtemu
 
             UpdateLabels_();
             UpdateTexts_();
+            UpdateLists_();
             UpdateCheckboxes_();
 
             UpdateItemsAvailability_();
