@@ -34,17 +34,31 @@ namespace mtemu
             return res;
         }
 
-        public static string IntToBinary(int num, int minLen)
+        public static string IntToBinary(int num, int minLen, int groupSize = -1)
         {
             string res = "";
-            while (num > 0) {
-                res = (num % 2) + res;
-                num /= 2;
+
+            while (num != 0) {
+                res += (num & 1).ToString();
+                num >>= 1;
             }
-            while (res.Length < minLen) {
-                res = "0" + res;
+
+            while (res.Length < minLen)
+                res += "0";
+
+            if (groupSize != -1) {
+                int groupsCount = (res.Length - 1) / groupSize;
+                int offset = groupSize;
+                while (groupsCount > 0) {
+                    res = res.Insert(offset, " ");
+                    offset += 1 + groupSize;
+                    groupsCount--;
+                }
             }
-            return res;
+
+            char[] arr = res.ToCharArray();
+            Array.Reverse(arr);
+            return new string(arr);
         }
     }
 }

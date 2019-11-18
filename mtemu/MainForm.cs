@@ -12,44 +12,68 @@ namespace mtemu
 {
     public partial class MainForm : Form
     {
+        private string filenameLocal_;
+
+        private string filename_ {
+            get { return filenameLocal_; }
+            set {
+                filenameLocal_ = value;
+                this.Text = "mtemu";
+                if (value != null) {
+                    this.Text += " - " + filenameLocal_;
+                }
+            }
+        }
         private bool isProgramSaved_;
         private bool isCommandSaved_;
         private int prevSelected_;
 
-        private Processor program_;
+        private Emulator emulator_;
         private Command currentCommand_;
 
         private Label[] textLabels_;
+        private Label[] regLabels_;
         private TextBox[] textBoxes_;
         private Dictionary<WordType, ListView> listViewes_;
-        private TextBox[] stackTexts_;
         private TextBox[] regTexts_;
+
+        MemoryForm memoryForm_;
+        StackForm stackForm_;
 
         private bool Reset_(string filename = null)
         {
-            isProgramSaved_ = true;
-            isCommandSaved_ = true;
-            prevSelected_ = -1;
-            commandList.Items.Clear();
-            saveButton.Enabled = false;
-            removeButton.Enabled = false;
             LoadCommand_(new Command(new string[] {
                 "0000", "0000", "0000", "0010", "0001", "0111", "0000", "0000", "0000", "0000",
                 //"1111", "1111", "1111", "0101", "1100", "1001", "1000", "1111", "1111", "1111",
             }));
-            program_ = new Processor();
+
+            filename_ = filename;
+            isProgramSaved_ = true;
+            isCommandSaved_ = true;
+            prevSelected_ = -1;
+            saveButton.Enabled = false;
+            removeButton.Enabled = false;
+            upButton.Enabled = false;
+            downButton.Enabled = false;
+
+            emulator_ = new Emulator();
+            commandList.Items.Clear();
             if (filename != null) {
-                if (!program_.OpenFile(filename)) {
+                if (!emulator_.OpenFile(filename)) {
                     return false;
                 }
-                for (int i = 0; i < program_.Count(); ++i) {
-                    commandList.Items.Add(program_[i].GetName(i));
+                for (int i = 0; i < emulator_.Count(); ++i) {
+                    commandList.Items.Add(emulator_[i].GetName(i));
                 }
             }
-            if (program_.Count() > 0) {
+            if (emulator_.Count() > 0) {
                 saveButton.Enabled = true;
                 removeButton.Enabled = true;
+                upButton.Enabled = true;
+                downButton.Enabled = true;
             }
+
+            UpdateOutput_(true);
             return true;
         }
 
@@ -84,42 +108,60 @@ namespace mtemu
             }
         }
 
-        private void SetOut_(TextBox textBox, int value, int minLen = 4)
+        private void SetOut_(bool asNew, TextBox textBox, string value)
         {
             string oldValue = textBox.Text;
-            textBox.Text = Helpers.IntToBinary(value, minLen);
-            if (textBox.Text != oldValue) {
-                textBox.BackColor = System.Drawing.Color.Wheat;
+            textBox.Text = value;
+            if (asNew || textBox.Text == oldValue) {
+                textBox.BackColor = System.Drawing.SystemColors.Control;
             }
             else {
-                textBox.BackColor = System.Drawing.SystemColors.Control;
+                textBox.BackColor = System.Drawing.Color.Wheat;
             }
         }
 
-        private void UpdateOutput_()
+        private void SetOut_(bool asNew, TextBox textBox, int value, int minLen = 4)
         {
-            SetFlag_(ovrText, "OVR=", program_.GetOvr());
-            SetFlag_(c4Text, "C4=", program_.GetC4());
-            SetFlag_(f3Text, "F3=", program_.GetF3());
-            SetFlag_(zText, "Z=", program_.GetZ());
-            SetFlag_(gText, "/G=", program_.GetG());
-            SetFlag_(pText, "/P=", program_.GetP());
+            SetOut_(asNew, textBox, Helpers.IntToBinary(value, minLen));
+        }
 
-            SetOut_(fText, program_.GetF());
-            SetOut_(spText, program_.GetSP());
-            SetOut_(mpText, program_.GetMP(), 8);
-            SetOut_(pcText, program_.GetPC(), 12);
+        private void UpdateOutput_(bool asNew = false)
+        {
+            SetFlag_(ovrText, "OVR=", emulator_.GetOvr());
+            SetFlag_(c4Text, "C4=", emulator_.GetC4());
+            SetFlag_(f3Text, "F3=", emulator_.GetF3());
+            SetFlag_(zText, "Z=", emulator_.GetZ());
+            SetFlag_(gText, "/G=", emulator_.GetG());
+            SetFlag_(pText, "/P=", emulator_.GetP());
 
-            for (int i = 0; i < Processor.GetStackSize(); ++i) {
-                SetOut_(stackTexts_[i], program_.GetStackValue(i));
+            SetOut_(asNew, fText, emulator_.GetF());
+            SetOut_(asNew, spText, $"0x{emulator_.GetSP():X1}");
+            SetOut_(asNew, mpText, $"0x{emulator_.GetMP():X2}");
+            SetOut_(asNew, pcText, $"0x{emulator_.GetPC():X3}");
+
+            SetOut_(asNew, rqText, emulator_.GetRegQ());
+            for (int i = 0; i < Emulator.GetRegSize(); ++i) {
+                SetOut_(asNew, regTexts_[i], emulator_.GetRegValue(i));
             }
-            SetOut_(rqText, program_.GetRegQ());
-            for (int i = 0; i < Processor.GetRegSize(); ++i) {
-                SetOut_(regTexts_[i], program_.GetRegValue(i));
+
+            if (emulator_.Count() > 0) {
+                commandList.SelectedIndex = emulator_.GetPrevPC();
             }
 
-            if (program_.Count() > 0) {
-                commandList.SelectedIndex = program_.GetPrevPC();
+            for (int i = 0; i < Emulator.GetStackSize(); ++i) {
+                ListViewItem.ListViewSubItem item = stackForm_.stackListView.Items[i].SubItems[2];
+                string newText = Helpers.IntToBinary(emulator_.GetStackValue(i), 4);
+                if (item.Text != newText) {
+                    item.Text = newText;
+                }
+            }
+
+            for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
+                ListViewItem.ListViewSubItem item = memoryForm_.memoryListView.Items[i].SubItems[2];
+                string newText = Helpers.IntToBinary(emulator_.GetMemValue(i), 8, 4);
+                if (item.Text != newText) {
+                    item.Text = newText;
+                }
             }
         }
 
@@ -144,8 +186,6 @@ namespace mtemu
             switch (currentCommand_.GetCommandType()) {
             case CommandType.MtCommand:
                 EnableObject_(flagPanel);
-                //EnableObject_(m0CheckBox);
-                //EnableObject_(m1CheckBox);
                 EnableObject_(i02ListView);
                 EnableObject_(i68ListView);
                 EnableObject_(cc4Text);
@@ -158,8 +198,6 @@ namespace mtemu
                 break;
             case CommandType.MemoryPointer:
                 DisableObject_(flagPanel);
-                //DisableObject_(m0CheckBox);
-                //DisableObject_(m1CheckBox);
                 DisableObject_(i02ListView);
                 DisableObject_(i68ListView);
                 DisableObject_(cc4Text);
@@ -172,8 +210,6 @@ namespace mtemu
                 break;
             case CommandType.DevicePointer:
                 DisableObject_(flagPanel);
-                //DisableObject_(m0CheckBox);
-                //DisableObject_(m1CheckBox);
                 DisableObject_(i02ListView);
                 DisableObject_(i68ListView);
                 DisableObject_(cc4Text);
@@ -186,8 +222,6 @@ namespace mtemu
                 break;
             case CommandType.LoadCommand:
                 DisableObject_(flagPanel);
-                //DisableObject_(m0CheckBox);
-                //DisableObject_(m1CheckBox);
                 DisableObject_(i02ListView);
                 DisableObject_(i68ListView);
                 DisableObject_(cc4Text);
@@ -200,8 +234,6 @@ namespace mtemu
                 break;
             case CommandType.LoadSmallCommand:
                 DisableObject_(flagPanel);
-                //DisableObject_(m0CheckBox);
-                //DisableObject_(m1CheckBox);
                 DisableObject_(i02ListView);
                 DisableObject_(i68ListView);
                 DisableObject_(cc4Text);
@@ -214,8 +246,6 @@ namespace mtemu
                 break;
             default:
                 EnableObject_(flagPanel);
-                //EnableObject_(m0CheckBox);
-                //EnableObject_(m1CheckBox);
                 EnableObject_(i02ListView);
                 EnableObject_(i68ListView);
                 EnableObject_(cc4Text);
@@ -228,12 +258,22 @@ namespace mtemu
                 break;
             }
         }
+        
+        private void UpdateTexts_()
+        {
+            for (int i = 0; i < textBoxes_.Length; ++i) {
+                if (textBoxes_[i].BackColor == System.Drawing.Color.Wheat) {
+                    textBoxes_[i].BackColor = System.Drawing.SystemColors.Window;
+                }
+            }
+        }
 
         private void UpdateCommandHandler_()
         {
             UpdateLabels_();
             UpdateLists_();
             UpdateCheckboxes_();
+            UpdateTexts_();
         }
 
         private void LoadTexts_()
@@ -283,12 +323,6 @@ namespace mtemu
                 { WordType.PS, psListView },
                 { WordType.Device, deviceListView },
             };
-            stackTexts_ = new TextBox[] {
-                s0Text,
-                s1Text,
-                s2Text,
-                s3Text,
-            };
             regTexts_ = new TextBox[] {
                 r0Text,
                 r1Text,
@@ -307,6 +341,36 @@ namespace mtemu
                 r14Text,
                 r15Text,
             };
+            regLabels_ = new Label[] {
+                r0Label,
+                r1Label,
+                r2Label,
+                r3Label,
+                r4Label,
+                r5Label,
+                r6Label,
+                r7Label,
+                r8Label,
+                r9Label,
+                r10Label,
+                r11Label,
+                r12Label,
+                r13Label,
+                r14Label,
+                r15Label,
+            };
+            for (int i = 0; i < Emulator.GetRegSize(); ++i) {
+                regLabels_[i].Text = $"R{i:d}";
+            }
+
+            memoryForm_ = new MemoryForm();
+            for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
+                memoryForm_.memoryListView.Items.Add(new ListViewItem(new string[] {"", $"0x{i:X2}", "0000"}));
+            }
+            stackForm_ = new StackForm();
+            for (int i = 0; i < Emulator.GetStackSize(); ++i) {
+                stackForm_.stackListView.Items.Add(new ListViewItem(new string[] { "", $"0x{i:X}", "0000" }));
+            }
 
             // Init lists with values
             foreach (KeyValuePair<WordType, ListView> listView in listViewes_) {
@@ -347,7 +411,7 @@ namespace mtemu
                 }
                 prevSelected_ = listBox.SelectedIndex;
 
-                LoadCommand_(new Command(program_[listBox.SelectedIndex]));
+                LoadCommand_(new Command(emulator_[listBox.SelectedIndex]));
                 isCommandSaved_ = true;
             }
         }
@@ -357,8 +421,10 @@ namespace mtemu
             isCommandSaved_ = true;
             saveButton.Enabled = true;
             removeButton.Enabled = true;
+            upButton.Enabled = true;
+            downButton.Enabled = true;
 
-            program_.AddCommand(new Command(currentCommand_));
+            emulator_.AddCommand(new Command(currentCommand_));
 
             int number = commandList.Items.Count;
             commandList.Items.Add(currentCommand_.GetName(number));
@@ -372,7 +438,7 @@ namespace mtemu
 
             int number = commandList.SelectedIndex;
             if (number != -1) {
-                program_[number] = new Command(currentCommand_);
+                emulator_[number] = new Command(currentCommand_);
                 commandList.Items[number] = currentCommand_.GetName(number);
             }
         }
@@ -392,32 +458,34 @@ namespace mtemu
             isProgramSaved_ = false;
 
             int number = commandList.SelectedIndex;
-            program_.RemoveCommand(number);
+            emulator_.RemoveCommand(number);
             commandList.Items.RemoveAt(number);
             if (number >= commandList.Items.Count) {
                 number = commandList.Items.Count - 1;
             }
             commandList.SelectedIndex = number;
 
-            for (int i = 0; i < program_.Count(); ++i) {
-                commandList.Items[i] = program_[i].GetName(i);
+            for (int i = 0; i < emulator_.Count(); ++i) {
+                commandList.Items[i] = emulator_[i].GetName(i);
             }
 
-            if (program_.Count() == 0) {
+            if (emulator_.Count() == 0) {
                 saveButton.Enabled = false;
                 removeButton.Enabled = false;
+                upButton.Enabled = false;
+                downButton.Enabled = false;
             }
         }
 
         private void ResetButtonClick_(object sender, EventArgs e)
         {
-            program_.Reset();
+            emulator_.Reset();
             UpdateOutput_();
         }
 
         private void StepProgram_()
         {
-            program_.ExecOne();
+            emulator_.ExecOne();
             UpdateOutput_();
         }
 
@@ -428,7 +496,7 @@ namespace mtemu
 
         private void AutoButtonClick_(object sender, EventArgs e)
         {
-            if (!program_.ExecAll()) {
+            if (!emulator_.ExecAll()) {
                 MessageBox.Show(
                     "Не удалось определить, где заканчивается программа!",
                     "Залупа!",
@@ -442,28 +510,25 @@ namespace mtemu
 
         private void NewMenuItemClick_(object sender, EventArgs e)
         {
-            BeforeCloseProgram_();
-            Reset_();
+            if (BeforeCloseProgram_()) {
+                Reset_();
+            }
         }
         private bool OpenDialog_()
         {
-            DialogResult openRes = MessageBox.Show(
-                "Здесь должен быть выбор файла...",
-                "Открытие",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
+            DialogResult openRes = openFileDialog.ShowDialog();
             if (openRes == DialogResult.OK) {
-                if (!Reset_("test.mte")) {
-                    MessageBox.Show(
-                        "Выбран файл некорректного формата!",
-                        "Не удалось открыть файл!",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error,
-                        MessageBoxDefaultButton.Button1
-                    );
-                    return false;
+                if (openFileDialog.FileName != filename_) {
+                    if (!Reset_(openFileDialog.FileName)) {
+                        MessageBox.Show(
+                            "Выбран файл некорректного формата!",
+                            "Не удалось открыть файл!",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error,
+                            MessageBoxDefaultButton.Button1
+                        );
+                        return false;
+                    }
                 }
                 return true;
             }
@@ -472,8 +537,9 @@ namespace mtemu
 
         private void OpenMenuItemClick_(object sender, EventArgs e)
         {
-            BeforeCloseProgram_();
-            OpenDialog_();
+            if (BeforeCloseProgram_()) {
+                OpenDialog_();
+            }
         }
 
         private void SaveMenuItemClick_(object sender, EventArgs e)
@@ -499,29 +565,26 @@ namespace mtemu
 
         private bool SaveDialog_(bool asNew = false)
         {
-            DialogResult saveRes = MessageBox.Show(
-                "Здесь должен быть выбор файла...",
-                "Сохранение",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
-            if (saveRes == DialogResult.OK) {
-                if (program_.SaveFile("test.mte")) {
-                    isProgramSaved_ = true;
-                    return true;
+            if (filename_ == null || asNew) {
+                saveFileDialog.FileName = filename_;
+                DialogResult saveRes = saveFileDialog.ShowDialog();
+                if (saveRes != DialogResult.OK) {
+                    return false;
                 }
-                else {
-                    MessageBox.Show(
-                        "Недостаточно прав для выполнения данного действия!",
-                        "Не удалось сохранить файл!",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error,
-                        MessageBoxDefaultButton.Button1
-                    );
-                }
+                filename_ = saveFileDialog.FileName;
             }
-            return false;
+            if (!emulator_.SaveFile(filename_)) {
+                MessageBox.Show(
+                    "Недостаточно прав для выполнения данного действия!",
+                    "Не удалось сохранить файл!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
+                return false;
+            }
+            isProgramSaved_ = true;
+            return true;
         }
 
         private bool BeforeCloseProgram_()
@@ -535,9 +598,7 @@ namespace mtemu
                     MessageBoxDefaultButton.Button1
                 );
                 if (res == DialogResult.Yes) {
-                    if (SaveDialog_()) {
-                        return true;
-                    }
+                    return SaveDialog_();
                 }
                 if (res == DialogResult.No) {
                     return true;
@@ -554,7 +615,9 @@ namespace mtemu
 
         private void MainFormClosing_(object sender, FormClosingEventArgs e)
         {
-            BeforeCloseProgram_();
+            if (!BeforeCloseProgram_()) {
+                e.Cancel = true;
+            }
         }
 
         private bool DefaultTextChanged_(int textIndex)
@@ -736,7 +799,7 @@ namespace mtemu
                 isCommandSaved_ = false;
                 currentCommand_.SetValue(type, listView.SelectedIndices[0]);
                 textBox.Text = Helpers.IntToBinary(currentCommand_[textIndex], 4);
-                UpdateCommandHandler_();
+                textBox.BackColor = System.Drawing.Color.Wheat;
             }
         }
 
@@ -805,6 +868,81 @@ namespace mtemu
             TextBox textBox = (TextBox) sender;
             textBox.SelectionStart = 0;
             textBox.SelectionLength = textBox.TextLength;
+        }
+
+        private void StackFormMove_()
+        {
+            stackForm_.Top = Top;
+            stackForm_.Left = Right;
+            stackForm_.Height = Height / 2;
+        }
+
+        private void StackMenuItemClick_(object sender, EventArgs e)
+        {
+            stackForm_.Show(this);
+            StackFormMove_();
+            this.Focus();
+        }
+
+        private void MemoryFormMove_()
+        {
+            memoryForm_.Top = Top + stackForm_.Height;
+            memoryForm_.Left = Right;
+            memoryForm_.Height = Height / 2;
+        }
+
+        private void MemoryMenuItemClick_(object sender, EventArgs e)
+        {
+            memoryForm_.Show(this);
+            MemoryFormMove_();
+            this.Focus();
+        }
+
+        private void MoveSubForms_()
+        {
+            StackFormMove_();
+            MemoryFormMove_();
+        }
+
+        private void MainFormMove_(object sender, EventArgs e)
+        {
+            MoveSubForms_();
+        }
+
+        private void UpButtonClick_(object sender, EventArgs e)
+        {
+            isProgramSaved_ = false;
+
+            int index = commandList.SelectedIndex;
+            if (index == 0) {
+                return;
+            }
+            commandList.Items.Insert(index - 1, commandList.Items[index]);
+            commandList.Items.RemoveAt(index + 1);
+            emulator_.MoveCommandUp(index);
+            commandList.SelectedIndex = index - 1;
+
+            for (int i = 0; i < emulator_.Count(); ++i) {
+                commandList.Items[i] = emulator_[i].GetName(i);
+            }
+        }
+
+        private void DownButtonClick_(object sender, EventArgs e)
+        {
+            isProgramSaved_ = false;
+
+            int index = commandList.SelectedIndex;
+            if (index == commandList.Items.Count - 1) {
+                return;
+            }
+            commandList.Items.Insert(index + 2, commandList.Items[index]);
+            commandList.Items.RemoveAt(index);
+            emulator_.MoveCommandDown(index);
+            commandList.SelectedIndex = index + 1;
+
+            for (int i = 0; i < emulator_.Count(); ++i) {
+                commandList.Items[i] = emulator_[i].GetName(i);
+            }
         }
     }
 }
