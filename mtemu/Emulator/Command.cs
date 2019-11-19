@@ -8,6 +8,8 @@ namespace mtemu
 {
     partial class Command
     {
+        public bool isOffset;
+        private int number_;
         private int[] words_;
 
         public Command(string[] strWords)
@@ -34,8 +36,20 @@ namespace mtemu
 
         public Command(Command other)
         {
+            isOffset = other.isOffset;
+            number_ = other.number_;
             words_ = new int[length_];
             Array.Copy(other.words_, words_, length_);
+        }
+
+        public void SetNumber(int num)
+        {
+            number_ = num;
+        }
+
+        public int GetNumber()
+        {
+            return number_;
         }
 
         private string[] GetItem_(WordType type)
@@ -43,8 +57,12 @@ namespace mtemu
             return items_[type][GetSelIndex(type)];
         }
 
-        public string GetName(int index)
+        public string GetName()
         {
+            if (GetCommandType() == CommandType.Offset) {
+                return $"SET OFFSET = 0x{GetNextAdr():X3}"; 
+            }
+
             string res = "";
 
             switch (GetCommandType()) {
@@ -124,7 +142,7 @@ namespace mtemu
                 break;
             }
 
-            res = $"0x{index:X3}; " + res;
+            res = $"0x{number_:X3}; " + res;
 
             res += "; " + GetItem_(WordType.CA)[2];
             JumpType jt = GetJumpType();
@@ -138,7 +156,10 @@ namespace mtemu
 
         public CommandType GetCommandType()
         {
-            if (GetRawValue(WordType.I35) <= 10) {
+            if (isOffset) {
+                return CommandType.Offset;
+            }
+            else if (GetRawValue(WordType.I35) <= 10) {
                 return CommandType.MtCommand;
             }
             else if (GetRawValue(WordType.I35) == 11) {

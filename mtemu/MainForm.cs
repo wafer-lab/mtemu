@@ -172,7 +172,7 @@ namespace mtemu
                     return false;
                 }
                 for (int i = 0; i < emulator_.Count(); ++i) {
-                    commandList.Items.Add(emulator_[i].GetName(i));
+                    commandList.Items.Add(emulator_.GetCommand(i).GetName());
                 }
             }
 
@@ -186,94 +186,126 @@ namespace mtemu
 
         private void EnableObject_(Control obj)
         {
-            obj.Enabled = true;
-            obj.BackColor = enabledColor_;
-            obj.ForeColor = enabledTextColor_;
-            obj.Cursor = Cursors.Default;
+            if (!obj.Enabled) {
+                obj.Enabled = true;
+                obj.BackColor = enabledColor_;
+                obj.ForeColor = enabledTextColor_;
+                obj.Cursor = Cursors.Default;
+            }
         }
 
         private void DisableObject_(Control obj)
         {
-            obj.Enabled = false;
-            obj.BackColor = disabledColor_;
-            obj.ForeColor = disabledTextColor_;
-            obj.Cursor = Cursors.No;
+            if (obj.Enabled) {
+                obj.Enabled = false;
+                obj.BackColor = disabledColor_;
+                obj.ForeColor = disabledTextColor_;
+                obj.Cursor = Cursors.No;
+            }
+        }
+
+        private void DisableItems_(Control[] objs)
+        {
+            if (objs.Contains(flagPanel)) {
+                DisableObject_(flagPanel);
+            }
+            else {
+                EnableObject_(flagPanel);
+            }
+            foreach (TextBox textBox in textBoxes_) {
+                if (objs.Contains(textBox)) {
+                    DisableObject_(textBox);
+                }
+                else {
+                    EnableObject_(textBox);
+                }
+            }
+            foreach (KeyValuePair<WordType, ListView> listView in listViewes_) {
+                if (objs.Contains(listView.Value)) {
+                    DisableObject_(listView.Value);
+                }
+                else {
+                    EnableObject_(listView.Value);
+                }
+            }
         }
 
         private void UpdateItemsAvailability_()
         {
             switch (currentCommand_.GetCommandType()) {
             case CommandType.MtCommand:
-                EnableObject_(flagPanel);
-                EnableObject_(i02ListView);
-                EnableObject_(i68ListView);
-                EnableObject_(cc4Text);
-                EnableObject_(cc7Text);
-                EnableObject_(cc9Text);
-
-                DisableObject_(ptListView);
-                DisableObject_(deviceListView);
-                DisableObject_(psListView);
+                DisableItems_(new Control[] {
+                    ptListView,
+                    deviceListView,
+                    psListView,
+                });
                 break;
             case CommandType.MemoryPointer:
-                DisableObject_(flagPanel);
-                DisableObject_(i02ListView);
-                DisableObject_(i68ListView);
-                DisableObject_(cc4Text);
-                EnableObject_(cc7Text);
-                DisableObject_(cc9Text);
+                DisableItems_(new Control[] {
+                    flagPanel,
+                    i02ListView,
+                    i68ListView,
+                    cc4Text,
+                    cc9Text,
 
-                EnableObject_(ptListView);
-                DisableObject_(deviceListView);
-                DisableObject_(psListView);
+                    deviceListView,
+                    psListView,
+                });
                 break;
             case CommandType.DevicePointer:
-                DisableObject_(flagPanel);
-                DisableObject_(i02ListView);
-                DisableObject_(i68ListView);
-                DisableObject_(cc4Text);
-                EnableObject_(cc7Text);
-                DisableObject_(cc9Text);
+                DisableItems_(new Control[] {
+                    flagPanel,
+                    i02ListView,
+                    i68ListView,
+                    cc4Text,
+                    cc9Text,
 
-                EnableObject_(ptListView);
-                EnableObject_(deviceListView);
-                DisableObject_(psListView);
+                    psListView,
+                });
                 break;
             case CommandType.LoadCommand:
-                DisableObject_(flagPanel);
-                DisableObject_(i02ListView);
-                DisableObject_(i68ListView);
-                DisableObject_(cc4Text);
-                EnableObject_(cc7Text);
-                DisableObject_(cc9Text);
+                DisableItems_(new Control[] {
+                    flagPanel,
+                    i02ListView,
+                    i68ListView,
+                    cc4Text,
+                    cc9Text,
 
-                DisableObject_(ptListView);
-                DisableObject_(deviceListView);
-                EnableObject_(psListView);
+                    ptListView,
+                    deviceListView,
+                });
                 break;
             case CommandType.LoadSmallCommand:
-                DisableObject_(flagPanel);
-                DisableObject_(i02ListView);
-                DisableObject_(i68ListView);
-                DisableObject_(cc4Text);
-                DisableObject_(cc7Text);
-                DisableObject_(cc9Text);
+                DisableItems_(new Control[] {
+                    flagPanel,
+                    i02ListView,
+                    i68ListView,
+                    cc4Text,
+                    cc7Text,
+                    cc9Text,
 
-                DisableObject_(ptListView);
-                DisableObject_(deviceListView);
-                EnableObject_(psListView);
+                    ptListView,
+                    deviceListView,
+                });
                 break;
-            default:
-                EnableObject_(flagPanel);
-                EnableObject_(i02ListView);
-                EnableObject_(i68ListView);
-                EnableObject_(cc4Text);
-                EnableObject_(cc7Text);
-                EnableObject_(cc9Text);
-
-                EnableObject_(ptListView);
-                EnableObject_(deviceListView);
-                EnableObject_(psListView);
+            case CommandType.Offset:
+                DisableItems_(new Control[] {
+                    flagPanel,
+                    cc3Text,
+                    cc4Text,
+                    cc5Text,
+                    cc6Text,
+                    cc7Text,
+                    cc8Text,
+                    cc9Text,
+                    caListView,
+                    i68ListView,
+                    i02ListView,
+                    i35ListView,
+                    ptListView,
+                    psListView,
+                    deviceListView,
+                });
                 break;
             }
         }

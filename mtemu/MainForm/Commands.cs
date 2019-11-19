@@ -49,10 +49,8 @@ namespace mtemu
             isCommandSaved_ = true;
 
             emulator_.AddCommand(new Command(currentCommand_));
-
-            int number = commandList.Items.Count;
-            commandList.Items.Add(currentCommand_.GetName(number));
-            commandList.SelectedIndex = number;
+            commandList.Items.Add(emulator_.LastCommand().GetName());
+            commandList.SelectedIndex = commandList.Items.Count - 1;
         }
 
         private void SaveCommand_()
@@ -62,8 +60,11 @@ namespace mtemu
 
             int number = commandList.SelectedIndex;
             if (number != -1) {
-                emulator_[number] = new Command(currentCommand_);
-                commandList.Items[number] = currentCommand_.GetName(number);
+                emulator_.UpdateCommand(number, new Command(currentCommand_));
+
+                for (int i = number; i < emulator_.Count(); ++i) {
+                    commandList.Items[i] = emulator_.GetCommand(i).GetName();
+                }
             }
         }
 
@@ -79,8 +80,8 @@ namespace mtemu
             }
             commandList.SelectedIndex = number;
 
-            for (int i = 0; i < emulator_.Count(); ++i) {
-                commandList.Items[i] = emulator_[i].GetName(i);
+            for (int i = number; i < emulator_.Count(); ++i) {
+                commandList.Items[i] = emulator_.GetCommand(i).GetName();
             }
         }
 
@@ -95,8 +96,8 @@ namespace mtemu
             emulator_.MoveCommandUp(index);
             commandList.SelectedIndex = index - 1;
 
-            for (int i = 0; i < emulator_.Count(); ++i) {
-                commandList.Items[i] = emulator_[i].GetName(i);
+            for (int i = index - 1; i < emulator_.Count(); ++i) {
+                commandList.Items[i] = emulator_.GetCommand(i).GetName();
             }
 
             isProgramSaved_ = false;
@@ -113,8 +114,8 @@ namespace mtemu
             emulator_.MoveCommandDown(index);
             commandList.SelectedIndex = index + 1;
 
-            for (int i = 0; i < emulator_.Count(); ++i) {
-                commandList.Items[i] = emulator_[i].GetName(i);
+            for (int i = index; i < emulator_.Count(); ++i) {
+                commandList.Items[i] = emulator_.GetCommand(i).GetName();
             }
 
             isProgramSaved_ = false;
@@ -199,7 +200,7 @@ namespace mtemu
                 }
                 prevSelected_ = listBox.SelectedIndex;
 
-                LoadCommand_(new Command(emulator_[listBox.SelectedIndex]));
+                LoadCommand_(new Command(emulator_.GetCommand(listBox.SelectedIndex)));
             }
         }
 

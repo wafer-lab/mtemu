@@ -58,7 +58,7 @@ namespace mtemu
             }
 
             if (emulator_.Count() > 0) {
-                commandList.SelectedIndex = emulator_.GetPrevPC();
+                commandList.SelectedIndex = emulator_.GetLastIndex();
             }
 
             for (int i = 0; i < Emulator.GetStackSize(); ++i) {

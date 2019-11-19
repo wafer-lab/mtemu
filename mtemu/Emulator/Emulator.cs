@@ -56,14 +56,64 @@ namespace mtemu
             Reset();
         }
 
+        private int GetOffset_(Command last = null)
+        {
+            int offset = 0;
+            foreach (Command curr in commands_) {
+                if (curr == last) {
+                    break;
+                }
+                if (curr.isOffset) {
+                    offset = curr.GetNextAdr();
+                }
+                else {
+                    ++offset;
+                }
+            }
+            return offset;
+        }
+
+        private int UpdateOffsets_(int first = 0)
+        {
+            int offset = first == 0 ? -1 : commands_[first - 1].GetNumber();
+            for (int i = first; i < commands_.Count; ++i) {
+                if (i > 0 && commands_[i - 1].isOffset) {
+                    offset = commands_[i - 1].GetNextAdr();
+                }
+                else {
+                    ++offset;
+                }
+                commands_[i].SetNumber(offset);
+            }
+            return offset;
+        }
+
+        public Command GetCommand(int index)
+        {
+            return commands_[index];
+        }
+
         public void AddCommand(Command command)
         {
+            command.SetNumber(GetOffset_());
             commands_.Add(command);
+        }
+
+        public void UpdateCommand(int index, Command command)
+        {
+            commands_[index] = command;
+            UpdateOffsets_(index);
+        }
+
+        public Command LastCommand()
+        {
+            return commands_.Last();
         }
 
         public void RemoveCommand(int index)
         {
             commands_.RemoveAt(index);
+            UpdateOffsets_(index);
         }
 
         public void MoveCommandUp(int index)
@@ -73,6 +123,7 @@ namespace mtemu
             }
             commands_.Insert(index - 1, commands_[index]);
             commands_.RemoveAt(index + 1);
+            UpdateOffsets_(index - 1);
         }
 
         public void MoveCommandDown(int index)
@@ -82,20 +133,34 @@ namespace mtemu
             }
             commands_.Insert(index + 2, commands_[index]);
             commands_.RemoveAt(index);
+            UpdateOffsets_(index);
         }
 
         public int Count()
         {
             return commands_.Count();
         }
-        public Command this[int i] {
-            get { return commands_[i]; }
-            set { commands_[i] = value; }
+
+        private int GetIndex_(int addr)
+        {
+            int res = 0;
+            foreach (Command command in commands_) {
+                if (command.GetNumber() >= pc_ && !command.isOffset) {
+                    return res;
+                }
+                ++res;
+            }
+            return 0;
         }
 
         private Command Current_()
         {
-            return commands_[pc_];
+            foreach(Command command in commands_) {
+                if (command.GetNumber() >= pc_ && !command.isOffset) {
+                    return command;
+                }
+            }
+            return commands_.First();
         }
 
         private bool Jump_()
@@ -414,10 +479,7 @@ namespace mtemu
             if (commands_.Count() == 0) {
                 return;
             }
-            if (pc_ >= commands_.Count()) {
-                pc_ = 0;
-            }
-
+         
             // Save flags to restore then after command exec
             bool prevZ = z_;
             bool prevF3 = f3_;
@@ -472,9 +534,9 @@ namespace mtemu
             return false;
         }
 
-        public int GetPrevPC()
+        public int GetLastIndex()
         {
-            return prevPC_;
+            return GetIndex_(prevPC_);
         }
 
         public int GetPC()
@@ -549,12 +611,14 @@ namespace mtemu
         {
             using (FileStream fstream = new FileStream(filename, FileMode.OpenOrCreate)) {
                 int seek = 0;
-                byte[] output = new byte[fileHeader_.Length + Count() * commandSize_];
+                byte[] output = new byte[fileHeader_.Length + Count() * (commandSize_ + 1)];
                 for(; seek < fileHeader_.Length; ++seek) {
                     output[seek] = fileHeader_[seek];
                 }
                 Command[] commandsArr = commands_.ToArray();
                 for (int i = 0; i < commandsArr.Length; ++i) {
+                    output[seek] = (byte) (commandsArr[i].isOffset ? 1 : 0);
+                    ++seek;
                     for (int j = 0; j < commandSize_; ++j, ++seek) {
                         output[seek] = (byte) ((commandsArr[i][2*j] << 4) + commandsArr[i][2*j + 1]);
                     }
@@ -580,15 +644,20 @@ namespace mtemu
 
                 commands_.Clear();
                 Reset();
-                int commandsCount = (input.Length - seek) / commandSize_;
+                int commandsCount = (input.Length - seek) / (commandSize_ + 1);
                 for (int i = 0; i < commandsCount; ++i) {
+                    bool isOffset = input[seek] == 1;
+                    ++seek;
+                     
                     int[] words = new int[commandSize_ * 2];
                     for (int j = 0; j < commandSize_;  ++j, ++seek) {
                         words[2*j] = input[seek] >> 4;
                         words[2*j+1] = input[seek] % 16;
                     }
                     commands_.Add(new Command(words));
+                    commands_.Last().isOffset = isOffset;
                 }
+                UpdateOffsets_();
                 return true;
             }
         }

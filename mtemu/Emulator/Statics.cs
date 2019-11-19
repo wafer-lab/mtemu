@@ -13,6 +13,7 @@ namespace mtemu
         DevicePointer,
         LoadCommand,
         LoadSmallCommand,
+        Offset,
         Unknown = 255,
     }
 
@@ -154,6 +155,18 @@ namespace mtemu
                     "F",
                     "",
                     "RB",
+                    "",
+                }
+            },
+            {
+                CommandType.Offset, new string[] {
+                    "AR",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
                     "",
                 }
             },

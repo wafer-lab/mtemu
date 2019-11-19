@@ -104,6 +104,7 @@ namespace mtemu
         {
             m0CheckBox.Checked = currentCommand_.GetFlag(FlagType.M0);
             m1CheckBox.Checked = currentCommand_.GetFlag(FlagType.M1);
+            offsetCheckBox.Checked = currentCommand_.isOffset;
         }
 
         private void DefaultCheckBoxChanged_(FlagType flagIndex, bool value)
@@ -135,6 +136,12 @@ namespace mtemu
             if (checkBox.Focused) {
                 DefaultCheckBoxChanged_(FlagType.M1, checkBox.Checked);
             }
+        }
+
+        private void OffsetCheckBoxCheckedChanged_(object sender, EventArgs e)
+        {
+            currentCommand_.isOffset = offsetCheckBox.Checked;
+            UpdateCommandHandler_();
         }
     }
 }
