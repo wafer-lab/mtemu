@@ -143,24 +143,23 @@ namespace mtemu
 
         private int GetIndex_(int addr)
         {
+            int curr = 0;
             int res = 0;
+            int bestDiff = int.MaxValue;
             foreach (Command command in commands_) {
-                if (command.GetNumber() >= pc_ && !command.isOffset) {
-                    return res;
+                int diff = Math.Abs(command.GetNumber() - addr);
+                if (diff < bestDiff && !command.isOffset) {
+                    res = curr;
+                    bestDiff = diff;
                 }
-                ++res;
+                ++curr;
             }
-            return 0;
+            return res;
         }
 
         private Command Current_()
         {
-            foreach(Command command in commands_) {
-                if (command.GetNumber() >= pc_ && !command.isOffset) {
-                    return command;
-                }
-            }
-            return commands_.First();
+            return commands_[GetIndex_(pc_)];
         }
 
         private bool Jump_()
@@ -537,6 +536,11 @@ namespace mtemu
         public int GetLastIndex()
         {
             return GetIndex_(prevPC_);
+        }
+
+        public int GetNextIndex()
+        {
+            return GetIndex_(pc_);
         }
 
         public int GetPC()

@@ -116,7 +116,10 @@ namespace mtemu
                 switch (GetRawValue(WordType.I35)) {
                 case 12:
                     if (GetRawValue(WordType.PS) == 0) {
-                        res += $"Memory(Ptr) = РОН({ GetRawValue(WordType.B) })";
+                        res += $"LOW(Memory(Ptr)) = РОН({ GetRawValue(WordType.B) })";
+                    }
+                    else if (GetRawValue(WordType.PS) == 1) {
+                        res += $"HIGH(Memory(Ptr)) = РОН({ GetRawValue(WordType.B) })";
                     }
                     else {
                         res += $"Memory(Ptr) = РОН({ GetRawValue(WordType.A) }) << 4 + РОН({ GetRawValue(WordType.B) })";
@@ -125,6 +128,9 @@ namespace mtemu
                 case 13:
                     if (GetRawValue(WordType.PS) == 0) {
                         res += $"РОН({ GetRawValue(WordType.B) }) = LOW(Memory(Ptr))";
+                    }
+                    else if (GetRawValue(WordType.PS) == 1) {
+                        res += $"РОН({ GetRawValue(WordType.B) }) = HIGH(Memory(Ptr))";
                     }
                     else {
                         res += $"РОН({ GetRawValue(WordType.A) }) = HIGH(Memory(Ptr))";
@@ -171,7 +177,7 @@ namespace mtemu
                 }
             }
             else if (12 <= GetRawValue(WordType.I35) && GetRawValue(WordType.I35) <= 15) {
-                if (GetRawValue(WordType.PS) == 0) {
+                if (GetRawValue(WordType.PS) < 2) {
                     return CommandType.LoadSmallCommand;
                 }
                 else {
@@ -222,7 +228,7 @@ namespace mtemu
                 }
             }
             else if (type == WordType.Device) {
-                if (raw < 2) {
+                if (raw < 4) {
                     return raw;
                 }
                 else {
@@ -230,7 +236,7 @@ namespace mtemu
                 }
             }
             else if (type == WordType.PS) {
-                if (raw < 2) {
+                if (raw < 3) {
                     return raw;
                 }
                 else {

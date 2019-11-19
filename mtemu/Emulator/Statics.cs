@@ -249,14 +249,17 @@ namespace mtemu
             },
             {
                 WordType.PS, new string[][] {
-                    new string[] {"","0000","4 бита"},
-                    new string[] {"","0001","8 бит"},
+                    new string[] {"","0000","Младш. 4 бита"},
+                    new string[] {"","0001","Старш. 4 бита"},
+                    new string[] {"","0010","8 бит"},
                 }
             },
             {
                 WordType.Device, new string[][] {
                     new string[] {"","0000","GPIO0"},
                     new string[] {"","0001","GPIO1"},
+                    new string[] {"","0010","GPIO2"},
+                    new string[] {"","0011","GPIO3"},
                 }
             },
         };
