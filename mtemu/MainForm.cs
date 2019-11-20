@@ -329,14 +329,14 @@ namespace mtemu
         private void StackFormMove_()
         {
             stackForm_.Top = Top;
-            stackForm_.Left = Right;
+            stackForm_.Left = Right; //Left + ClientRectangle.Width;
             stackForm_.Height = Height / 2;
         }
 
         private void MemoryFormMove_()
         {
             memoryForm_.Top = Top + stackForm_.Height;
-            memoryForm_.Left = Right;
+            memoryForm_.Left = Right; //Left + ClientRectangle.Width;
             memoryForm_.Height = Height / 2;
         }
 

@@ -43,12 +43,26 @@ namespace mtemu
         //    CONTROLS    //
         ////////////////////
 
+        private void IncorrectCommandDialog()
+        {
+            MessageBox.Show(
+                "В одной из ячеек введено неправильное значение!",
+                "Неправильная команда!",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error,
+                MessageBoxDefaultButton.Button1
+            );
+        }
+
         private void AddCommand_()
         {
             isProgramSaved_ = false;
             isCommandSaved_ = true;
 
-            emulator_.AddCommand(new Command(currentCommand_));
+            if (!emulator_.AddCommand(new Command(currentCommand_))) {
+                IncorrectCommandDialog();
+                return;
+            }
             commandList.Items.Add(emulator_.LastCommand().GetName());
             commandList.SelectedIndex = commandList.Items.Count - 1;
         }
@@ -60,7 +74,10 @@ namespace mtemu
 
             int number = commandList.SelectedIndex;
             if (number != -1) {
-                emulator_.UpdateCommand(number, new Command(currentCommand_));
+                if (!emulator_.UpdateCommand(number, new Command(currentCommand_))) {
+                    IncorrectCommandDialog();
+                    return;
+                }
 
                 for (int i = number; i < emulator_.Count(); ++i) {
                     commandList.Items[i] = emulator_.GetCommand(i).GetName();

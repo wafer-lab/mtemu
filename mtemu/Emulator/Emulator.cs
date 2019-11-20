@@ -93,16 +93,27 @@ namespace mtemu
             return commands_[index];
         }
 
-        public void AddCommand(Command command)
+        public bool AddCommand(Command command)
         {
+            if (!command.Check()) {
+                return false;
+            }
             command.SetNumber(GetOffset_());
+            if (command.GetNumber() > programSize_) {
+                return false;
+            }
             commands_.Add(command);
+            return true;
         }
 
-        public void UpdateCommand(int index, Command command)
+        public bool UpdateCommand(int index, Command command)
         {
+            if (!command.Check()) {
+                return false;
+            }
             commands_[index] = command;
             UpdateOffsets_(index);
+            return true;
         }
 
         public Command LastCommand()
@@ -144,22 +155,22 @@ namespace mtemu
         private int GetIndex_(int addr)
         {
             int curr = 0;
-            int res = 0;
-            int bestDiff = int.MaxValue;
             foreach (Command command in commands_) {
-                int diff = Math.Abs(command.GetNumber() - addr);
-                if (diff < bestDiff && !command.isOffset) {
-                    res = curr;
-                    bestDiff = diff;
+                if (command.GetNumber() - addr == 0 && !command.isOffset) {
+                    return curr;
                 }
                 ++curr;
             }
-            return res;
+            return -1;
         }
 
         private Command Current_()
         {
-            return commands_[GetIndex_(pc_)];
+            int i = GetIndex_(pc_);
+            if (i == -1) {
+                return incorrectCommand_;
+            }
+            return commands_[i];
         }
 
         private bool Jump_()
@@ -437,22 +448,33 @@ namespace mtemu
             // TODO: Maybe to do device registers
         }
 
-        private void LoadData_(bool is8Bit)
+        private void LoadData_()
         {
             int func = Current_().GetRawValue(WordType.I35);
+            int ps = Current_().GetRawValue(WordType.PS);
             int a = Current_().GetRawValue(WordType.A);
             int b = Current_().GetRawValue(WordType.B);
 
             switch (func) {
             case 12:
-                memory_[mp_] = regCommon_[b];
-                if (is8Bit) {
+                if (ps == 1) {
+                    memory_[mp_] = regCommon_[b] << 4;
+                }
+                else {
+                    memory_[mp_] = regCommon_[b];
+                }
+                if (ps == 2) {
                     memory_[mp_] += regCommon_[a] << 4;
                 }
                 break;
             case 13:
-                regCommon_[b] = memory_[mp_] % 16;
-                if (is8Bit) {
+                if (ps == 1) {
+                    regCommon_[b] = memory_[mp_] >> 4;
+                }
+                else {
+                    regCommon_[b] = memory_[mp_] % 16;
+                }
+                if (ps == 2) {
                     regCommon_[a] = memory_[mp_] >> 4;
                 }
                 break;
@@ -473,12 +495,24 @@ namespace mtemu
             }
         }
 
-        public void ExecOne()
+        public enum ResultCode
+        {
+            Ok,
+            NoCommands,
+            IncorrectCommand,
+            Loop,
+        };
+
+        public ResultCode ExecOne()
         {
             if (commands_.Count() == 0) {
-                return;
+                return ResultCode.NoCommands;
             }
-         
+
+            if (!Current_().Check()) {
+                return ResultCode.IncorrectCommand;
+            }
+
             // Save flags to restore then after command exec
             bool prevZ = z_;
             bool prevF3 = f3_;
@@ -496,10 +530,8 @@ namespace mtemu
                 SetDevicePtr_();
                 break;
             case CommandType.LoadSmallCommand:
-                LoadData_(false);
-                break;
             case CommandType.LoadCommand:
-                LoadData_(true);
+                LoadData_();
                 break;
             }
 
@@ -520,17 +552,23 @@ namespace mtemu
                 c4_ = newC4;
                 ovr_ = newOvr;
             }
+            pc_ %= programSize_;
+
+            return ResultCode.Ok;
         }
 
-        public bool ExecAll()
+        public ResultCode ExecAll()
         {
             for (int i = 0; i < maxAutoCount_; ++i) {
-                ExecOne();
+                ResultCode rc = ExecOne();
+                if (rc != ResultCode.Ok) {
+                    return rc;
+                }
                 if (prevPC_ == pc_) {
-                    return true;
+                    return ResultCode.Ok;
                 }
             }
-            return false;
+            return ResultCode.Loop;
         }
 
         public int GetLastIndex()

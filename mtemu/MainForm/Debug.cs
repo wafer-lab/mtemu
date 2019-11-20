@@ -98,15 +98,10 @@ namespace mtemu
             UpdateOutput_();
         }
 
-        private void StepButtonClick_(object sender, EventArgs e)
+        private void ResultCodeHandler_(Emulator.ResultCode rc)
         {
-            emulator_.ExecOne();
-            UpdateOutput_();
-        }
-
-        private void AutoButtonClick_(object sender, EventArgs e)
-        {
-            if (!emulator_.ExecAll()) {
+            switch (rc) {
+            case Emulator.ResultCode.Loop:
                 MessageBox.Show(
                     "Не удалось определить, где заканчивается программа!",
                     "Залупа!",
@@ -114,8 +109,38 @@ namespace mtemu
                     MessageBoxIcon.Warning,
                     MessageBoxDefaultButton.Button1
                 );
+                break;
+            case Emulator.ResultCode.IncorrectCommand:
+                MessageBox.Show(
+                    "Невозможно исполнить команду!",
+                    "Некорректная команда!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
+                break;
+            case Emulator.ResultCode.NoCommands:
+                MessageBox.Show(
+                    "Вы не добавили ни одной команды!",
+                    "Нет комманд!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1
+                );
+                break;
             }
+
             UpdateOutput_();
+        }
+
+        private void StepButtonClick_(object sender, EventArgs e)
+        {
+            ResultCodeHandler_(emulator_.ExecOne());
+        }
+
+        private void AutoButtonClick_(object sender, EventArgs e)
+        {
+            ResultCodeHandler_(emulator_.ExecAll());
         }
     }
 }

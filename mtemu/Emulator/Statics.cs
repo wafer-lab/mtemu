@@ -293,6 +293,8 @@ namespace mtemu
 
     partial class Emulator
     {
+        private static Command incorrectCommand_ = new Command(new int[] { 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF });
+
         private static int commandSize_ = 5;
         private static byte[] fileHeader_ = Encoding.ASCII.GetBytes("MTEM");
 

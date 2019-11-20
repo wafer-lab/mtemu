@@ -60,7 +60,7 @@ namespace mtemu
         public string GetName()
         {
             if (GetCommandType() == CommandType.Offset) {
-                return $"SET OFFSET = 0x{GetNextAdr():X3}"; 
+                return $"SET OFFSET = 0x{GetNextAdr():X3}";
             }
 
             string res = "";
@@ -96,45 +96,45 @@ namespace mtemu
                 res += "; M0=" + (GetFlag(FlagType.M0) ? "1" : "0");
                 break;
             case CommandType.MemoryPointer:
-                res += $"Memory Poiter = 0x{((GetRawValue(WordType.A) << 4) + GetRawValue(WordType.B)):X2}";
-                res += "; NewPtr = ";
+                res += $"MemoryPtr=0x{((GetRawValue(WordType.A) << 4) + GetRawValue(WordType.B)):X2}";
+                res += "; NewPtr=";
                 if (GetRawValue(WordType.Inc) == 1) {
-                    res += "OldPtr + 1";
+                    res += "OldPtr+1";
                 }
                 else if (GetRawValue(WordType.Inc) == 2) {
-                    res += "OldPtr - 1";
+                    res += "OldPtr-1";
                 }
                 else {
                     res += "OldPtr";
                 }
                 break;
             case CommandType.DevicePointer:
-                res += "Device Poiter = " + ((GetRawValue(WordType.A) << 4) + GetRawValue(WordType.B));
+                res += $"Interface={GetItem_(WordType.Device)[2]}; DevicePtr=0x{GetRawValue(WordType.B):X}";
                 break;
             case CommandType.LoadSmallCommand:
             case CommandType.LoadCommand:
                 switch (GetRawValue(WordType.I35)) {
                 case 12:
                     if (GetRawValue(WordType.PS) == 0) {
-                        res += $"LOW(Memory(Ptr)) = РОН({ GetRawValue(WordType.B) })";
+                        res += $"LOW(Memory(Ptr))=РОН({ GetRawValue(WordType.B) })";
                     }
                     else if (GetRawValue(WordType.PS) == 1) {
-                        res += $"HIGH(Memory(Ptr)) = РОН({ GetRawValue(WordType.B) })";
+                        res += $"HIGH(Memory(Ptr))=РОН({ GetRawValue(WordType.B) })";
                     }
                     else {
-                        res += $"Memory(Ptr) = РОН({ GetRawValue(WordType.A) }) << 4 + РОН({ GetRawValue(WordType.B) })";
+                        res += $"Memory(Ptr)=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
                     }
                     break;
                 case 13:
                     if (GetRawValue(WordType.PS) == 0) {
-                        res += $"РОН({ GetRawValue(WordType.B) }) = LOW(Memory(Ptr))";
+                        res += $"РОН({ GetRawValue(WordType.B) })=LOW(Memory(Ptr))";
                     }
                     else if (GetRawValue(WordType.PS) == 1) {
-                        res += $"РОН({ GetRawValue(WordType.B) }) = HIGH(Memory(Ptr))";
+                        res += $"РОН({ GetRawValue(WordType.B) })=HIGH(Memory(Ptr))";
                     }
                     else {
-                        res += $"РОН({ GetRawValue(WordType.A) }) = HIGH(Memory(Ptr))";
-                        res += $"; РОН({ GetRawValue(WordType.B) }) = LOW(Memory(Ptr))";
+                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH(Memory(Ptr))";
+                        res += $"; РОН({ GetRawValue(WordType.B) })=LOW(Memory(Ptr))";
                     }
                     break;
                 case 14:
@@ -158,6 +158,27 @@ namespace mtemu
                 res += " " + $"0x{GetNextAdr():X3}";
             }
             return res;
+        }
+
+        public bool Check()
+        {
+            if (isOffset) {
+                return true;
+            }
+            if (GetRawValue(WordType.I35) == 11) {
+                if (GetRawValue(WordType.PT) > 2 && GetRawValue(WordType.PT) != 8) {
+                    return false;
+                }
+                if (GetRawValue(WordType.PT) == 8 && GetRawValue(WordType.Device) > 3) {
+                    return false;
+                }
+            }
+            if (12 <= GetRawValue(WordType.I35) && GetRawValue(WordType.I35) <= 15) {
+                if (GetRawValue(WordType.PS) > 2) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public CommandType GetCommandType()
