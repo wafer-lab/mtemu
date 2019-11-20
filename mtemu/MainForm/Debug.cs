@@ -29,7 +29,7 @@ namespace mtemu
                 textBox.BackColor = disabledColor_;
             }
             else {
-                textBox.BackColor = selectedColor_;
+                textBox.BackColor = changedColor_;
             }
         }
 
@@ -50,7 +50,12 @@ namespace mtemu
             SetOut_(fText, emulator_.GetF(), asNew);
             SetOut_(spText, $"0x{emulator_.GetSP():X1}", asNew);
             SetOut_(mpText, $"0x{emulator_.GetMP():X2}", asNew);
-            SetOut_(pcText, $"0x{emulator_.GetPC():X3}", asNew);
+
+            int pc = emulator_.GetPC();
+            if (pc == -1) {
+                pc = 0;
+            }
+            SetOut_(pcText, $"0x{pc:X3}", asNew);
 
             SetOut_(rqText, emulator_.GetRegQ(), asNew);
             for (int i = 0; i < Emulator.GetRegSize(); ++i) {
@@ -58,7 +63,8 @@ namespace mtemu
             }
 
             if (emulator_.Count() > 0) {
-                commandList.SelectedIndex = emulator_.GetLastIndex();
+                SelectNextCommand_(emulator_.GetNextIndex());
+                ChangeCommand_(emulator_.GetLastIndex(), selectedColor_);
             }
 
             for (int i = 0; i < Emulator.GetStackSize(); ++i) {
@@ -71,7 +77,7 @@ namespace mtemu
                 if (subitem.Text != newText) {
                     subitem.Text = newText;
                     if (!asNew) {
-                        item.BackColor = selectedColor_;
+                        item.BackColor = changedColor_;
                     }
                 }
             }
@@ -86,7 +92,7 @@ namespace mtemu
                 if (subitem.Text != newText) {
                     subitem.Text = newText;
                     if (!asNew) {
-                        item.BackColor = selectedColor_;
+                        item.BackColor = changedColor_;
                     }
                 }
             }

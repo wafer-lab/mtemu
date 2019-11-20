@@ -60,7 +60,7 @@ namespace mtemu
         public string GetName()
         {
             if (GetCommandType() == CommandType.Offset) {
-                return $"SET OFFSET = 0x{GetNextAdr():X3}";
+                return $"OFFSET = 0x{GetNextAdr():X3}";
             }
 
             string res = "";
@@ -148,7 +148,7 @@ namespace mtemu
                 break;
             }
 
-            res = $"0x{number_:X3}; " + res;
+            //res = $"0x{number_:X3}; " + res;
 
             res += "; " + GetItem_(WordType.CA)[2];
             JumpType jt = GetJumpType();

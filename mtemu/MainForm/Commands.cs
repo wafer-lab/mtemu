@@ -14,7 +14,10 @@ namespace mtemu
         {
             for (int i = 0; i < textLabels_.Length; ++i) {
                 string newLabel = currentCommand_.GetLabel(i);
-                if (newLabel.Length <= 6) {
+                if (i == 0) {
+                    newLabel += $" = 0x{currentCommand_.GetNextAdr():X3}";
+                }
+                if (i == 0 || newLabel.Length <= 6) {
                     textLabels_[i].Font = new Font("Consolas", 10F);
                 }
                 else {
@@ -37,6 +40,99 @@ namespace mtemu
             currentCommand_ = command;
             UpdateCommandHandler_();
             isCommandSaved_ = true;
+        }
+
+        ////////////////////
+        //  COMMAND LIST  //
+        ////////////////////
+
+        private void SelectCommand_(int index, Color selectedColor)
+        {
+            if (0 <= selected_ && selected_ < commandList.Items.Count) {
+                commandList.Items[selected_].BackColor = enabledColor_;
+            }
+            selected_ = index;
+            if (0 <= selected_ && selected_ < commandList.Items.Count) {
+                commandList.Items[selected_].BackColor = selectedColor;
+            }
+        }
+
+        private void ChangeCommand_(int newSelected, Color color)
+        {
+            if (newSelected != selected_) {
+                if (!isCommandSaved_) {
+                    DialogResult saveRes = MessageBox.Show(
+                        "Сохранить текущую команду?",
+                        "Сохранение",
+                        MessageBoxButtons.YesNoCancel,
+                        MessageBoxIcon.Question,
+                        MessageBoxDefaultButton.Button1
+                    );
+                    if (saveRes == DialogResult.Cancel) {
+                        return;
+                    }
+                    if (saveRes == DialogResult.Yes) {
+                        SaveCommand_();
+                    }
+
+                    SelectCommand_(newSelected, color);
+                }
+                SelectCommand_(newSelected, color);
+
+                if (newSelected == -1) {
+                    LoadCommand_(Command.GetDefault());
+
+                    removeButton.Enabled = false;
+                    saveButton.Enabled = false;
+                    upButton.Enabled = false;
+                    downButton.Enabled = false;
+                }
+                else {
+                    LoadCommand_(new Command(emulator_.GetCommand(newSelected)));
+
+                    removeButton.Enabled = true;
+                    saveButton.Enabled = true;
+                    if (newSelected == 0) {
+                        upButton.Enabled = false;
+                    }
+                    else {
+                        upButton.Enabled = true;
+                    }
+                    if (newSelected == commandList.Items.Count - 1) {
+                        downButton.Enabled = false;
+                    }
+                    else {
+                        downButton.Enabled = true;
+                    }
+                }
+            }
+        }
+
+        private void SelectNextCommand_(int index)
+        {
+            if (0 <= nextSelected_ && nextSelected_ < commandList.Items.Count) {
+                commandList.Items[nextSelected_].BackColor = enabledColor_;
+            }
+            nextSelected_ = index;
+            if (0 <= nextSelected_ && nextSelected_ < commandList.Items.Count) {
+                commandList.Items[nextSelected_].BackColor = nextSelectedColor_;
+            }
+        }
+
+        private ListViewItem CommandToItems(Command command)
+        {
+            string number = "";
+            if (!command.isOffset) {
+                number = $"0x{command.GetNumber():X3}";
+            }
+            return new ListViewItem(new string[] { "", number, command.GetName() });
+        }
+
+        private void CommandListSelectedIndexChanged_(object sender, EventArgs e)
+        {
+            if (commandList.SelectedIndices.Count != 0) {
+                ChangeCommand_(commandList.SelectedIndices[0], selectedColor_);
+            }
         }
 
         ////////////////////
@@ -63,8 +159,8 @@ namespace mtemu
                 IncorrectCommandDialog();
                 return;
             }
-            commandList.Items.Add(emulator_.LastCommand().GetName());
-            commandList.SelectedIndex = commandList.Items.Count - 1;
+            commandList.Items.Add(CommandToItems(emulator_.LastCommand()));
+            ChangeCommand_(commandList.Items.Count - 1, selectedColor_);
         }
 
         private void SaveCommand_()
@@ -72,7 +168,7 @@ namespace mtemu
             isProgramSaved_ = false;
             isCommandSaved_ = true;
 
-            int number = commandList.SelectedIndex;
+            int number = selected_;
             if (number != -1) {
                 if (!emulator_.UpdateCommand(number, new Command(currentCommand_))) {
                     IncorrectCommandDialog();
@@ -80,8 +176,9 @@ namespace mtemu
                 }
 
                 for (int i = number; i < emulator_.Count(); ++i) {
-                    commandList.Items[i] = emulator_.GetCommand(i).GetName();
+                    commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
                 }
+                SelectCommand_(number, selectedColor_);
             }
         }
 
@@ -89,51 +186,52 @@ namespace mtemu
         {
             isProgramSaved_ = false;
 
-            int number = commandList.SelectedIndex;
+            int number = selected_;
             emulator_.RemoveCommand(number);
             commandList.Items.RemoveAt(number);
             if (number >= commandList.Items.Count) {
                 number = commandList.Items.Count - 1;
             }
-            commandList.SelectedIndex = number;
+            ChangeCommand_(number, selectedColor_);
 
-            for (int i = number; i < emulator_.Count(); ++i) {
-                commandList.Items[i] = emulator_.GetCommand(i).GetName();
+            if (number != -1) {
+                for (int i = number; i < emulator_.Count(); ++i) {
+                    commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
+                }
+                SelectCommand_(number, selectedColor_);
             }
         }
 
         private void MoveUpCommand_()
         {
-            int index = commandList.SelectedIndex;
+            int index = selected_;
             if (index == 0) {
                 return;
             }
-            commandList.Items.Insert(index - 1, commandList.Items[index]);
-            commandList.Items.RemoveAt(index + 1);
             emulator_.MoveCommandUp(index);
-            commandList.SelectedIndex = index - 1;
+            ChangeCommand_(index - 1, selectedColor_);
 
             for (int i = index - 1; i < emulator_.Count(); ++i) {
-                commandList.Items[i] = emulator_.GetCommand(i).GetName();
+                commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
             }
+            SelectCommand_(index - 1, selectedColor_);
 
             isProgramSaved_ = false;
         }
 
         private void MoveDownCommand_()
         {
-            int index = commandList.SelectedIndex;
+            int index = selected_;
             if (index == commandList.Items.Count - 1) {
                 return;
             }
-            commandList.Items.Insert(index + 2, commandList.Items[index]);
-            commandList.Items.RemoveAt(index);
             emulator_.MoveCommandDown(index);
-            commandList.SelectedIndex = index + 1;
+            ChangeCommand_(index + 1, selectedColor_);
 
             for (int i = index; i < emulator_.Count(); ++i) {
-                commandList.Items[i] = emulator_.GetCommand(i).GetName();
+                commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
             }
+            SelectCommand_(index + 1, selectedColor_);
 
             isProgramSaved_ = false;
         }
@@ -161,64 +259,6 @@ namespace mtemu
         private void DownButtonClick_(object sender, EventArgs e)
         {
             MoveDownCommand_();
-        }
-
-        ////////////////////
-        //  COMMAND LIST  //
-        ////////////////////
-
-        private void CommandListSelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListBox listBox = (ListBox) sender;
-            if (listBox.SelectedIndex == -1) {
-                removeButton.Enabled = false;
-                saveButton.Enabled = false;
-                upButton.Enabled = false;
-                downButton.Enabled = false;
-            }
-            else {
-                removeButton.Enabled = true;
-                saveButton.Enabled = true;
-                if (listBox.SelectedIndex == 0) {
-                    upButton.Enabled = false;
-                }
-                else {
-                    upButton.Enabled = true;
-                }
-                if (listBox.SelectedIndex == listBox.Items.Count - 1) {
-                    downButton.Enabled = false;
-                }
-                else {
-                    downButton.Enabled = true;
-                }
-            }
-
-            if (listBox.SelectedIndex != -1 && listBox.SelectedIndex != prevSelected_) {
-                if (!isCommandSaved_) {
-                    int newSelected = listBox.SelectedIndex;
-                    listBox.SelectedIndex = prevSelected_;
-
-                    DialogResult saveRes = MessageBox.Show(
-                        "Сохранить текущую команду?",
-                        "Сохранение",
-                        MessageBoxButtons.YesNoCancel,
-                        MessageBoxIcon.Question,
-                        MessageBoxDefaultButton.Button1
-                    );
-                    if (saveRes == DialogResult.Cancel) {
-                        return;
-                    }
-                    if (saveRes == DialogResult.Yes) {
-                        SaveCommand_();
-                    }
-
-                    prevSelected_ = newSelected;
-                    listBox.SelectedIndex = newSelected;
-                }
-                prevSelected_ = listBox.SelectedIndex;
-
-                LoadCommand_(new Command(emulator_.GetCommand(listBox.SelectedIndex)));
-            }
         }
 
         ////////////////////

@@ -21,12 +21,12 @@ namespace mtemu
                 ListViewItemCollection items = listView.Value.Items;
                 for (int i = 0; i < items.Count; ++i) {
                     if (i == currentCommand_.GetSelIndex(listView.Key)) {
-                        if (items[i].BackColor != selectedColor_) {
-                            items[i].BackColor = selectedColor_;
+                        if (items[i].BackColor != changedColor_) {
+                            items[i].BackColor = changedColor_;
                         }
                     }
                     else {
-                        if (items[i].BackColor == selectedColor_) {
+                        if (items[i].BackColor == changedColor_) {
                             items[i].BackColor = enabledColor_;
                         }
                     }
@@ -57,8 +57,13 @@ namespace mtemu
                 // Copy value in textbox
                 currentCommand_.SetValue(type, listView.SelectedIndices[0]);
                 textBox.Text = Helpers.IntToBinary(currentCommand_[textIndex], 4);
-                textBox.BackColor = selectedColor_;
+                textBox.BackColor = changedColor_;
             }
+        }
+
+        private void I35ListViewEnter(object sender, EventArgs e)
+        {
+            DefaultListIndexChanged_(WordType.I35);
         }
 
         private void I35ListViewSelectedIndexChanged_(object sender, EventArgs e)
@@ -66,9 +71,19 @@ namespace mtemu
             DefaultListIndexChanged_(WordType.I35);
         }
 
+        private void CaListViewEnter(object sender, EventArgs e)
+        {
+            DefaultListIndexChanged_(WordType.CA);
+        }
+
         private void CaListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
             DefaultListIndexChanged_(WordType.CA);
+        }
+
+        private void I02ListViewEnter(object sender, EventArgs e)
+        {
+            DefaultListIndexChanged_(WordType.I02);
         }
 
         private void I02ListViewSelectedIndexChanged_(object sender, EventArgs e)
@@ -76,9 +91,19 @@ namespace mtemu
             DefaultListIndexChanged_(WordType.I02);
         }
 
+        private void I68ListViewEnter(object sender, EventArgs e)
+        {
+            DefaultListIndexChanged_(WordType.I68);
+        }
+
         private void I68ListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
             DefaultListIndexChanged_(WordType.I68);
+        }
+
+        private void PtListViewEnter(object sender, EventArgs e)
+        {
+            DefaultListIndexChanged_(WordType.PT);
         }
 
         private void PtListViewSelectedIndexChanged_(object sender, EventArgs e)
@@ -86,9 +111,19 @@ namespace mtemu
             DefaultListIndexChanged_(WordType.PT);
         }
 
+        private void PsListViewEnter(object sender, EventArgs e)
+        {
+            DefaultListIndexChanged_(WordType.PS);
+        }
+
         private void PsListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
             DefaultListIndexChanged_(WordType.PS);
+        }
+
+        private void DeviceListViewEnter(object sender, EventArgs e)
+        {
+            DefaultListIndexChanged_(WordType.Device);
         }
 
         private void DeviceListViewSelectedIndexChanged_(object sender, EventArgs e)
@@ -104,7 +139,12 @@ namespace mtemu
         {
             m0CheckBox.Checked = currentCommand_.GetFlag(FlagType.M0);
             m1CheckBox.Checked = currentCommand_.GetFlag(FlagType.M1);
-            offsetCheckBox.Checked = currentCommand_.isOffset;
+            if (currentCommand_.isOffset) {
+                offsetRadioButton.Checked = true;
+            }
+            else {
+                commandRadioButton.Checked = true;
+            }
         }
 
         private void DefaultCheckBoxChanged_(FlagType flagIndex, bool value)
@@ -118,7 +158,7 @@ namespace mtemu
                 isCommandSaved_ = false;
                 currentCommand_.SetFlag(flagIndex, value);
                 textBox.Text = Helpers.IntToBinary(currentCommand_[textIndex], 4);
-                textBox.BackColor = selectedColor_;
+                textBox.BackColor = changedColor_;
             }
         }
 
@@ -138,9 +178,9 @@ namespace mtemu
             }
         }
 
-        private void OffsetCheckBoxCheckedChanged_(object sender, EventArgs e)
+        private void OffsetRadioCheckedChanged_(object sender, EventArgs e)
         {
-            currentCommand_.isOffset = offsetCheckBox.Checked;
+            currentCommand_.isOffset = offsetRadioButton.Checked;
             UpdateCommandHandler_();
         }
     }

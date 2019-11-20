@@ -160,7 +160,7 @@ namespace mtemu
             },
             {
                 CommandType.Offset, new string[] {
-                    "AR",
+                    "Offset",
                     "",
                     "",
                     "",
@@ -288,6 +288,13 @@ namespace mtemu
         public static string[][] GetItems(WordType listIndex)
         {
             return items_[listIndex];
+        }
+
+        public static Command GetDefault()
+        {
+            return new Command(new string[] {
+                "0000", "0000", "0000", "0010", "0001", "0111", "0000", "0000", "0000", "0000",
+            });
         }
     }
 

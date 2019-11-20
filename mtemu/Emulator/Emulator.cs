@@ -35,7 +35,7 @@ namespace mtemu
         public void Reset()
         {
             prevPC_ = -1;
-            pc_ = 0;
+            pc_ = -1;
 
             sp_ = 0;
             regQ_ = 0;
@@ -505,6 +505,10 @@ namespace mtemu
 
         public ResultCode ExecOne()
         {
+            if (pc_ == -1) {
+                pc_ = 0;
+            }
+
             if (commands_.Count() == 0) {
                 return ResultCode.NoCommands;
             }

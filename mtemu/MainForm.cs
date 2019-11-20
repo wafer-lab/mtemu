@@ -16,7 +16,9 @@ namespace mtemu
         private static Color enabledTextColor_ = SystemColors.WindowText;
         private static Color disabledColor_ = SystemColors.Control;
         private static Color disabledTextColor_ = SystemColors.GrayText;
-        private static Color selectedColor_ = Color.Wheat;
+        private static Color changedColor_ = Color.Wheat;
+        private static Color selectedColor_ = Color.LightBlue;
+        private static Color nextSelectedColor_ = Color.LightGray;
 
         private string filenamePrivate_;
         private string filename_ {
@@ -29,8 +31,10 @@ namespace mtemu
                 }
             }
         }
+        
+        private int selected_;
+        private int nextSelected_;
 
-        private int prevSelected_;
         private bool isCommandSaved_;
         private bool isProgramSaved_;
         
@@ -151,12 +155,11 @@ namespace mtemu
 
         private bool Reset_(string filename = null)
         {
-            LoadCommand_(new Command(new string[] {
-                "0000", "0000", "0000", "0010", "0001", "0111", "0000", "0000", "0000", "0000",
-            }));
+            LoadCommand_(Command.GetDefault());
 
             filename_ = filename;
-            prevSelected_ = -1;
+            selected_ = -1;
+            nextSelected_ = -1;
             isCommandSaved_ = true;
             isProgramSaved_ = true;
 
@@ -172,7 +175,7 @@ namespace mtemu
                     return false;
                 }
                 for (int i = 0; i < emulator_.Count(); ++i) {
-                    commandList.Items.Add(emulator_.GetCommand(i).GetName());
+                    commandList.Items.Add(CommandToItems(emulator_.GetCommand(i)));
                 }
             }
 
