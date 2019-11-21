@@ -59,6 +59,10 @@ namespace mtemu
 
         private void ChangeCommand_(int newSelected, Color color)
         {
+            if (newSelected < -1 || commandList.Items.Count <= newSelected) {
+                return;
+            }
+
             if (newSelected != selected_) {
                 if (!isCommandSaved_) {
                     DialogResult saveRes = MessageBox.Show(
@@ -122,10 +126,12 @@ namespace mtemu
         private ListViewItem CommandToItems(Command command)
         {
             string number = "";
+            string jump = "";
             if (!command.isOffset) {
                 number = $"0x{command.GetNumber():X3}";
+                jump = command.GetJumpName();
             }
-            return new ListViewItem(new string[] { "", number, command.GetName() });
+            return new ListViewItem(new string[] { "", number, command.GetName(), jump });
         }
 
         private void CommandListSelectedIndexChanged_(object sender, EventArgs e)
@@ -184,21 +190,23 @@ namespace mtemu
 
         private void RemoveCommand_()
         {
-            isProgramSaved_ = false;
+            if (0 <= selected_ && selected_ < commandList.Items.Count) {
+                isProgramSaved_ = false;
 
-            int number = selected_;
-            emulator_.RemoveCommand(number);
-            commandList.Items.RemoveAt(number);
-            if (number >= commandList.Items.Count) {
-                number = commandList.Items.Count - 1;
-            }
-            ChangeCommand_(number, selectedColor_);
-
-            if (number != -1) {
-                for (int i = number; i < emulator_.Count(); ++i) {
-                    commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
+                int number = selected_;
+                emulator_.RemoveCommand(number);
+                commandList.Items.RemoveAt(number);
+                if (number >= commandList.Items.Count) {
+                    number = commandList.Items.Count - 1;
                 }
-                SelectCommand_(number, selectedColor_);
+                ChangeCommand_(number, selectedColor_);
+
+                if (number != -1) {
+                    for (int i = number; i < emulator_.Count(); ++i) {
+                        commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
+                    }
+                    SelectCommand_(number, selectedColor_);
+                }
             }
         }
 
@@ -264,6 +272,11 @@ namespace mtemu
         ////////////////////
         //   TEXT BOXES   //
         ////////////////////
+
+        private void RadioButtonTabStopChanged(object sender, EventArgs e)
+        {
+            (sender as RadioButton).TabStop = false;
+        }
 
         private void DefaultTextEnter_(object sender, EventArgs e)
         {
@@ -350,15 +363,37 @@ namespace mtemu
 
             int value = Helpers.BinaryToInt(textBox.Text);
             if (e.KeyCode == Keys.Up) {
-                if (value > 0) {
-                    textBox.Text = Helpers.IntToBinary(value - 1, 4);
+                if (e.Control) {
+                    ChangeCommand_(selected_ - 1, selectedColor_);
+                }
+                else {
+                    if (value > 0) {
+                        textBox.Text = Helpers.IntToBinary(value - 1, 4);
+                    }
                 }
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Down) {
-                if (value < 15) {
-                    textBox.Text = Helpers.IntToBinary(value + 1, 4);
+                if (e.Control) {
+                    ChangeCommand_(selected_ + 1, selectedColor_);
                 }
+                else {
+                    if (value < 15) {
+                        textBox.Text = Helpers.IntToBinary(value + 1, 4);
+                    }
+                }
+                e.Handled = true;
+            }
+            if (e.Control && e.KeyCode == Keys.Left) {
+                commandRadioButton.Checked = true;
+                e.Handled = true;
+            }
+            if (e.Control && e.KeyCode == Keys.Delete) {
+                RemoveCommand_();
+                e.Handled = true;
+            }
+            if (e.Control && e.KeyCode == Keys.Right) {
+                offsetRadioButton.Checked = true;
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Enter) {

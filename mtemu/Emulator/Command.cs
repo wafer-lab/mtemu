@@ -148,9 +148,11 @@ namespace mtemu
                 break;
             }
 
-            //res = $"0x{number_:X3}; " + res;
+            return res;
+        }
 
-            res += "; " + GetItem_(WordType.CA)[2];
+        public string GetJumpName() { 
+            string res = GetItem_(WordType.CA)[2];
             JumpType jt = GetJumpType();
             if (jt == JumpType.JNZ || jt == JumpType.JMP || jt == JumpType.CLNZ
                 || jt == JumpType.CALL || jt == JumpType.JZ || jt == JumpType.JF3

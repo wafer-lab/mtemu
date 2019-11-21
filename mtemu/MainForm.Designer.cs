@@ -49,8 +49,8 @@
             this.ovrText = new System.Windows.Forms.TextBox();
             this.outputLabel = new System.Windows.Forms.Label();
             this.currentPanel = new System.Windows.Forms.Panel();
-            this.offsetRadioButton = new System.Windows.Forms.RadioButton();
             this.commandRadioButton = new System.Windows.Forms.RadioButton();
+            this.offsetRadioButton = new System.Windows.Forms.RadioButton();
             this.downButton = new System.Windows.Forms.Button();
             this.upButton = new System.Windows.Forms.Button();
             this.cc2Text = new System.Windows.Forms.TextBox();
@@ -112,6 +112,7 @@
             this.firstComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.addrComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.nameComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.jumpComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.stepButton = new System.Windows.Forms.Button();
             this.autoButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
@@ -193,6 +194,8 @@
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveButtonClick_);
+            System.Windows.Forms.ToolTip saveButtonToolTip = new System.Windows.Forms.ToolTip();
+            saveButtonToolTip.SetToolTip(saveButton, "Enter");
             // 
             // cc0Text
             // 
@@ -456,8 +459,8 @@
             // currentPanel
             // 
             this.currentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.currentPanel.Controls.Add(this.offsetRadioButton);
             this.currentPanel.Controls.Add(this.commandRadioButton);
+            this.currentPanel.Controls.Add(this.offsetRadioButton);
             this.currentPanel.Controls.Add(this.downButton);
             this.currentPanel.Controls.Add(this.upButton);
             this.currentPanel.Controls.Add(this.cc2Text);
@@ -488,19 +491,6 @@
             this.currentPanel.Size = new System.Drawing.Size(591, 122);
             this.currentPanel.TabIndex = 0;
             // 
-            // offsetRadioButton
-            // 
-            this.offsetRadioButton.AutoSize = true;
-            this.offsetRadioButton.Location = new System.Drawing.Point(489, 10);
-            this.offsetRadioButton.Margin = new System.Windows.Forms.Padding(4);
-            this.offsetRadioButton.Name = "offsetRadioButton";
-            this.offsetRadioButton.Size = new System.Drawing.Size(90, 21);
-            this.offsetRadioButton.TabIndex = 17;
-            this.offsetRadioButton.TabStop = true;
-            this.offsetRadioButton.Text = "Смещение";
-            this.offsetRadioButton.UseVisualStyleBackColor = true;
-            this.offsetRadioButton.CheckedChanged += new System.EventHandler(this.OffsetRadioCheckedChanged_);
-            // 
             // commandRadioButton
             // 
             this.commandRadioButton.AutoSize = true;
@@ -508,10 +498,27 @@
             this.commandRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.commandRadioButton.Name = "commandRadioButton";
             this.commandRadioButton.Size = new System.Drawing.Size(82, 21);
-            this.commandRadioButton.TabIndex = 16;
-            this.commandRadioButton.TabStop = true;
+            this.commandRadioButton.TabIndex = 0;
             this.commandRadioButton.Text = "Команда";
             this.commandRadioButton.UseVisualStyleBackColor = true;
+            this.commandRadioButton.TabStopChanged += new System.EventHandler(this.RadioButtonTabStopChanged);
+            System.Windows.Forms.ToolTip commandRadioToolTip = new System.Windows.Forms.ToolTip();
+            commandRadioToolTip.SetToolTip(commandRadioButton, "Ctrl + Left");
+            // 
+            // offsetRadioButton
+            // 
+            this.offsetRadioButton.AutoSize = true;
+            this.offsetRadioButton.Location = new System.Drawing.Point(489, 10);
+            this.offsetRadioButton.Margin = new System.Windows.Forms.Padding(4);
+            this.offsetRadioButton.Name = "offsetRadioButton";
+            this.offsetRadioButton.Size = new System.Drawing.Size(90, 21);
+            this.offsetRadioButton.TabIndex = 0;
+            this.offsetRadioButton.Text = "Смещение";
+            this.offsetRadioButton.UseVisualStyleBackColor = true;
+            this.offsetRadioButton.CheckedChanged += new System.EventHandler(this.OffsetRadioCheckedChanged_);
+            this.offsetRadioButton.TabStopChanged += new System.EventHandler(this.RadioButtonTabStopChanged);
+            System.Windows.Forms.ToolTip offsetRadioToolTip = new System.Windows.Forms.ToolTip();
+            offsetRadioToolTip.SetToolTip(offsetRadioButton, "Ctrl + Right");
             // 
             // downButton
             // 
@@ -521,7 +528,7 @@
             this.downButton.Margin = new System.Windows.Forms.Padding(4);
             this.downButton.Name = "downButton";
             this.downButton.Size = new System.Drawing.Size(24, 24);
-            this.downButton.TabIndex = 14;
+            this.downButton.TabIndex = 0;
             this.downButton.TabStop = false;
             this.downButton.Text = "▼";
             this.downButton.UseVisualStyleBackColor = true;
@@ -535,7 +542,7 @@
             this.upButton.Margin = new System.Windows.Forms.Padding(4);
             this.upButton.Name = "upButton";
             this.upButton.Size = new System.Drawing.Size(24, 24);
-            this.upButton.TabIndex = 13;
+            this.upButton.TabIndex = 0;
             this.upButton.TabStop = false;
             this.upButton.Text = "▲";
             this.upButton.UseVisualStyleBackColor = true;
@@ -584,6 +591,8 @@
             this.addButton.Text = "Добавить";
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.AddButtonClick_);
+            System.Windows.Forms.ToolTip addButtonToolTip = new System.Windows.Forms.ToolTip();
+            addButtonToolTip.SetToolTip(addButton, "Ctrl + Enter");
             // 
             // cc7TextLabel
             // 
@@ -750,6 +759,8 @@
             this.removeButton.Text = "Удалить";
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.RemoveButtonClick_);
+            System.Windows.Forms.ToolTip removeButtonToolTip = new System.Windows.Forms.ToolTip();
+            removeButtonToolTip.SetToolTip(removeButton, "Ctrl + Del");
             // 
             // cc5Text
             // 
@@ -1288,7 +1299,8 @@
             this.commandList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.firstComColumn,
             this.addrComColumn,
-            this.nameComColumn});
+            this.nameComColumn,
+            this.jumpComColumn});
             this.commandList.Cursor = System.Windows.Forms.Cursors.Hand;
             this.commandList.FullRowSelect = true;
             this.commandList.GridLines = true;
@@ -1296,7 +1308,6 @@
             this.commandList.Location = new System.Drawing.Point(10, 61);
             this.commandList.MultiSelect = false;
             this.commandList.Name = "commandList";
-            this.commandList.Scrollable = false;
             this.commandList.Size = new System.Drawing.Size(590, 385);
             this.commandList.TabIndex = 0;
             this.commandList.TabStop = false;
@@ -1319,7 +1330,14 @@
             // nameComColumn
             // 
             this.nameComColumn.Text = "Команда";
-            this.nameComColumn.Width = 541;
+            this.nameComColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nameComColumn.Width = 443;
+            // 
+            // jumpComColumn
+            // 
+            this.jumpComColumn.Text = "Jump";
+            this.jumpComColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.jumpComColumn.Width = 82;
             // 
             // stepButton
             // 
@@ -2032,8 +2050,9 @@
         private System.Windows.Forms.ColumnHeader addrComColumn;
         private System.Windows.Forms.ColumnHeader nameComColumn;
         private System.Windows.Forms.ColumnHeader firstComColumn;
-        private System.Windows.Forms.RadioButton offsetRadioButton;
         private System.Windows.Forms.RadioButton commandRadioButton;
+        private System.Windows.Forms.RadioButton offsetRadioButton;
+        private System.Windows.Forms.ColumnHeader jumpComColumn;
     }
 }
 
