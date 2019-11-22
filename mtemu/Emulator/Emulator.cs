@@ -325,11 +325,11 @@ namespace mtemu
             case 0:
                 f_ = opA + opB + c0;
                 break;
-            case 2:
-                f_ = opA + (~opB & 15) + c0;
-                break;
             case 1:
-                f_ = opB + (~opA & 15) + c0;
+                f_ = opB - opA - 1 + c0;
+                break;
+            case 2:
+                f_ = opA - opB - 1 + c0;
                 break;
             case 3:
                 f_ = opB | opA;
@@ -350,8 +350,9 @@ namespace mtemu
 
             z_ = (f_ & 15) == 0;
             f3_ = (f_ & 8) != 0;
+            bool c3_ = (f_ & 8) != 0;
             c4_ = (f_ & 16) != 0;
-            ovr_ = c4_ != f3_;
+            ovr_ = c4_ != c3_;
             f_ = f_ & 15;
 
             int qLow = regQ_ & 1;
@@ -495,22 +496,15 @@ namespace mtemu
             }
         }
 
-        public enum ResultCode
-        {
-            Ok,
-            NoCommands,
-            IncorrectCommand,
-            Loop,
-        };
-
         public ResultCode ExecOne()
         {
-            if (pc_ == -1) {
-                pc_ = 0;
-            }
-
             if (commands_.Count() == 0) {
                 return ResultCode.NoCommands;
+            }
+
+            if (pc_ == -1) {
+                pc_ = 0;
+                return ResultCode.Ok;
             }
 
             if (!Current_().Check()) {
@@ -653,24 +647,62 @@ namespace mtemu
             return p_;
         }
 
+        private void SaveAsMtemu_(FileStream fstream)
+        {
+            int seek = 0;
+            byte[] output = new byte[fileHeader_.Length + Count() * (commandSize_ + 1)];
+            for (; seek < fileHeader_.Length; ++seek) {
+                output[seek] = fileHeader_[seek];
+            }
+            Command[] commandsArr = commands_.ToArray();
+            for (int i = 0; i < commandsArr.Length; ++i) {
+                output[seek] = (byte) (commandsArr[i].isOffset ? 1 : 0);
+                ++seek;
+                for (int j = 0; j < commandSize_; ++j, ++seek) {
+                    output[seek] = (byte) ((commandsArr[i][2 * j] << 4) + commandsArr[i][2 * j + 1]);
+                }
+            }
+            fstream.Write(output, 0, output.Length);
+            fstream.SetLength(fstream.Position);
+        }
+
+        private void SaveAsBinary_(FileStream fstream)
+        {
+            int seek = 0;
+            byte[] output = new byte[binFileHeader_.Length + programSize_ * commandSize_];
+            for (; seek < binFileHeader_.Length; ++seek) {
+                output[seek] = binFileHeader_[seek];
+            }
+
+            UpdateOffsets_();
+            Command[] commandsArr = new Command[programSize_];
+            foreach (Command command in commands_) {
+                if (!command.isOffset) {
+                    commandsArr[command.GetNumber()] = command;
+                }
+            }
+
+            for (int i = 0; i < commandsArr.Length; ++i) {
+                if (commandsArr[i] == null) {
+                    commandsArr[i] = incorrectCommand_;
+                }
+                for (int j = 0; j < commandSize_; ++j, ++seek) {
+                    output[seek] = (byte) ((commandsArr[i][2 * j] << 4) + commandsArr[i][2 * j + 1]);
+                }
+            }
+            fstream.Write(output, 0, output.Length);
+            fstream.SetLength(fstream.Position);
+        }
+
         public bool SaveFile(string filename)
         {
             using (FileStream fstream = new FileStream(filename, FileMode.OpenOrCreate)) {
-                int seek = 0;
-                byte[] output = new byte[fileHeader_.Length + Count() * (commandSize_ + 1)];
-                for(; seek < fileHeader_.Length; ++seek) {
-                    output[seek] = fileHeader_[seek];
+                if (Path.GetExtension(filename) == ".bin") {
+                    SaveAsBinary_(fstream);
                 }
-                Command[] commandsArr = commands_.ToArray();
-                for (int i = 0; i < commandsArr.Length; ++i) {
-                    output[seek] = (byte) (commandsArr[i].isOffset ? 1 : 0);
-                    ++seek;
-                    for (int j = 0; j < commandSize_; ++j, ++seek) {
-                        output[seek] = (byte) ((commandsArr[i][2*j] << 4) + commandsArr[i][2*j + 1]);
-                    }
+                else {
+                    SaveAsMtemu_(fstream);
                 }
-                fstream.Write(output, 0, output.Length);
-                fstream.SetLength(fstream.Position);
                 return true;
             }
         }

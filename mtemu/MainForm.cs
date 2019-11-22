@@ -17,8 +17,8 @@ namespace mtemu
         private static Color disabledColor_ = SystemColors.Control;
         private static Color disabledTextColor_ = SystemColors.GrayText;
         private static Color changedColor_ = Color.Wheat;
-        private static Color selectedColor_ = Color.LightBlue;
-        private static Color nextSelectedColor_ = Color.LightGray;
+        private static Color selectedColor_ = Color.FromArgb(0, 190, 200, 234);
+        private static Color nextSelectedColor_ = Color.FromArgb(0, 234, 234, 234);
 
         private string filenamePrivate_;
         private string filename_ {
@@ -31,13 +31,13 @@ namespace mtemu
                 }
             }
         }
-        
+
         private int selected_;
         private int nextSelected_;
 
         private bool isCommandSaved_;
         private bool isProgramSaved_;
-        
+
         private Emulator emulator_;
         private Command currentCommand_;
 
@@ -46,7 +46,7 @@ namespace mtemu
         private Label[] regLabels_;
         private TextBox[] regTexts_;
         private Dictionary<WordType, ListView> listViewes_;
-        
+
         MemoryForm memoryForm_;
         StackForm stackForm_;
 
@@ -140,13 +140,13 @@ namespace mtemu
             // Memory debug form
             memoryForm_ = new MemoryForm();
             for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
-                memoryForm_.memoryListView.Items.Add(new ListViewItem(new string[] {"", $"0x{i:X2}", "0000"}));
+                memoryForm_.memoryListView.Items.Add(new ListViewItem(new string[] { "", $"0x{i:X2}", "0000 0000", "0x00" }));
             }
 
             // Stack debug form
             stackForm_ = new StackForm();
             for (int i = 0; i < Emulator.GetStackSize(); ++i) {
-                stackForm_.stackListView.Items.Add(new ListViewItem(new string[] { "", $"0x{i:X}", "0000" }));
+                stackForm_.stackListView.Items.Add(new ListViewItem(new string[] { "", $"0x{i:X}", "0x000" }));
             }
 
             // Reset to initial values
@@ -359,6 +359,40 @@ namespace mtemu
             if (!BeforeCloseProgram_()) {
                 e.Cancel = true;
             }
+        }
+
+        private bool DefaultKeyDown_(KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.Up) {
+                ChangeCommand_(selected_ - 1, selectedColor_);
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.Down) {
+                ChangeCommand_(selected_ + 1, selectedColor_);
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.Left) {
+                commandRadioButton.Checked = true;
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.Right) {
+                offsetRadioButton.Checked = true;
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.Delete) {
+                RemoveCommand_();
+                return true;
+            }
+            if (e.KeyCode == Keys.Enter) {
+                if (e.Control) {
+                    AddCommand_();
+                }
+                else {
+                    SaveCommand_();
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

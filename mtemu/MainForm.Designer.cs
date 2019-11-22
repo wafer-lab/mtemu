@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.listLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.cc0Text = new System.Windows.Forms.TextBox();
@@ -164,6 +165,11 @@
             this.infoLabel = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.saveButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.commandRadioToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.offsetRadioToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.addButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.removeButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
             this.memoryPanel.SuspendLayout();
@@ -192,10 +198,9 @@
             this.saveButton.Size = new System.Drawing.Size(102, 24);
             this.saveButton.TabIndex = 12;
             this.saveButton.Text = "Сохранить";
+            this.saveButtonToolTip.SetToolTip(this.saveButton, "Enter");
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveButtonClick_);
-            System.Windows.Forms.ToolTip saveButtonToolTip = new System.Windows.Forms.ToolTip();
-            saveButtonToolTip.SetToolTip(saveButton, "Enter");
             // 
             // cc0Text
             // 
@@ -500,10 +505,9 @@
             this.commandRadioButton.Size = new System.Drawing.Size(82, 21);
             this.commandRadioButton.TabIndex = 0;
             this.commandRadioButton.Text = "Команда";
+            this.commandRadioToolTip.SetToolTip(this.commandRadioButton, "Ctrl + Left");
             this.commandRadioButton.UseVisualStyleBackColor = true;
             this.commandRadioButton.TabStopChanged += new System.EventHandler(this.RadioButtonTabStopChanged);
-            System.Windows.Forms.ToolTip commandRadioToolTip = new System.Windows.Forms.ToolTip();
-            commandRadioToolTip.SetToolTip(commandRadioButton, "Ctrl + Left");
             // 
             // offsetRadioButton
             // 
@@ -514,11 +518,10 @@
             this.offsetRadioButton.Size = new System.Drawing.Size(90, 21);
             this.offsetRadioButton.TabIndex = 0;
             this.offsetRadioButton.Text = "Смещение";
+            this.offsetRadioToolTip.SetToolTip(this.offsetRadioButton, "Ctrl + Right");
             this.offsetRadioButton.UseVisualStyleBackColor = true;
             this.offsetRadioButton.CheckedChanged += new System.EventHandler(this.OffsetRadioCheckedChanged_);
             this.offsetRadioButton.TabStopChanged += new System.EventHandler(this.RadioButtonTabStopChanged);
-            System.Windows.Forms.ToolTip offsetRadioToolTip = new System.Windows.Forms.ToolTip();
-            offsetRadioToolTip.SetToolTip(offsetRadioButton, "Ctrl + Right");
             // 
             // downButton
             // 
@@ -589,10 +592,9 @@
             this.addButton.Size = new System.Drawing.Size(102, 24);
             this.addButton.TabIndex = 11;
             this.addButton.Text = "Добавить";
+            this.addButtonToolTip.SetToolTip(this.addButton, "Ctrl + Enter");
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.AddButtonClick_);
-            System.Windows.Forms.ToolTip addButtonToolTip = new System.Windows.Forms.ToolTip();
-            addButtonToolTip.SetToolTip(addButton, "Ctrl + Enter");
             // 
             // cc7TextLabel
             // 
@@ -757,10 +759,9 @@
             this.removeButton.TabIndex = 0;
             this.removeButton.TabStop = false;
             this.removeButton.Text = "Удалить";
+            this.removeButtonToolTip.SetToolTip(this.removeButton, "Ctrl + Del");
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.RemoveButtonClick_);
-            System.Windows.Forms.ToolTip removeButtonToolTip = new System.Windows.Forms.ToolTip();
-            removeButtonToolTip.SetToolTip(removeButton, "Ctrl + Del");
             // 
             // cc5Text
             // 
@@ -1302,6 +1303,7 @@
             this.nameComColumn,
             this.jumpComColumn});
             this.commandList.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.commandList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.commandList.FullRowSelect = true;
             this.commandList.GridLines = true;
             this.commandList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -1330,13 +1332,11 @@
             // nameComColumn
             // 
             this.nameComColumn.Text = "Команда";
-            this.nameComColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nameComColumn.Width = 443;
             // 
             // jumpComColumn
             // 
             this.jumpComColumn.Text = "Jump";
-            this.jumpComColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.jumpComColumn.Width = 82;
             // 
             // stepButton
@@ -1848,12 +1848,13 @@
             // 
             // openFileDialog
             // 
+            this.openFileDialog.DefaultExt = "mte";
             this.openFileDialog.Filter = "Программа для MT (*.mte)|*.mte|Все файлы (*.*)|*.*";
             // 
             // saveFileDialog
             // 
             this.saveFileDialog.DefaultExt = "mte";
-            this.saveFileDialog.Filter = "Программа для MT (*.mte)|*.mte|Все файлы (*.*)|*.*";
+            this.saveFileDialog.Filter = "Программа для MT (*.mte)|*.mte|Бинарный файл (*.bin)|*.bin|Все файлы (*.*)|*.*";
             // 
             // MainForm
             // 
@@ -2053,6 +2054,11 @@
         private System.Windows.Forms.RadioButton commandRadioButton;
         private System.Windows.Forms.RadioButton offsetRadioButton;
         private System.Windows.Forms.ColumnHeader jumpComColumn;
+        private System.Windows.Forms.ToolTip saveButtonToolTip;
+        private System.Windows.Forms.ToolTip commandRadioToolTip;
+        private System.Windows.Forms.ToolTip offsetRadioToolTip;
+        private System.Windows.Forms.ToolTip addButtonToolTip;
+        private System.Windows.Forms.ToolTip removeButtonToolTip;
     }
 }
 

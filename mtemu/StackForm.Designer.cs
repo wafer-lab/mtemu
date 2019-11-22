@@ -50,7 +50,7 @@
             this.stackListView.Margin = new System.Windows.Forms.Padding(0);
             this.stackListView.MultiSelect = false;
             this.stackListView.Name = "stackListView";
-            this.stackListView.Size = new System.Drawing.Size(182, 365);
+            this.stackListView.Size = new System.Drawing.Size(184, 291);
             this.stackListView.TabIndex = 1;
             this.stackListView.TabStop = false;
             this.stackListView.UseCompatibleStateImageBehavior = false;
@@ -66,24 +66,23 @@
             this.stackCodeColumn.DisplayIndex = 0;
             this.stackCodeColumn.Text = "Адрес";
             this.stackCodeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.stackCodeColumn.Width = 47;
+            this.stackCodeColumn.Width = 48;
             // 
             // stackNameColumn
             // 
             this.stackNameColumn.DisplayIndex = 1;
             this.stackNameColumn.Text = "Значение";
             this.stackNameColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.stackNameColumn.Width = 80;
+            this.stackNameColumn.Width = 118;
             // 
             // StackForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(182, 365);
+            this.ClientSize = new System.Drawing.Size(184, 291);
             this.Controls.Add(this.stackListView);
             this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "StackForm";
             this.ShowInTaskbar = false;
             this.Text = "Стек";

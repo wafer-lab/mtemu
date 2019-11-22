@@ -304,6 +304,7 @@ namespace mtemu
 
         private static int commandSize_ = 5;
         private static byte[] fileHeader_ = Encoding.ASCII.GetBytes("MTEM");
+        private static byte[] binFileHeader_ = Encoding.ASCII.GetBytes("MTBP");
 
         private static int programSize_ = 1 << 12;
         private static int stackSize_ = 1 << 4;
@@ -325,5 +326,13 @@ namespace mtemu
         {
             return memSize_;
         }
+
+        public enum ResultCode
+        {
+            Ok,
+            NoCommands,
+            IncorrectCommand,
+            Loop,
+        };
     }
 }

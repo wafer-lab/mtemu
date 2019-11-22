@@ -31,6 +31,7 @@
             this.memoryFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.memoryCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.memoryNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.memoryHexColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // memoryListView
@@ -40,7 +41,8 @@
             this.memoryListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.memoryFirstColumn,
             this.memoryCodeColumn,
-            this.memoryNameColumn});
+            this.memoryNameColumn,
+            this.memoryHexColumn});
             this.memoryListView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.memoryListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.memoryListView.FullRowSelect = true;
@@ -50,7 +52,7 @@
             this.memoryListView.Margin = new System.Windows.Forms.Padding(0);
             this.memoryListView.MultiSelect = false;
             this.memoryListView.Name = "memoryListView";
-            this.memoryListView.Size = new System.Drawing.Size(182, 365);
+            this.memoryListView.Size = new System.Drawing.Size(184, 291);
             this.memoryListView.TabIndex = 1;
             this.memoryListView.TabStop = false;
             this.memoryListView.UseCompatibleStateImageBehavior = false;
@@ -66,24 +68,29 @@
             this.memoryCodeColumn.DisplayIndex = 0;
             this.memoryCodeColumn.Text = "Адрес";
             this.memoryCodeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.memoryCodeColumn.Width = 47;
+            this.memoryCodeColumn.Width = 48;
             // 
             // memoryNameColumn
             // 
             this.memoryNameColumn.DisplayIndex = 1;
             this.memoryNameColumn.Text = "Значение";
             this.memoryNameColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.memoryNameColumn.Width = 80;
+            this.memoryNameColumn.Width = 78;
+            // 
+            // memoryHexColumn
+            // 
+            this.memoryHexColumn.Text = "HEX";
+            this.memoryHexColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.memoryHexColumn.Width = 40;
             // 
             // MemoryForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(182, 365);
+            this.ClientSize = new System.Drawing.Size(184, 291);
             this.Controls.Add(this.memoryListView);
             this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MemoryForm";
             this.ShowInTaskbar = false;
             this.Text = "Память";
@@ -97,5 +104,6 @@
         private System.Windows.Forms.ColumnHeader memoryCodeColumn;
         private System.Windows.Forms.ColumnHeader memoryNameColumn;
         public System.Windows.Forms.ListView memoryListView;
+        private System.Windows.Forms.ColumnHeader memoryHexColumn;
     }
 }

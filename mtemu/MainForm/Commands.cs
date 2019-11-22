@@ -131,7 +131,11 @@ namespace mtemu
                 number = $"0x{command.GetNumber():X3}";
                 jump = command.GetJumpName();
             }
-            return new ListViewItem(new string[] { "", number, command.GetName(), jump });
+            ListViewItem lv = new ListViewItem(new string[] { "", number, command.GetName(), jump });
+            if (command.isOffset) {
+                lv.Font = new Font("Consolas", 10F, FontStyle.Italic | FontStyle.Underline);
+            }
+            return lv;
         }
 
         private void CommandListSelectedIndexChanged_(object sender, EventArgs e)
@@ -360,52 +364,24 @@ namespace mtemu
 
             int selPos = textBox.SelectionStart;
             int selLen = textBox.SelectionLength;
-
             int value = Helpers.BinaryToInt(textBox.Text);
-            if (e.KeyCode == Keys.Up) {
-                if (e.Control) {
-                    ChangeCommand_(selected_ - 1, selectedColor_);
-                }
-                else {
-                    if (value > 0) {
-                        textBox.Text = Helpers.IntToBinary(value - 1, 4);
-                    }
-                }
-                e.Handled = true;
-            }
-            if (e.KeyCode == Keys.Down) {
-                if (e.Control) {
-                    ChangeCommand_(selected_ + 1, selectedColor_);
-                }
-                else {
-                    if (value < 15) {
-                        textBox.Text = Helpers.IntToBinary(value + 1, 4);
-                    }
-                }
-                e.Handled = true;
-            }
-            if (e.Control && e.KeyCode == Keys.Left) {
-                commandRadioButton.Checked = true;
-                e.Handled = true;
-            }
-            if (e.Control && e.KeyCode == Keys.Delete) {
-                RemoveCommand_();
-                e.Handled = true;
-            }
-            if (e.Control && e.KeyCode == Keys.Right) {
-                offsetRadioButton.Checked = true;
-                e.Handled = true;
-            }
-            if (e.KeyCode == Keys.Enter) {
-                if (e.Control) {
-                    AddCommand_();
-                }
-                else {
-                    SaveCommand_();
-                }
-                e.Handled = true;
-            }
 
+            if (DefaultKeyDown_(e)) {
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Up) {
+                if (value > 0) {
+                    textBox.Text = Helpers.IntToBinary(value - 1, 4);
+                }
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Down) {
+                if (value < 15) {
+                    textBox.Text = Helpers.IntToBinary(value + 1, 4);
+                }
+                e.Handled = true;
+            }
+            
             textBox.SelectionStart = selPos;
             textBox.SelectionLength = selLen;
             return true;

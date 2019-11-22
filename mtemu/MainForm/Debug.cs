@@ -63,14 +63,14 @@ namespace mtemu
             }
 
             if (emulator_.Count() > 0) {
-                SelectNextCommand_(emulator_.GetNextIndex());
-                ChangeCommand_(emulator_.GetLastIndex(), selectedColor_);
+                ChangeCommand_(emulator_.GetNextIndex(), selectedColor_);
+                SelectNextCommand_(emulator_.GetLastIndex());
             }
 
             for (int i = 0; i < Emulator.GetStackSize(); ++i) {
                 ListViewItem item = stackForm_.stackListView.Items[i];
                 ListViewItem.ListViewSubItem subitem = item.SubItems[2];
-                string newText = Helpers.IntToBinary(emulator_.GetStackValue(i), 4);
+                string newText = $"0x{emulator_.GetStackValue(i):X3}";
                 if (item.BackColor != enabledColor_) {
                     item.BackColor = enabledColor_;
                 }
@@ -84,13 +84,16 @@ namespace mtemu
 
             for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
                 ListViewItem item = memoryForm_.memoryListView.Items[i];
-                ListViewItem.ListViewSubItem subitem = item.SubItems[2];
                 string newText = Helpers.IntToBinary(emulator_.GetMemValue(i), 8, 4);
+                string newText2 = $"0x{emulator_.GetMemValue(i):X2}";
+
                 if (item.BackColor != enabledColor_) {
                     item.BackColor = enabledColor_;
                 }
-                if (subitem.Text != newText) {
-                    subitem.Text = newText;
+
+                if (item.SubItems[2].Text != newText) {
+                    item.SubItems[2].Text = newText;
+                    item.SubItems[3].Text = newText2;
                     if (!asNew) {
                         item.BackColor = changedColor_;
                     }
