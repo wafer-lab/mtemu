@@ -119,6 +119,16 @@ namespace mtemu
             this.Focus();
         }
 
+        private void SchemeMenuItemClick_(object sender, EventArgs e)
+        {
+            schemeForm_.Show(this);
+        }
+
+        private void ExtenderSettingsMenuItemClick_(object sender, EventArgs e)
+        {
+            extenderSettingsForm_.Show(this);
+        }
+
         private void HelpMenuItemClick_(object sender, EventArgs e)
         {
             MessageBox.Show(

@@ -49,6 +49,8 @@ namespace mtemu
 
         MemoryForm memoryForm_;
         StackForm stackForm_;
+        SchemeForm schemeForm_;
+        ExtenderSettingsForm extenderSettingsForm_;
 
         public MainForm()
         {
@@ -127,7 +129,7 @@ namespace mtemu
                 { WordType.I35, i35ListView },
                 { WordType.PT, ptListView },
                 { WordType.PS, psListView },
-                { WordType.Device, deviceListView },
+                { WordType.DEVICE, deviceListView },
             };
             foreach (KeyValuePair<WordType, ListView> listView in listViewes_) {
                 listView.Value.Items.Clear();
@@ -148,6 +150,12 @@ namespace mtemu
             for (int i = 0; i < Emulator.GetStackSize(); ++i) {
                 stackForm_.stackListView.Items.Add(new ListViewItem(new string[] { "", $"0x{i:X}", "0x000" }));
             }
+
+            // Form with scheme of ALU
+            schemeForm_ = new SchemeForm();
+
+            // Form with extenser device settings
+            extenderSettingsForm_ = new ExtenderSettingsForm();
 
             // Reset to initial values
             Reset_();
@@ -235,15 +243,15 @@ namespace mtemu
 
         private void UpdateItemsAvailability_()
         {
-            switch (currentCommand_.GetCommandType()) {
-            case CommandType.MtCommand:
+            switch (currentCommand_.GetCommandView()) {
+            case ViewType.MT_COMMAND:
                 DisableItems_(new Control[] {
                     ptListView,
                     deviceListView,
                     psListView,
                 });
                 break;
-            case CommandType.MemoryPointer:
+            case ViewType.MEMORY_POINTER:
                 DisableItems_(new Control[] {
                     flagPanel,
                     i02ListView,
@@ -255,7 +263,7 @@ namespace mtemu
                     psListView,
                 });
                 break;
-            case CommandType.DevicePointer:
+            case ViewType.DEVICE_POINTER:
                 DisableItems_(new Control[] {
                     flagPanel,
                     i02ListView,
@@ -266,7 +274,7 @@ namespace mtemu
                     psListView,
                 });
                 break;
-            case CommandType.LoadCommand:
+            case ViewType.LOAD_8BIT:
                 DisableItems_(new Control[] {
                     flagPanel,
                     i02ListView,
@@ -278,7 +286,7 @@ namespace mtemu
                     deviceListView,
                 });
                 break;
-            case CommandType.LoadSmallCommand:
+            case ViewType.LOAD_4BIT:
                 DisableItems_(new Control[] {
                     flagPanel,
                     i02ListView,
@@ -291,7 +299,7 @@ namespace mtemu
                     deviceListView,
                 });
                 break;
-            case CommandType.Offset:
+            case ViewType.OFFSET:
                 DisableItems_(new Control[] {
                     flagPanel,
                     cc3Text,

@@ -123,12 +123,12 @@ namespace mtemu
 
         private void DeviceListViewEnter(object sender, EventArgs e)
         {
-            DefaultListIndexChanged_(WordType.Device);
+            DefaultListIndexChanged_(WordType.DEVICE);
         }
 
         private void DeviceListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
-            DefaultListIndexChanged_(WordType.Device);
+            DefaultListIndexChanged_(WordType.DEVICE);
         }
 
         ////////////////////

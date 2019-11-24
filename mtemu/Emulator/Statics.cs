@@ -1,20 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace mtemu
 {
-    enum CommandType : byte
+    enum ViewType : byte
     {
-        MtCommand,
-        MemoryPointer,
-        DevicePointer,
-        LoadCommand,
-        LoadSmallCommand,
-        Offset,
-        Unknown = 255,
+        MT_COMMAND,
+        MEMORY_POINTER,
+        DEVICE_POINTER,
+        LOAD_8BIT,
+        LOAD_4BIT,
+        OFFSET,
+        UNKNOWN = 255,
+    }
+
+    enum WordType : byte
+    {
+        AR_HIGH,
+        AR_MID,
+        AR_LOW,
+        CA,
+        I68,
+        I02,
+        I35,
+        A,
+        B,
+        D,
+        PT,
+        INC,
+        PS,
+        DEVICE,
+        UNKNOWN = 255,
+    }
+
+    enum FlagType : byte
+    {
+        M0,
+        M1,
+        C0,
+        UNKNOWN = 255,
     }
 
     enum JumpType : byte
@@ -35,53 +59,103 @@ namespace mtemu
         JF3,
         JOVR,
         JC4,
-    }
-
-    enum WordType : byte
-    {
-        ArHigh,
-        ArMid,
-        ArLow,
-        CA,
-        I68,
-        I02,
-        I35,
-        A,
-        B,
-        D,
-        PT,
-        Inc,
-        PS,
-        Device,
         Unknown = 255,
     }
 
-    enum FlagType : byte
+    enum FuncType : byte
     {
-        M0,
-        M1,
-        C0,
-        Unknown = 255,
+        R_PLUS_S = 0,
+        S_MINUS_R_MINUS_1 = 1,
+        R_MINUS_S_MINUS_1 = 2,
+        R_OR_S = 3,
+        R_AND_S = 4,
+        NO_R_AND_S = 5,
+        R_XOR_S = 6,
+        R_EQ_S = 7,
+        R_PLUS_S_PLUS_1 = 8,
+        S_MINUS_R = 9,
+        R_MINUS_S = 10,
+        SET_POINTER = 11,
+        STORE_MEMORY = 12,
+        LOAD_MEMORY = 13,
+        STORE_DEVICE = 14,
+        LOAD_DEVICE = 15,
+        UNKNOWN = 255,
+    }
+
+    enum FromType : byte
+    {
+        A_AND_PQ = 0,
+        A_AND_B = 1,
+        ZERO_AND_Q = 2,
+        ZERO_AND_B = 3,
+        ZERO_AND_A = 4,
+        D_AND_A = 5,
+        D_AND_Q = 6,
+        D_AND_ZERO = 7,
+        UNKNOWN = 255,
+    }
+
+    enum ToType : byte
+    {
+        F_IN_Q = 0,
+        NO_LOAD = 1,
+        F_IN_B_AND_A_IN_Y = 2,
+        F_IN_B = 3,
+        SR_F_IN_B_AND_SR_Q_IN_Q = 4,
+        SR_F_IN_B = 5,
+        SL_F_IN_B_AND_SL_Q_IN_Q = 6,
+        SL_F_IN_B = 7,
+        UNKNOWN = 255,
+    }
+
+    enum ShiftType : byte
+    {
+        LOGIC = 0,
+        CYCLE = 1,
+        CYCLE_DOUBLE = 2,
+        ARITHMETIC_DOUBLE = 3,
+        UNKNOWN = 255,
     }
 
     enum IncType : byte
     {
         No = 0,
-        Plus,
-        Minus,
+        PLUS,
+        MINUS,
+        UNKNOWN = 255,
+    }
+
+    enum PointerSize : byte
+    {
+        LOW_4_BIT = 0,
+        HIGH_4_BIT = 1,
+        FULL_8_BIT = 2,
+        UNKNOWN = 255,
+    }
+
+    enum DeviceType : byte
+    {
+        GPIO0 = 0,
+        GPIO1 = 1,
+        GPIO2 = 2,
+        GPIO3 = 3,
+        UNKNOWN = 255,
     }
 
     partial class Command
     {
+        public static int WORD_SIZE = 4;
+
         private static int length_ = 10;
 
         // Numbers of text boxes
         private static Dictionary<WordType, int> wordIndexes_ =
             new Dictionary<WordType, int>
         {
-            { WordType.ArHigh, 0 },
-            { WordType.ArMid, 1 },
-            { WordType.ArLow, 2 },
+            { WordType.AR_HIGH, 0 },
+            { WordType.AR_MID, 1 },
+            { WordType.AR_LOW, 2 },
             { WordType.CA, 3 },
             { WordType.I68, 4 },
             { WordType.I02, 5 },
@@ -90,16 +164,16 @@ namespace mtemu
             { WordType.B, 8 },
             { WordType.D, 9 },
             { WordType.PT, 5 },
-            { WordType.Inc, 5 },
+            { WordType.INC, 5 },
             { WordType.PS, 5 },
-            { WordType.Device, 7 },
+            { WordType.DEVICE, 7 },
         };
 
-        private static Dictionary<CommandType, string[]> labels_ =
-            new Dictionary<CommandType, string[]>
+        private static Dictionary<ViewType, string[]> labels_ =
+            new Dictionary<ViewType, string[]>
         {
             {
-                CommandType.MtCommand, new string[] {
+                ViewType.MT_COMMAND, new string[] {
                     "AR",
                     "CA",
                     "M1|I6-I8",
@@ -111,7 +185,7 @@ namespace mtemu
                 }
             },
             {
-                CommandType.MemoryPointer, new string[] {
+                ViewType.MEMORY_POINTER, new string[] {
                     "AR",
                     "CA",
                     "",
@@ -123,7 +197,7 @@ namespace mtemu
                 }
             },
             {
-                CommandType.DevicePointer, new string[] {
+                ViewType.DEVICE_POINTER, new string[] {
                     "AR",
                     "CA",
                     "",
@@ -135,7 +209,7 @@ namespace mtemu
                 }
             },
             {
-                CommandType.LoadCommand, new string[] {
+                ViewType.LOAD_8BIT, new string[] {
                     "AR",
                     "CA",
                     "",
@@ -147,7 +221,7 @@ namespace mtemu
                 }
             },
             {
-                CommandType.LoadSmallCommand, new string[] {
+                ViewType.LOAD_4BIT, new string[] {
                     "AR",
                     "CA",
                     "",
@@ -159,7 +233,7 @@ namespace mtemu
                 }
             },
             {
-                CommandType.Offset, new string[] {
+                ViewType.OFFSET, new string[] {
                     "Offset",
                     "",
                     "",
@@ -255,7 +329,7 @@ namespace mtemu
                 }
             },
             {
-                WordType.Device, new string[][] {
+                WordType.DEVICE, new string[][] {
                     new string[] {"","0000","GPIO0"},
                     new string[] {"","0001","GPIO1"},
                     new string[] {"","0010","GPIO2"},
@@ -296,11 +370,16 @@ namespace mtemu
                 "0000", "0000", "0000", "0010", "0001", "0111", "0000", "0000", "0000", "0000",
             });
         }
+
+        public static Command GetIncorrect()
+        {
+            return new Command(new int[] { 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF });
+        }
     }
 
     partial class Emulator
     {
-        private static Command incorrectCommand_ = new Command(new int[] { 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF, 0xF });
+        private static Command incorrectCommand_ = Command.GetIncorrect();
 
         private static int commandSize_ = 5;
         private static byte[] fileHeader_ = Encoding.ASCII.GetBytes("MTEM");
@@ -311,6 +390,20 @@ namespace mtemu
         private static int regSize_ = 1 << 4;
         private static int memSize_ = 1 << 8;
         private static int maxAutoCount_ = 1 << 14;
+
+        public enum JumpResult
+        {
+            Next,
+            Address,
+        };
+
+        public enum ResultCode
+        {
+            Ok,
+            NoCommands,
+            IncorrectCommand,
+            Loop,
+        };
 
         public static int GetStackSize()
         {
@@ -326,13 +419,5 @@ namespace mtemu
         {
             return memSize_;
         }
-
-        public enum ResultCode
-        {
-            Ok,
-            NoCommands,
-            IncorrectCommand,
-            Loop,
-        };
     }
 }

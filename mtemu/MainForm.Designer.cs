@@ -127,6 +127,8 @@
             this.debugMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stackMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.memoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.schemeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extenderSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.i35ListView = new System.Windows.Forms.ListView();
             this.i35FirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -170,6 +172,8 @@
             this.offsetRadioToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.addButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.removeButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.yLabel = new System.Windows.Forms.Label();
+            this.yText = new System.Windows.Forms.TextBox();
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
             this.memoryPanel.SuspendLayout();
@@ -233,6 +237,8 @@
             // outputPanel
             // 
             this.outputPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.outputPanel.Controls.Add(this.yLabel);
+            this.outputPanel.Controls.Add(this.yText);
             this.outputPanel.Controls.Add(this.mpLabel);
             this.outputPanel.Controls.Add(this.mpText);
             this.outputPanel.Controls.Add(this.spLabel);
@@ -257,7 +263,7 @@
             // mpLabel
             // 
             this.mpLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.mpLabel.Location = new System.Drawing.Point(146, 89);
+            this.mpLabel.Location = new System.Drawing.Point(142, 135);
             this.mpLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
             this.mpLabel.Name = "mpLabel";
             this.mpLabel.Size = new System.Drawing.Size(40, 15);
@@ -269,7 +275,7 @@
             // 
             this.mpText.BackColor = System.Drawing.SystemColors.Control;
             this.mpText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.mpText.Location = new System.Drawing.Point(146, 107);
+            this.mpText.Location = new System.Drawing.Point(142, 154);
             this.mpText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.mpText.MaxLength = 4;
             this.mpText.Name = "mpText";
@@ -284,7 +290,7 @@
             // spLabel
             // 
             this.spLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.spLabel.Location = new System.Drawing.Point(81, 89);
+            this.spLabel.Location = new System.Drawing.Point(84, 135);
             this.spLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
             this.spLabel.Name = "spLabel";
             this.spLabel.Size = new System.Drawing.Size(40, 15);
@@ -296,7 +302,7 @@
             // 
             this.spText.BackColor = System.Drawing.SystemColors.Control;
             this.spText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.spText.Location = new System.Drawing.Point(81, 107);
+            this.spText.Location = new System.Drawing.Point(84, 154);
             this.spText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.spText.MaxLength = 4;
             this.spText.Name = "spText";
@@ -311,7 +317,7 @@
             // pcLabel
             // 
             this.pcLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.pcLabel.Location = new System.Drawing.Point(80, 135);
+            this.pcLabel.Location = new System.Drawing.Point(22, 135);
             this.pcLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
             this.pcLabel.Name = "pcLabel";
             this.pcLabel.Size = new System.Drawing.Size(40, 15);
@@ -322,7 +328,7 @@
             // pcText
             // 
             this.pcText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.pcText.Location = new System.Drawing.Point(76, 154);
+            this.pcText.Location = new System.Drawing.Point(17, 154);
             this.pcText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.pcText.MaxLength = 4;
             this.pcText.Name = "pcText";
@@ -337,7 +343,7 @@
             // fLabel
             // 
             this.fLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.fLabel.Location = new System.Drawing.Point(14, 89);
+            this.fLabel.Location = new System.Drawing.Point(40, 89);
             this.fLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
             this.fLabel.Name = "fLabel";
             this.fLabel.Size = new System.Drawing.Size(40, 15);
@@ -349,7 +355,7 @@
             // 
             this.fText.BackColor = System.Drawing.SystemColors.Control;
             this.fText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.fText.Location = new System.Drawing.Point(14, 107);
+            this.fText.Location = new System.Drawing.Point(40, 107);
             this.fText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.fText.MaxLength = 4;
             this.fText.Name = "fText";
@@ -1449,7 +1455,9 @@
             // 
             this.debugMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stackMenuItem,
-            this.memoryMenuItem});
+            this.memoryMenuItem,
+            this.schemeMenuItem,
+            this.extenderSettingsMenuItem});
             this.debugMenuItem.Name = "debugMenuItem";
             this.debugMenuItem.Size = new System.Drawing.Size(64, 20);
             this.debugMenuItem.Text = "Отладка";
@@ -1458,7 +1466,7 @@
             // 
             this.stackMenuItem.Name = "stackMenuItem";
             this.stackMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
-            this.stackMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.stackMenuItem.Size = new System.Drawing.Size(231, 22);
             this.stackMenuItem.Text = "Окно стека";
             this.stackMenuItem.Click += new System.EventHandler(this.StackMenuItemClick_);
             // 
@@ -1466,9 +1474,25 @@
             // 
             this.memoryMenuItem.Name = "memoryMenuItem";
             this.memoryMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.memoryMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.memoryMenuItem.Size = new System.Drawing.Size(231, 22);
             this.memoryMenuItem.Text = "Окно памяти";
             this.memoryMenuItem.Click += new System.EventHandler(this.MemoryMenuItemClick_);
+            // 
+            // schemeMenuItem
+            // 
+            this.schemeMenuItem.Name = "schemeMenuItem";
+            this.schemeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.schemeMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.schemeMenuItem.Text = "Схема";
+            this.schemeMenuItem.Click += new System.EventHandler(this.SchemeMenuItemClick_);
+            // 
+            // extenderSettingsMenuItem
+            // 
+            this.extenderSettingsMenuItem.Name = "extenderSettingsMenuItem";
+            this.extenderSettingsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.extenderSettingsMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.extenderSettingsMenuItem.Text = "Внешнее устройство";
+            this.extenderSettingsMenuItem.Click += new System.EventHandler(this.ExtenderSettingsMenuItemClick_);
             // 
             // helpMenuItem
             // 
@@ -1856,6 +1880,33 @@
             this.saveFileDialog.DefaultExt = "mte";
             this.saveFileDialog.Filter = "Программа для MT (*.mte)|*.mte|Бинарный файл (*.bin)|*.bin|Все файлы (*.*)|*.*";
             // 
+            // yLabel
+            // 
+            this.yLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
+            this.yLabel.Location = new System.Drawing.Point(118, 89);
+            this.yLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
+            this.yLabel.Name = "yLabel";
+            this.yLabel.Size = new System.Drawing.Size(40, 15);
+            this.yLabel.TabIndex = 3;
+            this.yLabel.Text = "Y";
+            this.yLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // yText
+            // 
+            this.yText.BackColor = System.Drawing.SystemColors.Control;
+            this.yText.Font = new System.Drawing.Font("Consolas", 10F);
+            this.yText.Location = new System.Drawing.Point(118, 107);
+            this.yText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
+            this.yText.MaxLength = 4;
+            this.yText.Name = "yText";
+            this.yText.ReadOnly = true;
+            this.yText.Size = new System.Drawing.Size(41, 23);
+            this.yText.TabIndex = 4;
+            this.yText.TabStop = false;
+            this.yText.Text = "0000";
+            this.yText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.yText.WordWrap = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -2059,6 +2110,10 @@
         private System.Windows.Forms.ToolTip offsetRadioToolTip;
         private System.Windows.Forms.ToolTip addButtonToolTip;
         private System.Windows.Forms.ToolTip removeButtonToolTip;
+        private System.Windows.Forms.ToolStripMenuItem schemeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extenderSettingsMenuItem;
+        private System.Windows.Forms.Label yLabel;
+        private System.Windows.Forms.TextBox yText;
     }
 }
 

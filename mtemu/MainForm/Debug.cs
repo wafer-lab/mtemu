@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace mtemu
@@ -48,6 +44,7 @@ namespace mtemu
             SetFlag_(pText, "/P=", emulator_.GetP());
 
             SetOut_(fText, emulator_.GetF(), asNew);
+            SetOut_(yText, emulator_.GetY(), asNew);
             SetOut_(spText, $"0x{emulator_.GetSP():X1}", asNew);
             SetOut_(mpText, $"0x{emulator_.GetMP():X2}", asNew);
 

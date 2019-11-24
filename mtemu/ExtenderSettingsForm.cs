@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace mtemu
 {
-    public partial class MemoryForm : Form
+    public partial class ExtenderSettingsForm : Form
     {
-        public MemoryForm()
+        public ExtenderSettingsForm()
         {
             InitializeComponent();
         }
 
-        private void MemoryFormClosing_(object sender, FormClosingEventArgs e)
+        private void ExtenderSettingsFormClosing_(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing) {
                 this.Hide();

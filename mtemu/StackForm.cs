@@ -17,7 +17,7 @@ namespace mtemu
             InitializeComponent();
         }
 
-        private void StackFormFormClosing_(object sender, FormClosingEventArgs e)
+        private void StackFormClosing_(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing) {
                 this.Hide();

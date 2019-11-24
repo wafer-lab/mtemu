@@ -2,8 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace mtemu
 {
@@ -24,6 +22,7 @@ namespace mtemu
         private int[] memory_ = new int[memSize_];
 
         private int f_;
+        private int y_;
 
         private bool z_;
         private bool f3_;
@@ -31,6 +30,13 @@ namespace mtemu
         private bool ovr_;
         private bool g_;
         private bool p_;
+
+        private bool prevZ_;
+        private bool prevF3_;
+        private bool prevC4_;
+        private bool prevOvr_;
+        private bool prevG_;
+        private bool prevP_;
 
         public void Reset()
         {
@@ -43,17 +49,46 @@ namespace mtemu
             mp_ = 0;
 
             f_ = 0;
+            y_ = 0;
+
             z_ = false;
             f3_ = false;
             c4_ = false;
             ovr_ = false;
             g_ = false;
             p_ = false;
+
+            prevZ_ = false;
+            prevF3_ = false;
+            prevC4_ = false;
+            prevOvr_ = false;
+            prevG_ = false;
+            prevP_ = false;
         }
 
         public Emulator()
         {
             Reset();
+        }
+
+        private void BackupFlags_()
+        {
+            prevZ_ = z_;
+            prevF3_ = f3_;
+            prevC4_ = c4_;
+            prevOvr_ = ovr_;
+            prevG_ = g_;
+            prevP_ = p_;
+        }
+
+        private void RestoreFlags()
+        {
+            z_ = prevZ_;
+            f3_ = prevF3_;
+            c4_ = prevC4_;
+            ovr_ = prevOvr_;
+            g_ = prevG_;
+            p_ = prevP_;
         }
 
         private int GetOffset_(Command last = null)
@@ -173,29 +208,29 @@ namespace mtemu
             return commands_[i];
         }
 
-        private bool Jump_()
+        private JumpResult Jump_()
         {
             prevPC_ = pc_;
             switch (Current_().GetJumpType()) {
             case JumpType.JNZ:
-                if (!z_) {
+                if (!prevZ_) {
                     pc_ = Current_().GetNextAdr();
-                    return true;
+                    return JumpResult.Address;
                 }
                 break;
             case JumpType.JMP:
                 pc_ = Current_().GetNextAdr();
-                return true;
+                return JumpResult.Address;
             case JumpType.JADR:
-                pc_ = 0; // TODO: Check this shit: Current_().GetRawValue(WordType.D)
-                return true;
+                pc_ = 0;
+                return JumpResult.Address;
             case JumpType.CLNZ:
-                if (!z_) {
+                if (!prevZ_) {
                     stack_[sp_] = pc_ + 1;
                     ++sp_;
                     sp_ %= stackSize_;
                     pc_ = Current_().GetNextAdr();
-                    return true;
+                    return JumpResult.Address;
                 }
                 break;
             case JumpType.CALL:
@@ -203,19 +238,19 @@ namespace mtemu
                 ++sp_;
                 sp_ %= stackSize_;
                 pc_ = Current_().GetNextAdr();
-                return true;
+                return JumpResult.Address;
             case JumpType.RET:
                 pc_ = stack_[sp_ - 1];
                 --sp_;
                 sp_ %= stackSize_;
-                return true;
+                return JumpResult.Address;
             case JumpType.JSP:
                 pc_ = stack_[sp_ - 1];
-                return true;
+                return JumpResult.Address;
             case JumpType.JSNZ:
-                if (!z_) {
+                if (!prevZ_) {
                     pc_ = stack_[sp_ - 1];
-                    return true;
+                    return JumpResult.Address;
                 }
                 else {
                     --sp_;
@@ -232,9 +267,9 @@ namespace mtemu
                 sp_ %= stackSize_;
                 break;
             case JumpType.JSNC4:
-                if (!c4_) {
+                if (!prevC4_) {
                     pc_ = stack_[sp_ - 1];
-                    return true;
+                    return JumpResult.Address;
                 }
                 else {
                     --sp_;
@@ -242,205 +277,209 @@ namespace mtemu
                 }
                 break;
             case JumpType.JZ:
-                if (z_) {
+                if (prevZ_) {
                     pc_ = Current_().GetNextAdr();
-                    return true;
+                    return JumpResult.Address;
                 }
                 break;
             case JumpType.JF3:
-                if (f3_) {
+                if (prevF3_) {
                     pc_ = Current_().GetNextAdr();
-                    return true;
+                    return JumpResult.Address;
                 }
                 break;
             case JumpType.JOVR:
-                if (ovr_) {
+                if (prevOvr_) {
                     pc_ = Current_().GetNextAdr();
-                    return true;
+                    return JumpResult.Address;
                 }
                 break;
             case JumpType.JC4:
-                if (c4_) {
+                if (prevC4_) {
                     pc_ = Current_().GetNextAdr();
-                    return true;
+                    return JumpResult.Address;
                 }
                 break;
             }
             ++pc_;
-            return false;
+            return JumpResult.Next;
         }
 
         private void ExecMtCommand_()
         {
-            int from = Current_().GetRawValue(WordType.I02) % 8;
-            int alu = Current_().GetRawValue(WordType.I35) % 8;
-            int to = Current_().GetRawValue(WordType.I68) % 8;
+            FromType from = Current_().GetFromType();
+            FuncType alu = Current_().GetFuncType();
+            ToType to = Current_().GetToType();
+            ShiftType shift = Current_().GetShiftType();
+
             int a = Current_().GetRawValue(WordType.A);
             int b = Current_().GetRawValue(WordType.B);
             int d = Current_().GetRawValue(WordType.D);
-
-            int c0 = Current_().GetFlag(FlagType.C0) ? 1 : 0;
-            int m0 = Current_().GetFlag(FlagType.M0) ? 1 : 0;
-            int m1 = Current_().GetFlag(FlagType.M1) ? 1 : 0;
-
+            
             int opA = 0;
             int opB = 0;
 
             switch (from) {
-            case 0:
+            case FromType.A_AND_PQ:
                 opA = regCommon_[a];
                 opB = regQ_;
                 break;
-            case 1:
+            case FromType.A_AND_B:
                 opA = regCommon_[a];
                 opB = regCommon_[b];
                 break;
-            case 2:
+            case FromType.ZERO_AND_Q:
                 opA = 0;
                 opB = regQ_;
                 break;
-            case 3:
+            case FromType.ZERO_AND_B:
                 opA = 0;
                 opB = regCommon_[b];
                 break;
-            case 4:
+            case FromType.ZERO_AND_A:
                 opA = 0;
                 opB = regCommon_[a];
                 break;
-            case 5:
+            case FromType.D_AND_A:
                 opA = d;
                 opB = regCommon_[a];
                 break;
-            case 6:
+            case FromType.D_AND_Q:
                 opA = d;
                 opB = regQ_;
                 break;
-            case 7:
+            case FromType.D_AND_ZERO:
                 opA = d;
                 opB = 0;
                 break;
             }
 
             switch (alu) {
-            case 0:
-                f_ = opA + opB + c0;
+            case FuncType.R_PLUS_S:
+                f_ = opA + opB;
                 break;
-            case 1:
-                f_ = opB - opA - 1 + c0;
+            case FuncType.R_PLUS_S_PLUS_1:
+                f_ = opA + opB + 1;
                 break;
-            case 2:
-                f_ = opA - opB - 1 + c0;
+            case FuncType.S_MINUS_R_MINUS_1:
+                f_ = opB - opA - 1;
                 break;
-            case 3:
-                f_ = opB | opA;
+            case FuncType.S_MINUS_R:
+                f_ = opB - opA;
                 break;
-            case 4:
-                f_ = opB & opA;
+            case FuncType.R_MINUS_S_MINUS_1:
+                f_ = opA - opB - 1;
                 break;
-            case 5:
-                f_ = opB & (~opA & 15);
+            case FuncType.R_MINUS_S:
+                f_ = opA - opB;
                 break;
-            case 6:
-                f_ = opB ^ opA;
+            case FuncType.R_OR_S:
+                f_ = opA | opB;
                 break;
-            case 7:
-                f_ = (~(opB ^ opA)) & 15;
+            case FuncType.R_AND_S:
+                f_ = opA & opB;
+                break;
+            case FuncType.NO_R_AND_S:
+                f_ = Helpers.Mask(~opA) & opB;
+                break;
+            case FuncType.R_XOR_S:
+                f_ = opA ^ opB;
+                break;
+            case FuncType.R_EQ_S:
+                f_ = Helpers.Mask(~(opA ^ opB));
                 break;
             }
 
-            z_ = (f_ & 15) == 0;
-            f3_ = (f_ & 8) != 0;
-            bool c3_ = (f_ & 8) != 0;
-            c4_ = (f_ & 16) != 0;
-            ovr_ = c4_ != c3_;
-            f_ = f_ & 15;
+            f3_ = Helpers.IsBitSet(f_, Command.WORD_SIZE - 1);
+            g_ = f3_;
+            c4_ = Helpers.IsBitSet(f_, Command.WORD_SIZE);
+            ovr_ = c4_ != f3_;
+            p_ = ovr_;
+            f_ = Helpers.Mask(f_);
+            z_ = f_ == 0;
 
-            int qLow = regQ_ & 1;
-            int qHigh = (regQ_ & 8) >> 3;
-            int fLow = f_ & 1;
-            int fHigh = (f_ & 8) >> 3;
+            int qLow = Helpers.GetBit(regQ_, 0);
+            int qHigh = Helpers.GetBit(regQ_, Command.WORD_SIZE - 1);
+            int fLow = Helpers.GetBit(f_, 0);
+            int fHigh = Helpers.GetBit(f_, Command.WORD_SIZE - 1);
 
             switch (to) {
-            case 0:
+            case ToType.F_IN_Q:
                 regQ_ = f_;
                 break;
-            case 1:
+            case ToType.NO_LOAD:
                 break;
-            case 2:
+            case ToType.F_IN_B_AND_A_IN_Y:
+                regCommon_[b] = f_;
+                f_ = regCommon_[a];
+                break;
+            case ToType.F_IN_B:
                 regCommon_[b] = f_;
                 break;
-            case 3:
-                regCommon_[b] = f_;
-                f_ = regCommon_[a]; // TODO: Check this shit
-                break;
-            case 4:
+            case ToType.SR_F_IN_B_AND_SR_Q_IN_Q:
                 regQ_ = regQ_ >> 1;
                 regCommon_[b] = f_ >> 1;
-                switch (m1 << 1 + m0) {
-                case 1:
+                switch (shift) {
+                case ShiftType.CYCLE:
                     regCommon_[b] |= fLow << 3;
                     regQ_ |= qLow << 3;
                     break;
-                case 2:
+                case ShiftType.CYCLE_DOUBLE:
                     regCommon_[b] |= qLow << 3;
                     regQ_ |= fLow << 3;
                     break;
-                case 3:
+                case ShiftType.ARITHMETIC_DOUBLE:
                     regCommon_[b] |= fHigh << 3;
                     regQ_ |= fLow << 3;
                     break;
                 }
                 break;
-            case 5:
+            case ToType.SR_F_IN_B:
                 regCommon_[b] = f_ >> 1;
-                switch (m1 << 1 + m0) {
-                case 1:
+                switch (shift) {
+                case ShiftType.CYCLE:
                     regCommon_[b] |= fLow << 3;
                     break;
                 }
                 break;
-            case 6:
-                regQ_ = (regQ_ << 1) & 15;
-                regCommon_[b] = (f_ << 1) & 15;
-                switch (m1 << 1 + m0) {
-                case 1:
+            case ToType.SL_F_IN_B_AND_SL_Q_IN_Q:
+                regQ_ = Helpers.Mask(regQ_ << 1);
+                regCommon_[b] = Helpers.Mask(f_ << 1);
+                switch (shift) {
+                case ShiftType.CYCLE:
                     regCommon_[b] |= fHigh;
                     regQ_ |= qHigh;
                     break;
-                case 2:
+                case ShiftType.CYCLE_DOUBLE:
                     regCommon_[b] |= qHigh;
                     regQ_ |= fHigh;
                     break;
-                case 3:
+                case ShiftType.ARITHMETIC_DOUBLE:
                     regCommon_[b] |= qHigh;
                     break;
                 }
                 break;
-            case 7:
-                regCommon_[b] = (f_ << 1) & 15;
-                switch (m1 << 1 + m0) {
-                case 1:
+            case ToType.SL_F_IN_B:
+                regCommon_[b] = Helpers.Mask(f_ << 1);
+                switch (shift) {
+                case ShiftType.CYCLE:
                     regCommon_[b] |= fHigh;
                     break;
                 }
                 break;
+            }
+
+            if (to == ToType.F_IN_B_AND_A_IN_Y) {
+                y_ = regCommon_[a];
+            }
+            else {
+                y_ = f_;
             }
         }
 
         private void SetMemPtr_()
         {
-            switch (Current_().GetRawValue(WordType.PT) % 4) {
-            case 1:
-                inc_ = IncType.Plus;
-                break;
-            case 2:
-                inc_ = IncType.Minus;
-                break;
-            default:
-                inc_ = IncType.No;
-                break;
-            }
-
+            inc_ = Current_().GetIncType();
             mp_ = (Current_().GetRawValue(WordType.A) << 4) + Current_().GetRawValue(WordType.B);
         }
 
@@ -451,47 +490,55 @@ namespace mtemu
 
         private void LoadData_()
         {
-            int func = Current_().GetRawValue(WordType.I35);
-            int ps = Current_().GetRawValue(WordType.PS);
+            FuncType func = Current_().GetFuncType();
+            PointerSize pointerSize = Current_().GetPointerSize();
             int a = Current_().GetRawValue(WordType.A);
             int b = Current_().GetRawValue(WordType.B);
 
             switch (func) {
-            case 12:
-                if (ps == 1) {
-                    memory_[mp_] = regCommon_[b] << 4;
-                }
-                else {
+            case FuncType.STORE_MEMORY:
+                switch (pointerSize) {
+                case PointerSize.LOW_4_BIT:
                     memory_[mp_] = regCommon_[b];
-                }
-                if (ps == 2) {
-                    memory_[mp_] += regCommon_[a] << 4;
+                    break;
+                case PointerSize.HIGH_4_BIT:
+                    memory_[mp_] = regCommon_[b] << 4;
+                    break;
+                case PointerSize.FULL_8_BIT:
+                    memory_[mp_] = (regCommon_[a] << 4) | regCommon_[b];
+                    break;
                 }
                 break;
-            case 13:
-                if (ps == 1) {
+            case FuncType.LOAD_MEMORY:
+                switch (pointerSize) {
+                case PointerSize.LOW_4_BIT:
+                    regCommon_[b] = Helpers.Mask(memory_[mp_]);
+                    break;
+                case PointerSize.HIGH_4_BIT:
                     regCommon_[b] = memory_[mp_] >> 4;
-                }
-                else {
-                    regCommon_[b] = memory_[mp_] % 16;
-                }
-                if (ps == 2) {
+                    break;
+                case PointerSize.FULL_8_BIT:
                     regCommon_[a] = memory_[mp_] >> 4;
+                    regCommon_[b] = Helpers.Mask(memory_[mp_]);
+                    break;
                 }
                 break;
-            case 14:
-            case 15:
+            case FuncType.STORE_DEVICE:
+                // TODO: Maybe to do device registers
+            case FuncType.LOAD_DEVICE:
                 // TODO: Maybe to do device registers
                 break;
             }
-            if (func == 12 || func == 13) {
-                if (inc_ == IncType.Plus) {
+            if (func == FuncType.STORE_MEMORY || func == FuncType.LOAD_MEMORY) {
+                switch (inc_) {
+                case IncType.PLUS:
                     ++mp_;
                     mp_ %= memSize_;
-                }
-                else if (inc_ == IncType.Minus) {
+                    break;
+                case IncType.MINUS:
                     --mp_;
                     mp_ %= memSize_;
+                    break;
                 }
             }
         }
@@ -512,43 +559,27 @@ namespace mtemu
             }
 
             // Save flags to restore then after command exec
-            bool prevZ = z_;
-            bool prevF3 = f3_;
-            bool prevC4 = c4_;
-            bool prevOvr = ovr_;
+            BackupFlags_();
 
-            switch (Current_().GetCommandType()) {
-            case CommandType.MtCommand:
+            switch (Current_().GetCommandView()) {
+            case ViewType.MT_COMMAND:
                 ExecMtCommand_();
                 break;
-            case CommandType.MemoryPointer:
+            case ViewType.MEMORY_POINTER:
                 SetMemPtr_();
                 break;
-            case CommandType.DevicePointer:
+            case ViewType.DEVICE_POINTER:
                 SetDevicePtr_();
                 break;
-            case CommandType.LoadSmallCommand:
-            case CommandType.LoadCommand:
+            case ViewType.LOAD_4BIT:
+            case ViewType.LOAD_8BIT:
                 LoadData_();
                 break;
             }
 
-            // To use old values in jumper
-            bool newZ = z_;
-            bool newF3 = f3_;
-            bool newC4 = c4_;
-            bool newOvr = ovr_;
-            z_ = prevZ;
-            f3_ = prevF3;
-            c4_ = prevC4;
-            ovr_ = prevOvr;
-
             // Update to new flags only if jump next
-            if (!Jump_()) {
-                z_ = newZ;
-                f3_ = newF3;
-                c4_ = newC4;
-                ovr_ = newOvr;
+            if (Jump_() != JumpResult.Next) {
+                RestoreFlags();
             }
             pc_ %= programSize_;
 
@@ -615,6 +646,11 @@ namespace mtemu
         public int GetF()
         {
             return f_;
+        }
+
+        public int GetY()
+        {
+            return y_;
         }
 
         public bool GetZ()

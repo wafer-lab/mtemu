@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace mtemu
 {
     class Helpers
     {
-        public static void Swap<T>(ref T x, ref T y)
-        {
-            T temp = x;
-            x = y;
-            y = temp;
-        }
-
         public static string ClearBinary(string str, ref int pos)
         {
             string newStr = "";
@@ -66,6 +55,29 @@ namespace mtemu
             char[] arr = res.ToCharArray();
             Array.Reverse(arr);
             return new string(arr);
+        }
+
+        public static int GetBit(int value, int number)
+        {
+            return (value >> number) & 1;
+        }
+
+        public static int GetBitMask(int number)
+        {
+            return 1 << number;
+        }
+
+        public static bool IsBitSet(int value, int number)
+        {
+            return GetBit(value, number) != 0;
+        }
+
+        public static int Mask(int value, int size = -1)
+        {
+            if (size == -1) {
+                size = Command.WORD_SIZE;
+            }
+            return value & ((1 << size) - 1);
         }
     }
 }

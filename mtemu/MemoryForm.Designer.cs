@@ -94,7 +94,7 @@
             this.Name = "MemoryForm";
             this.ShowInTaskbar = false;
             this.Text = "Память";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MemoryFormFormClosing_);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MemoryFormClosing_);
             this.ResumeLayout(false);
 
         }

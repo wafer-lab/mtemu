@@ -86,7 +86,7 @@
             this.Name = "StackForm";
             this.ShowInTaskbar = false;
             this.Text = "Стек";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StackFormFormClosing_);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StackFormClosing_);
             this.ResumeLayout(false);
 
         }
