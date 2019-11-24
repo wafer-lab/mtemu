@@ -122,11 +122,13 @@ namespace mtemu
         private void SchemeMenuItemClick_(object sender, EventArgs e)
         {
             schemeForm_.Show(this);
+            SchemeFormMove_();
         }
 
         private void ExtenderSettingsMenuItemClick_(object sender, EventArgs e)
         {
             extenderSettingsForm_.Show(this);
+            ExtenderSettingsFormMove_();
         }
 
         private void HelpMenuItemClick_(object sender, EventArgs e)

@@ -21,6 +21,12 @@ namespace mtemu
         private int mp_;
         private int[] memory_ = new int[memSize_];
 
+        private int prevRegA_;
+        private int prevRegB_;
+        private int prevRegQ_;
+        private int r_;
+        private int s_;
+
         private int f_;
         private int y_;
 
@@ -47,6 +53,12 @@ namespace mtemu
             regQ_ = 0;
             inc_ = IncType.No;
             mp_ = 0;
+
+            prevRegA_ = 0;
+            prevRegB_ = 0;
+            prevRegQ_ = 0;
+            r_ = 0;
+            s_ = 0;
 
             f_ = 0;
             y_ = 0;
@@ -199,6 +211,15 @@ namespace mtemu
             return -1;
         }
 
+        public Command ExecutedCommand()
+        {
+            int i = GetIndex_(prevPC_);
+            if (i == -1) {
+                return incorrectCommand_;
+            }
+            return commands_[i];
+        }
+
         private Command Current_()
         {
             int i = GetIndex_(pc_);
@@ -315,78 +336,79 @@ namespace mtemu
             int a = Current_().GetRawValue(WordType.A);
             int b = Current_().GetRawValue(WordType.B);
             int d = Current_().GetRawValue(WordType.D);
-            
-            int opA = 0;
-            int opB = 0;
+
+            prevRegQ_ = regQ_;
+            prevRegA_ = regCommon_[a];
+            prevRegB_ = regCommon_[b];
 
             switch (from) {
             case FromType.A_AND_PQ:
-                opA = regCommon_[a];
-                opB = regQ_;
+                r_ = regCommon_[a];
+                s_ = regQ_;
                 break;
             case FromType.A_AND_B:
-                opA = regCommon_[a];
-                opB = regCommon_[b];
+                r_ = regCommon_[a];
+                s_ = regCommon_[b];
                 break;
             case FromType.ZERO_AND_Q:
-                opA = 0;
-                opB = regQ_;
+                r_ = 0;
+                s_ = regQ_;
                 break;
             case FromType.ZERO_AND_B:
-                opA = 0;
-                opB = regCommon_[b];
+                r_ = 0;
+                s_ = regCommon_[b];
                 break;
             case FromType.ZERO_AND_A:
-                opA = 0;
-                opB = regCommon_[a];
+                r_ = 0;
+                s_ = regCommon_[a];
                 break;
             case FromType.D_AND_A:
-                opA = d;
-                opB = regCommon_[a];
+                r_ = d;
+                s_ = regCommon_[a];
                 break;
             case FromType.D_AND_Q:
-                opA = d;
-                opB = regQ_;
+                r_ = d;
+                s_ = regQ_;
                 break;
             case FromType.D_AND_ZERO:
-                opA = d;
-                opB = 0;
+                r_ = d;
+                s_ = 0;
                 break;
             }
 
             switch (alu) {
             case FuncType.R_PLUS_S:
-                f_ = opA + opB;
+                f_ = r_ + s_;
                 break;
             case FuncType.R_PLUS_S_PLUS_1:
-                f_ = opA + opB + 1;
+                f_ = r_ + s_ + 1;
                 break;
             case FuncType.S_MINUS_R_MINUS_1:
-                f_ = opB - opA - 1;
+                f_ = s_ - r_ - 1;
                 break;
             case FuncType.S_MINUS_R:
-                f_ = opB - opA;
+                f_ = s_ - r_;
                 break;
             case FuncType.R_MINUS_S_MINUS_1:
-                f_ = opA - opB - 1;
+                f_ = r_ - s_ - 1;
                 break;
             case FuncType.R_MINUS_S:
-                f_ = opA - opB;
+                f_ = r_ - s_;
                 break;
             case FuncType.R_OR_S:
-                f_ = opA | opB;
+                f_ = r_ | s_;
                 break;
             case FuncType.R_AND_S:
-                f_ = opA & opB;
+                f_ = r_ & s_;
                 break;
             case FuncType.NO_R_AND_S:
-                f_ = Helpers.Mask(~opA) & opB;
+                f_ = Helpers.Mask(~r_) & s_;
                 break;
             case FuncType.R_XOR_S:
-                f_ = opA ^ opB;
+                f_ = r_ ^ s_;
                 break;
             case FuncType.R_EQ_S:
-                f_ = Helpers.Mask(~(opA ^ opB));
+                f_ = Helpers.Mask(~(r_ ^ s_));
                 break;
             }
 
@@ -410,9 +432,6 @@ namespace mtemu
             case ToType.NO_LOAD:
                 break;
             case ToType.F_IN_B_AND_A_IN_Y:
-                regCommon_[b] = f_;
-                f_ = regCommon_[a];
-                break;
             case ToType.F_IN_B:
                 regCommon_[b] = f_;
                 break;
@@ -651,6 +670,31 @@ namespace mtemu
         public int GetY()
         {
             return y_;
+        }
+
+        public int GetPrevRegQ()
+        {
+            return prevRegQ_;
+        }
+
+        public int GetPrevRegA()
+        {
+            return prevRegA_;
+        }
+
+        public int GetPrevRegB()
+        {
+            return prevRegB_;
+        }
+
+        public int GetR()
+        {
+            return r_;
+        }
+
+        public int GetS()
+        {
+            return s_;
         }
 
         public bool GetZ()

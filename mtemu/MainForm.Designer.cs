@@ -29,11 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.listLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.cc0Text = new System.Windows.Forms.TextBox();
             this.currentLabel = new System.Windows.Forms.Label();
             this.outputPanel = new System.Windows.Forms.Panel();
+            this.yLabel = new System.Windows.Forms.Label();
+            this.yText = new System.Windows.Forms.TextBox();
             this.mpLabel = new System.Windows.Forms.Label();
             this.mpText = new System.Windows.Forms.TextBox();
             this.spLabel = new System.Windows.Forms.Label();
@@ -172,8 +175,6 @@
             this.offsetRadioToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.addButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.removeButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.yLabel = new System.Windows.Forms.Label();
-            this.yText = new System.Windows.Forms.TextBox();
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
             this.memoryPanel.SuspendLayout();
@@ -259,6 +260,33 @@
             this.outputPanel.Padding = new System.Windows.Forms.Padding(6);
             this.outputPanel.Size = new System.Drawing.Size(200, 187);
             this.outputPanel.TabIndex = 0;
+            // 
+            // yLabel
+            // 
+            this.yLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
+            this.yLabel.Location = new System.Drawing.Point(118, 89);
+            this.yLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
+            this.yLabel.Name = "yLabel";
+            this.yLabel.Size = new System.Drawing.Size(40, 15);
+            this.yLabel.TabIndex = 3;
+            this.yLabel.Text = "Y";
+            this.yLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // yText
+            // 
+            this.yText.BackColor = System.Drawing.SystemColors.Control;
+            this.yText.Font = new System.Drawing.Font("Consolas", 10F);
+            this.yText.Location = new System.Drawing.Point(118, 107);
+            this.yText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
+            this.yText.MaxLength = 4;
+            this.yText.Name = "yText";
+            this.yText.ReadOnly = true;
+            this.yText.Size = new System.Drawing.Size(41, 23);
+            this.yText.TabIndex = 4;
+            this.yText.TabStop = false;
+            this.yText.Text = "0000";
+            this.yText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.yText.WordWrap = false;
             // 
             // mpLabel
             // 
@@ -1483,7 +1511,7 @@
             this.schemeMenuItem.Name = "schemeMenuItem";
             this.schemeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
             this.schemeMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.schemeMenuItem.Text = "Схема";
+            this.schemeMenuItem.Text = "Схема АЛУ";
             this.schemeMenuItem.Click += new System.EventHandler(this.SchemeMenuItemClick_);
             // 
             // extenderSettingsMenuItem
@@ -1880,33 +1908,6 @@
             this.saveFileDialog.DefaultExt = "mte";
             this.saveFileDialog.Filter = "Программа для MT (*.mte)|*.mte|Бинарный файл (*.bin)|*.bin|Все файлы (*.*)|*.*";
             // 
-            // yLabel
-            // 
-            this.yLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.yLabel.Location = new System.Drawing.Point(118, 89);
-            this.yLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
-            this.yLabel.Name = "yLabel";
-            this.yLabel.Size = new System.Drawing.Size(40, 15);
-            this.yLabel.TabIndex = 3;
-            this.yLabel.Text = "Y";
-            this.yLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // yText
-            // 
-            this.yText.BackColor = System.Drawing.SystemColors.Control;
-            this.yText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.yText.Location = new System.Drawing.Point(118, 107);
-            this.yText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
-            this.yText.MaxLength = 4;
-            this.yText.Name = "yText";
-            this.yText.ReadOnly = true;
-            this.yText.Size = new System.Drawing.Size(41, 23);
-            this.yText.TabIndex = 4;
-            this.yText.TabStop = false;
-            this.yText.Text = "0000";
-            this.yText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.yText.WordWrap = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1935,6 +1936,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;

@@ -273,11 +273,11 @@ namespace mtemu
                 WordType.I68, new string[][] {
                     new string[] {"","000","PQ=F"},
                     new string[] {"","001","Нет загрузки"},
-                    new string[] {"","010","РОН(B)=F"},
+                    new string[] {"","010","Y=РОН(A), РОН(B)=F"},
                     new string[] {"","011","РОН(B)=F"},
-                    new string[] {"","100","PQ=Q/2,РОН(B)=F/2"},
+                    new string[] {"","100","PQ=Q/2, РОН(B)=F/2"},
                     new string[] {"","101","РОН(B)=F/2"},
-                    new string[] {"","110","PQ=2Q,РОН(B)=2F"},
+                    new string[] {"","110","PQ=2Q, РОН(B)=2F"},
                     new string[] {"","111","РОН(B)=2F"},
                 }
             },

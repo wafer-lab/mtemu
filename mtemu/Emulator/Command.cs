@@ -322,6 +322,26 @@ namespace mtemu
                 + GetRawValue(WordType.AR_LOW);
         }
 
+        public int GetI02()
+        {
+            return Helpers.Mask(GetRawValue(WordType.I02), WORD_SIZE - 1);
+        }
+
+        public int GetI35()
+        {
+            return Helpers.Mask(GetRawValue(WordType.I35), WORD_SIZE - 1);
+        }
+
+        public int GetI68()
+        {
+            return Helpers.Mask(GetRawValue(WordType.I68), WORD_SIZE - 1);
+        }
+
+        public bool GetC0()
+        {
+            return Helpers.IsBitSet(GetRawValue(WordType.I35), WORD_SIZE - 1);
+        }
+
         public JumpType GetJumpType()
         {
             byte value = (byte) GetRawValue(WordType.CA);

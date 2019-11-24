@@ -35,6 +35,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ExtenderSettingsForm";
             this.Text = "ExtenderSettingsForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExtenderSettingsFormClosing_);
