@@ -67,7 +67,7 @@
             // regAText
             // 
             this.regAText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.regAText.Location = new System.Drawing.Point(115, 227);
+            this.regAText.Location = new System.Drawing.Point(118, 195);
             this.regAText.Margin = new System.Windows.Forms.Padding(0);
             this.regAText.MaxLength = 4;
             this.regAText.Name = "regAText";
@@ -82,7 +82,7 @@
             // regBText
             // 
             this.regBText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.regBText.Location = new System.Drawing.Point(202, 227);
+            this.regBText.Location = new System.Drawing.Point(203, 195);
             this.regBText.Margin = new System.Windows.Forms.Padding(0);
             this.regBText.MaxLength = 4;
             this.regBText.Name = "regBText";
@@ -97,7 +97,7 @@
             // aText
             // 
             this.aText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.aText.Location = new System.Drawing.Point(5, 145);
+            this.aText.Location = new System.Drawing.Point(36, 147);
             this.aText.Margin = new System.Windows.Forms.Padding(0);
             this.aText.MaxLength = 4;
             this.aText.Name = "aText";
@@ -112,7 +112,7 @@
             // bText
             // 
             this.bText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.bText.Location = new System.Drawing.Point(5, 176);
+            this.bText.Location = new System.Drawing.Point(36, 190);
             this.bText.Margin = new System.Windows.Forms.Padding(0);
             this.bText.MaxLength = 4;
             this.bText.Name = "bText";
@@ -127,7 +127,7 @@
             // dText
             // 
             this.dText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.dText.Location = new System.Drawing.Point(27, 345);
+            this.dText.Location = new System.Drawing.Point(33, 344);
             this.dText.Margin = new System.Windows.Forms.Padding(0);
             this.dText.MaxLength = 4;
             this.dText.Name = "dText";
@@ -142,7 +142,7 @@
             // c4Text
             // 
             this.c4Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.c4Text.Location = new System.Drawing.Point(22, 455);
+            this.c4Text.Location = new System.Drawing.Point(32, 450);
             this.c4Text.Margin = new System.Windows.Forms.Padding(0);
             this.c4Text.MaxLength = 4;
             this.c4Text.Name = "c4Text";
@@ -157,7 +157,7 @@
             // gText
             // 
             this.gText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.gText.Location = new System.Drawing.Point(22, 478);
+            this.gText.Location = new System.Drawing.Point(32, 473);
             this.gText.Margin = new System.Windows.Forms.Padding(0);
             this.gText.MaxLength = 4;
             this.gText.Name = "gText";
@@ -172,7 +172,7 @@
             // pText
             // 
             this.pText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.pText.Location = new System.Drawing.Point(22, 501);
+            this.pText.Location = new System.Drawing.Point(32, 496);
             this.pText.Margin = new System.Windows.Forms.Padding(0);
             this.pText.MaxLength = 4;
             this.pText.Name = "pText";
@@ -187,7 +187,7 @@
             // ovrText
             // 
             this.ovrText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.ovrText.Location = new System.Drawing.Point(22, 524);
+            this.ovrText.Location = new System.Drawing.Point(32, 519);
             this.ovrText.Margin = new System.Windows.Forms.Padding(0);
             this.ovrText.MaxLength = 4;
             this.ovrText.Name = "ovrText";
@@ -202,7 +202,7 @@
             // f3Text
             // 
             this.f3Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.f3Text.Location = new System.Drawing.Point(22, 570);
+            this.f3Text.Location = new System.Drawing.Point(32, 565);
             this.f3Text.Margin = new System.Windows.Forms.Padding(0);
             this.f3Text.MaxLength = 4;
             this.f3Text.Name = "f3Text";
@@ -217,7 +217,7 @@
             // zText
             // 
             this.zText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.zText.Location = new System.Drawing.Point(22, 547);
+            this.zText.Location = new System.Drawing.Point(32, 542);
             this.zText.Margin = new System.Windows.Forms.Padding(0);
             this.zText.MaxLength = 4;
             this.zText.Name = "zText";
@@ -232,7 +232,7 @@
             // yText
             // 
             this.yText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.yText.Location = new System.Drawing.Point(196, 707);
+            this.yText.Location = new System.Drawing.Point(194, 728);
             this.yText.Margin = new System.Windows.Forms.Padding(0);
             this.yText.MaxLength = 4;
             this.yText.Name = "yText";
@@ -247,7 +247,7 @@
             // i68Text
             // 
             this.i68Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.i68Text.Location = new System.Drawing.Point(472, 620);
+            this.i68Text.Location = new System.Drawing.Point(507, 603);
             this.i68Text.Margin = new System.Windows.Forms.Padding(0);
             this.i68Text.MaxLength = 4;
             this.i68Text.Name = "i68Text";
@@ -262,7 +262,7 @@
             // i35Text
             // 
             this.i35Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.i35Text.Location = new System.Drawing.Point(472, 518);
+            this.i35Text.Location = new System.Drawing.Point(507, 500);
             this.i35Text.Margin = new System.Windows.Forms.Padding(0);
             this.i35Text.MaxLength = 4;
             this.i35Text.Name = "i35Text";
@@ -277,7 +277,7 @@
             // i02Text
             // 
             this.i02Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.i02Text.Location = new System.Drawing.Point(472, 407);
+            this.i02Text.Location = new System.Drawing.Point(507, 389);
             this.i02Text.Margin = new System.Windows.Forms.Padding(0);
             this.i02Text.MaxLength = 4;
             this.i02Text.Name = "i02Text";
@@ -292,7 +292,7 @@
             // fText
             // 
             this.fText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.fText.Location = new System.Drawing.Point(159, 577);
+            this.fText.Location = new System.Drawing.Point(159, 584);
             this.fText.Margin = new System.Windows.Forms.Padding(0);
             this.fText.MaxLength = 4;
             this.fText.Name = "fText";
@@ -307,12 +307,12 @@
             // rText
             // 
             this.rText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.rText.Location = new System.Drawing.Point(118, 458);
+            this.rText.Location = new System.Drawing.Point(125, 460);
             this.rText.Margin = new System.Windows.Forms.Padding(0);
             this.rText.MaxLength = 4;
             this.rText.Name = "rText";
             this.rText.ReadOnly = true;
-            this.rText.Size = new System.Drawing.Size(47, 23);
+            this.rText.Size = new System.Drawing.Size(40, 23);
             this.rText.TabIndex = 17;
             this.rText.TabStop = false;
             this.rText.Text = "0001";
@@ -322,12 +322,12 @@
             // sText
             // 
             this.sText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.sText.Location = new System.Drawing.Point(199, 458);
+            this.sText.Location = new System.Drawing.Point(201, 460);
             this.sText.Margin = new System.Windows.Forms.Padding(0);
             this.sText.MaxLength = 4;
             this.sText.Name = "sText";
             this.sText.ReadOnly = true;
-            this.sText.Size = new System.Drawing.Size(47, 23);
+            this.sText.Size = new System.Drawing.Size(40, 23);
             this.sText.TabIndex = 18;
             this.sText.TabStop = false;
             this.sText.Text = "0001";
@@ -337,7 +337,7 @@
             // c0Text
             // 
             this.c0Text.Font = new System.Drawing.Font("Consolas", 10F);
-            this.c0Text.Location = new System.Drawing.Point(317, 465);
+            this.c0Text.Location = new System.Drawing.Point(276, 450);
             this.c0Text.Margin = new System.Windows.Forms.Padding(0);
             this.c0Text.MaxLength = 4;
             this.c0Text.Name = "c0Text";
@@ -352,7 +352,7 @@
             // regQText
             // 
             this.regQText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.regQText.Location = new System.Drawing.Point(416, 255);
+            this.regQText.Location = new System.Drawing.Point(416, 262);
             this.regQText.Margin = new System.Windows.Forms.Padding(0);
             this.regQText.MaxLength = 4;
             this.regQText.Name = "regQText";
