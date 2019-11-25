@@ -127,8 +127,13 @@ namespace mtemu
 
         private void ExtenderSettingsMenuItemClick_(object sender, EventArgs e)
         {
-            extenderSettingsForm_.Show(this);
-            ExtenderSettingsFormMove_();
+            DialogResult dr = extenderSettingsForm_.ShowDialog(this);
+            if (dr == DialogResult.OK) {
+                // TODO: Add react to result
+            }
+            else {
+                // TODO: Add react to result
+            }
         }
 
         private void HelpMenuItemClick_(object sender, EventArgs e)

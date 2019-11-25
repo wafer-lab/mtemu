@@ -356,11 +356,6 @@ namespace mtemu
             // TODO: Add a form position if necessary
         }
 
-        private void ExtenderSettingsFormMove_()
-        {
-            // TODO: Add a form position if necessary
-        }
-
         private void MoveSubForms_()
         {
             StackFormMove_();
