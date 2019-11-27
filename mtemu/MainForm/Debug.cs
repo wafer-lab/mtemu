@@ -6,6 +6,18 @@ namespace mtemu
 {
     partial class MainForm
     {
+        private void SetLeds_(PictureBox[] leds, int value)
+        {
+            for (int i = 0; i < leds.Length; ++i) {
+                if (Helpers.IsBitSet(value, i)) {
+                    leds[i].Image = greenLedOn;
+                }
+                else {
+                    leds[i].Image = greenLedOff;
+                }
+            }
+        }
+
         private void SetFlag_(TextBox textBox, string prefix, bool value)
         {
             textBox.Text = prefix + (value ? "1" : "0");
@@ -52,6 +64,7 @@ namespace mtemu
 
             SetOut_(schemeForm_.fText, emulator_.GetF(), asNew);
             SetOut_(schemeForm_.yText, emulator_.GetY(), asNew);
+            SetLeds_(leds_, emulator_.GetF());
 
             Command command = emulator_.ExecutedCommand();
 
@@ -93,9 +106,10 @@ namespace mtemu
                 SetOut_(regTexts_[i], emulator_.GetRegValue(i), asNew);
             }
 
-            if (emulator_.Count() > 0) {
+            if (emulator_.CommandsCount() > 0) {
                 ChangeCommand_(emulator_.GetNextIndex(), selectedColor_);
-                SelectNextCommand_(emulator_.GetLastIndex());
+                SelectPrevCommand_(emulator_.GetPrevIndex());
+                ChangeCall_(emulator_.GetCallIndex(), selectedColor_);
             }
 
             for (int i = 0; i < Emulator.GetStackSize(); ++i) {

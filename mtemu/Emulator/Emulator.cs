@@ -9,7 +9,9 @@ namespace mtemu
     {
         private int prevPC_;
         private int pc_;
+        private int callIndex_;
         private List<Command> commands_ = new List<Command>();
+        private List<Call> calls_ = new List<Call>();
 
         private int sp_;
         private int[] stack_ = new int[stackSize_];
@@ -48,6 +50,7 @@ namespace mtemu
         {
             prevPC_ = -1;
             pc_ = -1;
+            callIndex_ = -1;
 
             sp_ = 0;
             regQ_ = 0;
@@ -111,7 +114,7 @@ namespace mtemu
                     break;
                 }
                 if (curr.isOffset) {
-                    offset = curr.GetNextAdr();
+                    offset = curr.GetNextAddr();
                 }
                 else {
                     ++offset;
@@ -125,7 +128,7 @@ namespace mtemu
             int offset = first == 0 ? -1 : commands_[first - 1].GetNumber();
             for (int i = first; i < commands_.Count; ++i) {
                 if (i > 0 && commands_[i - 1].isOffset) {
-                    offset = commands_[i - 1].GetNextAdr();
+                    offset = commands_[i - 1].GetNextAddr();
                 }
                 else {
                     ++offset;
@@ -176,7 +179,7 @@ namespace mtemu
 
         public void MoveCommandUp(int index)
         {
-            if (index == 0) {
+            if (index <= 0) {
                 return;
             }
             commands_.Insert(index - 1, commands_[index]);
@@ -194,7 +197,7 @@ namespace mtemu
             UpdateOffsets_(index);
         }
 
-        public int Count()
+        public int CommandsCount()
         {
             return commands_.Count();
         }
@@ -235,22 +238,28 @@ namespace mtemu
             switch (Current_().GetJumpType()) {
             case JumpType.JNZ:
                 if (!prevZ_) {
-                    pc_ = Current_().GetNextAdr();
+                    pc_ = Current_().GetNextAddr();
                     return JumpResult.Address;
                 }
                 break;
             case JumpType.JMP:
-                pc_ = Current_().GetNextAdr();
+                pc_ = Current_().GetNextAddr();
                 return JumpResult.Address;
-            case JumpType.JADR:
-                pc_ = 0;
+            case JumpType.EXIT:
+                ++callIndex_;
+                if (calls_.Count > 0 && callIndex_ < calls_.Count) {
+                    pc_ = calls_[callIndex_].GetAddress();
+                }
+                else {
+                    --callIndex_;
+                }
                 return JumpResult.Address;
             case JumpType.CLNZ:
                 if (!prevZ_) {
                     stack_[sp_] = pc_ + 1;
                     ++sp_;
                     sp_ %= stackSize_;
-                    pc_ = Current_().GetNextAdr();
+                    pc_ = Current_().GetNextAddr();
                     return JumpResult.Address;
                 }
                 break;
@@ -258,7 +267,7 @@ namespace mtemu
                 stack_[sp_] = pc_ + 1;
                 ++sp_;
                 sp_ %= stackSize_;
-                pc_ = Current_().GetNextAdr();
+                pc_ = Current_().GetNextAddr();
                 return JumpResult.Address;
             case JumpType.RET:
                 pc_ = stack_[sp_ - 1];
@@ -299,25 +308,25 @@ namespace mtemu
                 break;
             case JumpType.JZ:
                 if (prevZ_) {
-                    pc_ = Current_().GetNextAdr();
+                    pc_ = Current_().GetNextAddr();
                     return JumpResult.Address;
                 }
                 break;
             case JumpType.JF3:
                 if (prevF3_) {
-                    pc_ = Current_().GetNextAdr();
+                    pc_ = Current_().GetNextAddr();
                     return JumpResult.Address;
                 }
                 break;
             case JumpType.JOVR:
                 if (prevOvr_) {
-                    pc_ = Current_().GetNextAdr();
+                    pc_ = Current_().GetNextAddr();
                     return JumpResult.Address;
                 }
                 break;
             case JumpType.JC4:
                 if (prevC4_) {
-                    pc_ = Current_().GetNextAdr();
+                    pc_ = Current_().GetNextAddr();
                     return JumpResult.Address;
                 }
                 break;
@@ -543,7 +552,7 @@ namespace mtemu
                 }
                 break;
             case FuncType.STORE_DEVICE:
-                // TODO: Maybe to do device registers
+            // TODO: Maybe to do device registers
             case FuncType.LOAD_DEVICE:
                 // TODO: Maybe to do device registers
                 break;
@@ -569,7 +578,13 @@ namespace mtemu
             }
 
             if (pc_ == -1) {
-                pc_ = 0;
+                if (calls_.Count > 0) {
+                    pc_ = calls_[0].GetAddress();
+                    callIndex_ = 0;
+                }
+                else {
+                    pc_ = 0;
+                }
                 return ResultCode.Ok;
             }
 
@@ -612,14 +627,14 @@ namespace mtemu
                 if (rc != ResultCode.Ok) {
                     return rc;
                 }
-                if (prevPC_ == pc_) {
+                if (callIndex_ >= calls_.Count || prevPC_ == pc_) {
                     return ResultCode.Ok;
                 }
             }
             return ResultCode.Loop;
         }
 
-        public int GetLastIndex()
+        public int GetPrevIndex()
         {
             return GetIndex_(prevPC_);
         }
@@ -627,6 +642,19 @@ namespace mtemu
         public int GetNextIndex()
         {
             return GetIndex_(pc_);
+        }
+
+        public int GetCallIndex()
+        {
+            if (callIndex_ >= calls_.Count) {
+                return -1;
+            }
+            return callIndex_;
+        }
+
+        public int SetPC(int value)
+        {
+            return pc_ = value;
         }
 
         public int GetPC()
@@ -727,21 +755,90 @@ namespace mtemu
             return p_;
         }
 
+        public Call GetCall(int index)
+        {
+            return calls_[index];
+        }
+
+        public void AddCall(Call call)
+        {
+            calls_.Add(call);
+        }
+
+        public void UpdateCall(int index, Call call)
+        {
+            calls_[index] = call;
+        }
+
+        public void RemoveCall(int index)
+        {
+            calls_.RemoveAt(index);
+        }
+
+        public void MoveCallUp(int index)
+        {
+            if (index <= 0) {
+                return;
+            }
+            calls_.Insert(index - 1, calls_[index]);
+            calls_.RemoveAt(index + 1);
+        }
+
+        public void MoveCallDown(int index)
+        {
+            if (index >= calls_.Count - 1) {
+                return;
+            }
+            calls_.Insert(index + 2, calls_[index]);
+            calls_.RemoveAt(index);
+        }
+
+        public int CallsCount()
+        {
+            return calls_.Count();
+        }
+
+        public Call LastCall()
+        {
+            return calls_.Last();
+        }
+
         private void SaveAsMtemu_(FileStream fstream)
         {
+            int callsSize = CallsCount() * (sizeof(UInt16) + Call.COMMENT_MAX_SIZE);
+            int commandsSize = CommandsCount() * (commandSize_ + 1);
+            byte[] output = new byte[fileHeader_.Length + callsSize + commandsSize + 2 * sizeof(UInt16)];
+
             int seek = 0;
-            byte[] output = new byte[fileHeader_.Length + Count() * (commandSize_ + 1)];
             for (; seek < fileHeader_.Length; ++seek) {
                 output[seek] = fileHeader_[seek];
             }
-            Command[] commandsArr = commands_.ToArray();
-            for (int i = 0; i < commandsArr.Length; ++i) {
-                output[seek] = (byte) (commandsArr[i].isOffset ? 1 : 0);
-                ++seek;
-                for (int j = 0; j < commandSize_; ++j, ++seek) {
-                    output[seek] = (byte) ((commandsArr[i][2 * j] << 4) + commandsArr[i][2 * j + 1]);
+
+            Call[] callsArr = calls_.ToArray();
+            output[seek++] = (byte) (calls_.Count >> 8);
+            output[seek++] = (byte) calls_.Count;
+
+            for (int i = 0; i < callsArr.Length; ++i) {
+                output[seek++] = (byte) (callsArr[i].GetAddress() >> 8);
+                output[seek++] = (byte) callsArr[i].GetAddress();
+
+                string comment = callsArr[i].GetComment();
+                for (int c = 0; c < Call.COMMENT_MAX_SIZE; ++c) {
+                    output[seek++] = (byte) (c < comment.Length ? comment[c] : '\0');
                 }
             }
+
+            Command[] commandsArr = commands_.ToArray();
+            output[seek++] = (byte) (commands_.Count >> 8);
+            output[seek++] = (byte) commands_.Count;
+
+            for (int i = 0; i < commandsArr.Length; ++i) {
+                output[seek++] = (byte) (commandsArr[i].isOffset ? 1 : 0);
+                for (int j = 0; j < commandSize_; ++j) {
+                    output[seek++] = (byte) ((commandsArr[i][2 * j] << 4) + commandsArr[i][2 * j + 1]);
+                }
+            }
+
             fstream.Write(output, 0, output.Length);
             fstream.SetLength(fstream.Position);
         }
@@ -800,17 +897,36 @@ namespace mtemu
                     }
                 }
 
+                calls_.Clear();
                 commands_.Clear();
                 Reset();
-                int commandsCount = (input.Length - seek) / (commandSize_ + 1);
+
+                int callsCount = 0;
+                callsCount = (input[seek++] << 8) + input[seek++];
+
+                for (int i = 0; i < callsCount; ++i) {
+                    int address = (input[seek++] << 8) + input[seek++];
+
+                    string comment = "";
+                    for (int c = 0; c < Call.COMMENT_MAX_SIZE; ++c) {
+                        if (input[seek++] != 0) {
+                            comment += (char) (input[seek - 1]);
+                        }
+                    }
+
+                    calls_.Add(new Call(address, comment));
+                }
+
+                int commandsCount = 0;
+                commandsCount = (input[seek++] << 8) + input[seek++];
+
                 for (int i = 0; i < commandsCount; ++i) {
-                    bool isOffset = input[seek] == 1;
-                    ++seek;
-                     
+                    bool isOffset = input[seek++] == 1;
+
                     int[] words = new int[commandSize_ * 2];
-                    for (int j = 0; j < commandSize_;  ++j, ++seek) {
-                        words[2*j] = input[seek] >> 4;
-                        words[2*j+1] = input[seek] % 16;
+                    for (int j = 0; j < commandSize_; ++j, ++seek) {
+                        words[2 * j] = input[seek] >> 4;
+                        words[2 * j + 1] = input[seek] % 16;
                     }
                     commands_.Add(new Command(words));
                     commands_.Last().isOffset = isOffset;

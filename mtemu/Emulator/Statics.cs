@@ -46,7 +46,7 @@ namespace mtemu
         JNZ,
         JMP,
         JNXT,
-        JADR,
+        EXIT,
         CLNZ,
         CALL,
         RET,
@@ -141,6 +141,16 @@ namespace mtemu
         GPIO2 = 2,
         GPIO3 = 3,
         UNKNOWN = 255,
+    }
+    partial class Call
+    {
+        public static int ADDRESS_SIZE_BIT = 12;
+        public static int COMMENT_MAX_SIZE = 50;
+
+        public static Call GetDefault()
+        {
+            return new Call(0, "");
+        }
     }
 
     partial class Command
@@ -254,7 +264,7 @@ namespace mtemu
                     new string[] {"","0000","JNZ"},
                     new string[] {"","0001","JMP"},
                     new string[] {"","0010","JNXT"},
-                    new string[] {"","0011","JADR"},
+                    new string[] {"","0011","EXIT"},
                     new string[] {"","0100","CLNZ"},
                     new string[] {"","0101","CALL"},
                     new string[] {"","0110","RET"},

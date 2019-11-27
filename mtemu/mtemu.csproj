@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Emulator\Call.cs" />
     <Compile Include="Emulator\Command.cs" />
     <Compile Include="Emulator\Statics.cs" />
     <Compile Include="Emulator\Helpers.cs" />
@@ -85,6 +86,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Emulator\Emulator.cs" />
+    <Compile Include="MainForm\Calls.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm\Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +108,12 @@
       <DependentUpon>MemoryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="CallsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CallsForm.Designer.cs">
+      <DependentUpon>CallsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemeForm.cs">
       <SubType>Form</SubType>
@@ -129,6 +139,9 @@
     <EmbeddedResource Include="MemoryForm.resx">
       <DependentUpon>MemoryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CallsForm.resx">
+      <DependentUpon>CallsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -139,7 +152,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="schemeForm.resx">
+    <EmbeddedResource Include="SchemeForm.resx">
       <DependentUpon>SchemeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StackForm.resx">
@@ -172,6 +185,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mtemu.ico" />
+    <None Include="Resources\red_led_on.png" />
+    <None Include="Resources\red_led_off.png" />
+    <None Include="Resources\green_led_on.png" />
+    <None Include="Resources\green_led_off.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

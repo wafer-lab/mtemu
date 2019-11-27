@@ -20,6 +20,11 @@ namespace mtemu
         private static Color selectedColor_ = Color.FromArgb(0, 190, 200, 234);
         private static Color nextSelectedColor_ = Color.FromArgb(0, 234, 234, 234);
 
+        private Image greenLedOff;
+        private Image greenLedOn;
+
+        private int ledClickCounter_;
+
         private string filenamePrivate_;
         private string filename_ {
             get { return filenamePrivate_; }
@@ -34,19 +39,24 @@ namespace mtemu
 
         private int selected_;
         private int nextSelected_;
+        private int selectedCall_;
 
+        private bool isCallSaved_;
         private bool isCommandSaved_;
         private bool isProgramSaved_;
 
         private Emulator emulator_;
         private Command currentCommand_;
+        private Call currentCall_;
 
         private Label[] textLabels_;
         private TextBox[] textBoxes_;
         private Label[] regLabels_;
         private TextBox[] regTexts_;
         private Dictionary<WordType, ListView> listViewes_;
+        private PictureBox[] leds_;
 
+        CallsForm callForm_;
         MemoryForm memoryForm_;
         StackForm stackForm_;
         SchemeForm schemeForm_;
@@ -139,6 +149,17 @@ namespace mtemu
                 }
             }
 
+            // Leds for fun
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));
+            greenLedOff = (Image) (resources.GetObject("led3.Image"));
+            greenLedOn = (Image) (resources.GetObject("led2.Image"));
+            leds_ = new PictureBox[] {
+                led0,
+                led1,
+                led2,
+                led3,
+            };
+
             // Memory debug form
             memoryForm_ = new MemoryForm();
             for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
@@ -157,6 +178,9 @@ namespace mtemu
             // Form with extenser device settings
             extenderSettingsForm_ = new ExtenderSettingsForm();
 
+            // Form with program editing
+            callForm_ = new CallsForm(this);
+
             // Reset to initial values
             Reset_();
         }
@@ -164,10 +188,13 @@ namespace mtemu
         private bool Reset_(string filename = null)
         {
             LoadCommand_(Command.GetDefault());
+            LoadCall_(Call.GetDefault());
 
             filename_ = filename;
+            ledClickCounter_ = 0;
             selected_ = -1;
             nextSelected_ = -1;
+            isCallSaved_ = true;
             isCommandSaved_ = true;
             isProgramSaved_ = true;
 
@@ -178,12 +205,16 @@ namespace mtemu
 
             emulator_ = new Emulator();
             commandList.Items.Clear();
+            callForm_.callList.Items.Clear();
             if (filename != null) {
                 if (!emulator_.OpenFile(filename)) {
                     return false;
                 }
-                for (int i = 0; i < emulator_.Count(); ++i) {
+                for (int i = 0; i < emulator_.CommandsCount(); ++i) {
                     commandList.Items.Add(CommandToItems(emulator_.GetCommand(i)));
+                }
+                for (int i = 0; i < emulator_.CallsCount(); ++i) {
+                    callForm_.callList.Items.Add(CallToItems(emulator_.GetCall(i)));
                 }
             }
 
@@ -356,10 +387,17 @@ namespace mtemu
             // TODO: Add a form position if necessary
         }
 
+        private void CallsFormMove_()
+        {
+            //callForm_.Top = Top;
+            //callForm_.Left = Left - callForm_.Width;
+        }
+
         private void MoveSubForms_()
         {
             StackFormMove_();
             MemoryFormMove_();
+            CallsFormMove_();
         }
 
         private void MainFormMove_(object sender, EventArgs e)
@@ -406,6 +444,18 @@ namespace mtemu
                 return true;
             }
             return false;
+        }
+
+        private void LedClick_(object sender, EventArgs e)
+        {
+            ++ledClickCounter_;
+            if (ledClickCounter_ == 4) {
+                if (BeforeCloseProgram_()) {
+                    Reset_();
+                    LoadMagicProgram_();
+                }
+            }
+            ledClickCounter_ %= 4;
         }
     }
 }

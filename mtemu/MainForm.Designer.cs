@@ -128,6 +128,7 @@
             this.saveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.programMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stackMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.memoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.schemeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,11 +176,19 @@
             this.offsetRadioToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.addButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.removeButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.led3 = new System.Windows.Forms.PictureBox();
+            this.led2 = new System.Windows.Forms.PictureBox();
+            this.led1 = new System.Windows.Forms.PictureBox();
+            this.led0 = new System.Windows.Forms.PictureBox();
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
             this.memoryPanel.SuspendLayout();
             this.menu.SuspendLayout();
             this.flagPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.led3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led0)).BeginInit();
             this.SuspendLayout();
             // 
             // listLabel
@@ -1416,6 +1425,7 @@
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenuItem,
             this.debugMenuItem,
+            this.extenderSettingsMenuItem,
             this.helpMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Margin = new System.Windows.Forms.Padding(0, 0, 0, 6);
@@ -1482,19 +1492,27 @@
             // debugMenuItem
             // 
             this.debugMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.programMenuItem,
             this.stackMenuItem,
             this.memoryMenuItem,
-            this.schemeMenuItem,
-            this.extenderSettingsMenuItem});
+            this.schemeMenuItem});
             this.debugMenuItem.Name = "debugMenuItem";
             this.debugMenuItem.Size = new System.Drawing.Size(64, 20);
             this.debugMenuItem.Text = "Отладка";
+            // 
+            // programMenuItem
+            // 
+            this.programMenuItem.Name = "programMenuItem";
+            this.programMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.programMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.programMenuItem.Text = "Окно программы";
+            this.programMenuItem.Click += new System.EventHandler(this.ProgramMenuItemClick_);
             // 
             // stackMenuItem
             // 
             this.stackMenuItem.Name = "stackMenuItem";
             this.stackMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
-            this.stackMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.stackMenuItem.Size = new System.Drawing.Size(213, 22);
             this.stackMenuItem.Text = "Окно стека";
             this.stackMenuItem.Click += new System.EventHandler(this.StackMenuItemClick_);
             // 
@@ -1502,7 +1520,7 @@
             // 
             this.memoryMenuItem.Name = "memoryMenuItem";
             this.memoryMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.memoryMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.memoryMenuItem.Size = new System.Drawing.Size(213, 22);
             this.memoryMenuItem.Text = "Окно памяти";
             this.memoryMenuItem.Click += new System.EventHandler(this.MemoryMenuItemClick_);
             // 
@@ -1510,7 +1528,7 @@
             // 
             this.schemeMenuItem.Name = "schemeMenuItem";
             this.schemeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.schemeMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.schemeMenuItem.Size = new System.Drawing.Size(213, 22);
             this.schemeMenuItem.Text = "Схема АЛУ";
             this.schemeMenuItem.Click += new System.EventHandler(this.SchemeMenuItemClick_);
             // 
@@ -1518,8 +1536,8 @@
             // 
             this.extenderSettingsMenuItem.Name = "extenderSettingsMenuItem";
             this.extenderSettingsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.extenderSettingsMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.extenderSettingsMenuItem.Text = "Внешнее устройство";
+            this.extenderSettingsMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.extenderSettingsMenuItem.Text = "Настройки";
             this.extenderSettingsMenuItem.Click += new System.EventHandler(this.ExtenderSettingsMenuItemClick_);
             // 
             // helpMenuItem
@@ -1908,12 +1926,60 @@
             this.saveFileDialog.DefaultExt = "mte";
             this.saveFileDialog.Filter = "Программа для MT (*.mte)|*.mte|Бинарный файл (*.bin)|*.bin|Все файлы (*.*)|*.*";
             // 
+            // led3
+            // 
+            this.led3.Image = ((System.Drawing.Image)(resources.GetObject("led3.Image")));
+            this.led3.Location = new System.Drawing.Point(12, 37);
+            this.led3.Name = "led3";
+            this.led3.Size = new System.Drawing.Size(12, 12);
+            this.led3.TabIndex = 1;
+            this.led3.TabStop = false;
+            this.led3.Click += new System.EventHandler(this.LedClick_);
+            this.led3.DoubleClick += new System.EventHandler(this.LedClick_);
+            // 
+            // led2
+            // 
+            this.led2.Image = ((System.Drawing.Image)(resources.GetObject("led2.Image")));
+            this.led2.Location = new System.Drawing.Point(30, 37);
+            this.led2.Name = "led2";
+            this.led2.Size = new System.Drawing.Size(12, 12);
+            this.led2.TabIndex = 2;
+            this.led2.TabStop = false;
+            this.led2.Click += new System.EventHandler(this.LedClick_);
+            this.led2.DoubleClick += new System.EventHandler(this.LedClick_);
+            // 
+            // led1
+            // 
+            this.led1.Image = ((System.Drawing.Image)(resources.GetObject("led1.Image")));
+            this.led1.Location = new System.Drawing.Point(48, 37);
+            this.led1.Name = "led1";
+            this.led1.Size = new System.Drawing.Size(12, 12);
+            this.led1.TabIndex = 3;
+            this.led1.TabStop = false;
+            this.led1.Click += new System.EventHandler(this.LedClick_);
+            this.led1.DoubleClick += new System.EventHandler(this.LedClick_);
+            // 
+            // led0
+            // 
+            this.led0.Image = ((System.Drawing.Image)(resources.GetObject("led0.Image")));
+            this.led0.Location = new System.Drawing.Point(66, 37);
+            this.led0.Name = "led0";
+            this.led0.Size = new System.Drawing.Size(12, 12);
+            this.led0.TabIndex = 4;
+            this.led0.TabStop = false;
+            this.led0.Click += new System.EventHandler(this.LedClick_);
+            this.led0.DoubleClick += new System.EventHandler(this.LedClick_);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1230, 585);
+            this.Controls.Add(this.led0);
+            this.Controls.Add(this.led1);
+            this.Controls.Add(this.led2);
+            this.Controls.Add(this.led3);
             this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.debugLabel);
             this.Controls.Add(this.deviceListView);
@@ -1954,6 +2020,10 @@
             this.menu.PerformLayout();
             this.flagPanel.ResumeLayout(false);
             this.flagPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.led3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led0)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2116,6 +2186,11 @@
         private System.Windows.Forms.ToolStripMenuItem extenderSettingsMenuItem;
         private System.Windows.Forms.Label yLabel;
         private System.Windows.Forms.TextBox yText;
+        private System.Windows.Forms.PictureBox led3;
+        private System.Windows.Forms.ToolStripMenuItem programMenuItem;
+        private System.Windows.Forms.PictureBox led2;
+        private System.Windows.Forms.PictureBox led1;
+        private System.Windows.Forms.PictureBox led0;
     }
 }
 

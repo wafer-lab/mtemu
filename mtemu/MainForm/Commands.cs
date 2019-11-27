@@ -11,7 +11,7 @@ namespace mtemu
             for (int i = 0; i < textLabels_.Length; ++i) {
                 string newLabel = currentCommand_.GetLabel(i);
                 if (i == 0) {
-                    newLabel += $" = 0x{currentCommand_.GetNextAdr():X3}";
+                    newLabel += $" = 0x{currentCommand_.GetNextAddr():X3}";
                 }
                 if (i == 0 || newLabel.Length <= 6) {
                     textLabels_[i].Font = new Font("Consolas", 10F);
@@ -108,7 +108,7 @@ namespace mtemu
             }
         }
 
-        private void SelectNextCommand_(int index)
+        private void SelectPrevCommand_(int index)
         {
             if (0 <= nextSelected_ && nextSelected_ < commandList.Items.Count) {
                 commandList.Items[nextSelected_].BackColor = enabledColor_;
@@ -181,7 +181,7 @@ namespace mtemu
                     return;
                 }
 
-                for (int i = number; i < emulator_.Count(); ++i) {
+                for (int i = number; i < emulator_.CommandsCount(); ++i) {
                     commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
                 }
                 SelectCommand_(number, selectedColor_);
@@ -202,7 +202,7 @@ namespace mtemu
                 ChangeCommand_(number, selectedColor_);
 
                 if (number != -1) {
-                    for (int i = number; i < emulator_.Count(); ++i) {
+                    for (int i = number; i < emulator_.CommandsCount(); ++i) {
                         commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
                     }
                     SelectCommand_(number, selectedColor_);
@@ -219,7 +219,7 @@ namespace mtemu
             emulator_.MoveCommandUp(index);
             ChangeCommand_(index - 1, selectedColor_);
 
-            for (int i = index - 1; i < emulator_.Count(); ++i) {
+            for (int i = index - 1; i < emulator_.CommandsCount(); ++i) {
                 commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
             }
             SelectCommand_(index - 1, selectedColor_);
@@ -236,7 +236,7 @@ namespace mtemu
             emulator_.MoveCommandDown(index);
             ChangeCommand_(index + 1, selectedColor_);
 
-            for (int i = index; i < emulator_.Count(); ++i) {
+            for (int i = index; i < emulator_.CommandsCount(); ++i) {
                 commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
             }
             SelectCommand_(index + 1, selectedColor_);

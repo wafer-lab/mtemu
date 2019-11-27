@@ -107,22 +107,36 @@ namespace mtemu
 
         private void StackMenuItemClick_(object sender, EventArgs e)
         {
-            stackForm_.Show(this);
-            StackFormMove_();
-            this.Focus();
+            if (!stackForm_.Visible) {
+                stackForm_.Show(this);
+                StackFormMove_();
+                this.Focus();
+            }
         }
 
         private void MemoryMenuItemClick_(object sender, EventArgs e)
         {
-            memoryForm_.Show(this);
-            MemoryFormMove_();
-            this.Focus();
+            if (!memoryForm_.Visible) {
+                memoryForm_.Show(this);
+                MemoryFormMove_();
+                this.Focus();
+            }
         }
 
         private void SchemeMenuItemClick_(object sender, EventArgs e)
         {
-            schemeForm_.Show(this);
-            SchemeFormMove_();
+            if (!schemeForm_.Visible) {
+                schemeForm_.Show(this);
+                SchemeFormMove_();
+            }
+        }
+
+        private void ProgramMenuItemClick_(object sender, EventArgs e)
+        {
+            if (!callForm_.Visible) {
+                callForm_.Show(this);
+                CallsFormMove_();
+            }
         }
 
         private void ExtenderSettingsMenuItemClick_(object sender, EventArgs e)
@@ -145,6 +159,78 @@ namespace mtemu
                 MessageBoxIcon.Information,
                 MessageBoxDefaultButton.Button1
             );
+        }
+
+        private void LoadMagicProgram_()
+        {
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 1, 11, 0, 0, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 7 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 2 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 1 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 6 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 2 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 0 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 7 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 0 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 9 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 4 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 15 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 7 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 2 });
+            AddCommand_();
+            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
+            AddCommand_();
+
+            currentCommand_ = new Command(new int[] { 0, 1, 12, 0, 1, 7, 0, 0, 0, 0 });
+            AddCommand_();
         }
     }
 }

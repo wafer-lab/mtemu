@@ -38,7 +38,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ExtenderSettingsForm";
             this.Text = "ExtenderSettingsForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExtenderSettingsFormClosing_);
             this.ResumeLayout(false);
 
         }

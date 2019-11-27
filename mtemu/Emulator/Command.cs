@@ -56,7 +56,7 @@ namespace mtemu
         public string GetName()
         {
             if (GetCommandView() == ViewType.OFFSET) {
-                return $"OFFSET = 0x{GetNextAdr():X3}";
+                return $"OFFSET = 0x{GetNextAddr():X3}";
             }
 
             string res = "";
@@ -157,7 +157,7 @@ namespace mtemu
             if (jt == JumpType.JNZ || jt == JumpType.JMP || jt == JumpType.CLNZ
                 || jt == JumpType.CALL || jt == JumpType.JZ || jt == JumpType.JF3
                 || jt == JumpType.JOVR || jt == JumpType.JC4) {
-                res += " " + $"0x{GetNextAdr():X3}";
+                res += " " + $"0x{GetNextAddr():X3}";
             }
             return res;
         }
@@ -315,7 +315,7 @@ namespace mtemu
             words_[textIndex] = (value ? 1 << (WORD_SIZE - 1) : 0) + oldLow;
         }
 
-        public int GetNextAdr()
+        public int GetNextAddr()
         {
             return (GetRawValue(WordType.AR_HIGH) << (2 * WORD_SIZE))
                 + (GetRawValue(WordType.AR_MID) << WORD_SIZE)

@@ -17,6 +17,22 @@ namespace mtemu
             }
             return newStr;
         }
+        public static string ClearHex(string str, ref int pos)
+        {
+            string newStr = "";
+            for (int i = 0; i < str.Length; ++i) {
+                if ('a' <= str[i] && str[i] <= 'f') {
+                    newStr += (char) ('A' + (str[i] - 'a'));
+                }
+                else if ('0' <= str[i] && str[i] <= '9' || 'A' <= str[i] && str[i] <= 'F') {
+                    newStr += str[i];
+                }
+                else if (i < pos) {
+                    pos--;
+                }
+            }
+            return newStr;
+        }
 
         public static int BinaryToInt(string str)
         {
@@ -24,6 +40,26 @@ namespace mtemu
             for (int i = 0; i < str.Length; ++i) {
                 if (str[i] == '0' || str[i] == '1') {
                     res <<= 1;
+                    res += str[i] - '0';
+                }
+            }
+            return res;
+        }
+
+        public static int HexToInt(string str)
+        {
+            int res = 0;
+            for (int i = 0; i < str.Length; ++i) {
+                if ('a' <= str[i] && str[i] <= 'f') {
+                    res <<= 4;
+                    res += str[i] - 'a' + 10;
+                }
+                if ('A' <= str[i] && str[i] <= 'F') {
+                    res <<= 4;
+                    res += str[i] - 'A' + 10;
+                }
+                else if ('0' <= str[i] && str[i] <= '9') {
+                    res <<= 4;
                     res += str[i] - '0';
                 }
             }
