@@ -11,6 +11,8 @@ namespace mtemu
         private int prevPC_;
         private int pc_;
         private int callIndex_;
+        private bool end_;
+
         private List<Command> commands_ = new List<Command>();
         private List<Call> calls_ = new List<Call>();
 
@@ -52,6 +54,7 @@ namespace mtemu
             prevPC_ = -1;
             pc_ = -1;
             callIndex_ = -1;
+            end_ = false;
 
             sp_ = 0;
             regQ_ = 0;
@@ -252,7 +255,7 @@ namespace mtemu
                     pc_ = calls_[callIndex_].GetAddress();
                 }
                 else {
-                    --callIndex_;
+                    end_ = true;
                 }
                 return JumpResult.Address;
             case JumpType.CLNZ:
@@ -576,6 +579,10 @@ namespace mtemu
         {
             if (commands_.Count() == 0) {
                 return ResultCode.NoCommands;
+            }
+
+            if (end_) {
+                return ResultCode.Ok;
             }
 
             if (pc_ == -1) {
