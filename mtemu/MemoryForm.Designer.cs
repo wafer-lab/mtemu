@@ -95,6 +95,8 @@
             this.ShowInTaskbar = false;
             this.Text = "Память";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MemoryFormClosing_);
+            this.ResizeEnd += new System.EventHandler(this.MemoryFormResizeEnd_);
+            this.Move += new System.EventHandler(this.MemoryFormMove_);
             this.ResumeLayout(false);
 
         }

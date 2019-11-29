@@ -13,8 +13,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -113,10 +112,10 @@
             this.r1Text = new System.Windows.Forms.TextBox();
             this.r0Text = new System.Windows.Forms.TextBox();
             this.commandList = new System.Windows.Forms.ListView();
-            this.firstComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.addrComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.nameComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.jumpComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.firstComColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.addrComColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.nameComColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.jumpComColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.stepButton = new System.Windows.Forms.Button();
             this.autoButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
@@ -132,50 +131,47 @@
             this.stackMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.memoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.schemeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extenderSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.i35ListView = new System.Windows.Forms.ListView();
-            this.i35FirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.i35CodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.i35NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.i35C0Column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i35FirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i35CodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i35NameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i35C0Column = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.caListView = new System.Windows.Forms.ListView();
-            this.caFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.caCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.caNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.caFirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.caCodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.caNameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.i02ListView = new System.Windows.Forms.ListView();
-            this.i02FirstСolumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.i02CodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.i02RColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.i02SColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i02FirstСolumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i02CodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i02RColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i02SColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.i68ListView = new System.Windows.Forms.ListView();
-            this.i68FirstСolumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.i68CodeСolumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.i68NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i68FirstСolumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i68CodeСolumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i68NameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.ptListView = new System.Windows.Forms.ListView();
-            this.ptFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ptCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ptNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ptFirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.ptCodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.ptNameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.psListView = new System.Windows.Forms.ListView();
-            this.psFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.psCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.psSizeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.psFirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.psCodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.psSizeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.flagPanel = new System.Windows.Forms.Panel();
             this.m1CheckBox = new System.Windows.Forms.CheckBox();
             this.m0CheckBox = new System.Windows.Forms.CheckBox();
             this.deviceListView = new System.Windows.Forms.ListView();
-            this.deviceFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.deviceCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.deviceNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.deviceFirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.deviceCodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.deviceNameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.debugLabel = new System.Windows.Forms.Label();
             this.infoLabel = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.saveButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.commandRadioToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.offsetRadioToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.addButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.removeButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.formToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.led3 = new System.Windows.Forms.PictureBox();
             this.led2 = new System.Windows.Forms.PictureBox();
             this.led1 = new System.Windows.Forms.PictureBox();
@@ -185,10 +181,10 @@
             this.memoryPanel.SuspendLayout();
             this.menu.SuspendLayout();
             this.flagPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.led3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.led2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.led1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.led0)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.led3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.led2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.led1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.led0)).BeginInit();
             this.SuspendLayout();
             // 
             // listLabel
@@ -212,7 +208,7 @@
             this.saveButton.Size = new System.Drawing.Size(102, 24);
             this.saveButton.TabIndex = 12;
             this.saveButton.Text = "Сохранить";
-            this.saveButtonToolTip.SetToolTip(this.saveButton, "Enter");
+            this.formToolTip.SetToolTip(this.saveButton, "Enter");
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveButtonClick_);
             // 
@@ -548,7 +544,7 @@
             this.commandRadioButton.Size = new System.Drawing.Size(82, 21);
             this.commandRadioButton.TabIndex = 0;
             this.commandRadioButton.Text = "Команда";
-            this.commandRadioToolTip.SetToolTip(this.commandRadioButton, "Ctrl + Left");
+            this.formToolTip.SetToolTip(this.commandRadioButton, "Ctrl + Left");
             this.commandRadioButton.UseVisualStyleBackColor = true;
             this.commandRadioButton.TabStopChanged += new System.EventHandler(this.RadioButtonTabStopChanged);
             // 
@@ -561,7 +557,7 @@
             this.offsetRadioButton.Size = new System.Drawing.Size(90, 21);
             this.offsetRadioButton.TabIndex = 0;
             this.offsetRadioButton.Text = "Смещение";
-            this.offsetRadioToolTip.SetToolTip(this.offsetRadioButton, "Ctrl + Right");
+            this.formToolTip.SetToolTip(this.offsetRadioButton, "Ctrl + Right");
             this.offsetRadioButton.UseVisualStyleBackColor = true;
             this.offsetRadioButton.CheckedChanged += new System.EventHandler(this.OffsetRadioCheckedChanged_);
             this.offsetRadioButton.TabStopChanged += new System.EventHandler(this.RadioButtonTabStopChanged);
@@ -635,7 +631,7 @@
             this.addButton.Size = new System.Drawing.Size(102, 24);
             this.addButton.TabIndex = 11;
             this.addButton.Text = "Добавить";
-            this.addButtonToolTip.SetToolTip(this.addButton, "Ctrl + Enter");
+            this.formToolTip.SetToolTip(this.addButton, "Ctrl + Enter");
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.AddButtonClick_);
             // 
@@ -802,7 +798,7 @@
             this.removeButton.TabIndex = 0;
             this.removeButton.TabStop = false;
             this.removeButton.Text = "Удалить";
-            this.removeButtonToolTip.SetToolTip(this.removeButton, "Ctrl + Del");
+            this.formToolTip.SetToolTip(this.removeButton, "Ctrl + Del");
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.RemoveButtonClick_);
             // 
@@ -1346,7 +1342,7 @@
             this.nameComColumn,
             this.jumpComColumn});
             this.commandList.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.commandList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.commandList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.commandList.FullRowSelect = true;
             this.commandList.GridLines = true;
             this.commandList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -1360,6 +1356,7 @@
             this.commandList.View = System.Windows.Forms.View.Details;
             this.commandList.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.commandList.SelectedIndexChanged += new System.EventHandler(this.CommandListSelectedIndexChanged_);
+            this.commandList.Enter += new System.EventHandler(this.CommandListSelectedIndexChanged_);
             // 
             // firstComColumn
             // 
@@ -1425,7 +1422,7 @@
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenuItem,
             this.debugMenuItem,
-            this.extenderSettingsMenuItem,
+            this.settingsMenuItem,
             this.helpMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Margin = new System.Windows.Forms.Padding(0, 0, 0, 6);
@@ -1450,7 +1447,7 @@
             // newMenuItem
             // 
             this.newMenuItem.Name = "newMenuItem";
-            this.newMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newMenuItem.Size = new System.Drawing.Size(235, 22);
             this.newMenuItem.Text = "Новый";
             this.newMenuItem.ToolTipText = "N";
@@ -1459,7 +1456,7 @@
             // openMenuItem
             // 
             this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openMenuItem.Size = new System.Drawing.Size(235, 22);
             this.openMenuItem.Text = "Открыть";
             this.openMenuItem.Click += new System.EventHandler(this.OpenMenuItemClick_);
@@ -1468,7 +1465,7 @@
             // 
             this.saveMenuItem.Name = "saveMenuItem";
             this.saveMenuItem.ShortcutKeyDisplayString = "";
-            this.saveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveMenuItem.Size = new System.Drawing.Size(235, 22);
             this.saveMenuItem.Text = "Сохранить";
             this.saveMenuItem.Click += new System.EventHandler(this.SaveMenuItemClick_);
@@ -1476,7 +1473,7 @@
             // saveAsMenuItem
             // 
             this.saveAsMenuItem.Name = "saveAsMenuItem";
-            this.saveAsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.saveAsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) (((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
             | System.Windows.Forms.Keys.S)));
             this.saveAsMenuItem.Size = new System.Drawing.Size(235, 22);
             this.saveAsMenuItem.Text = "Сохранить как...";
@@ -1503,41 +1500,49 @@
             // programMenuItem
             // 
             this.programMenuItem.Name = "programMenuItem";
-            this.programMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.programMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.programMenuItem.Text = "Окно программы";
+            this.programMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.programMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.programMenuItem.Text = "Память программы";
             this.programMenuItem.Click += new System.EventHandler(this.ProgramMenuItemClick_);
             // 
             // stackMenuItem
             // 
             this.stackMenuItem.Name = "stackMenuItem";
-            this.stackMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
-            this.stackMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.stackMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
+            this.stackMenuItem.Size = new System.Drawing.Size(225, 22);
             this.stackMenuItem.Text = "Окно стека";
             this.stackMenuItem.Click += new System.EventHandler(this.StackMenuItemClick_);
             // 
             // memoryMenuItem
             // 
             this.memoryMenuItem.Name = "memoryMenuItem";
-            this.memoryMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.memoryMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.memoryMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.memoryMenuItem.Size = new System.Drawing.Size(225, 22);
             this.memoryMenuItem.Text = "Окно памяти";
             this.memoryMenuItem.Click += new System.EventHandler(this.MemoryMenuItemClick_);
             // 
             // schemeMenuItem
             // 
             this.schemeMenuItem.Name = "schemeMenuItem";
-            this.schemeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.schemeMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.schemeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.schemeMenuItem.Size = new System.Drawing.Size(225, 22);
             this.schemeMenuItem.Text = "Схема АЛУ";
             this.schemeMenuItem.Click += new System.EventHandler(this.SchemeMenuItemClick_);
+            // 
+            // settingsMenuItem
+            // 
+            this.settingsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.extenderSettingsMenuItem});
+            this.settingsMenuItem.Name = "settingsMenuItem";
+            this.settingsMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.settingsMenuItem.Text = "Настройки";
             // 
             // extenderSettingsMenuItem
             // 
             this.extenderSettingsMenuItem.Name = "extenderSettingsMenuItem";
-            this.extenderSettingsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.extenderSettingsMenuItem.Size = new System.Drawing.Size(79, 20);
-            this.extenderSettingsMenuItem.Text = "Настройки";
+            this.extenderSettingsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.extenderSettingsMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.extenderSettingsMenuItem.Text = "Внешнее устройство";
             this.extenderSettingsMenuItem.Click += new System.EventHandler(this.ExtenderSettingsMenuItemClick_);
             // 
             // helpMenuItem
@@ -1572,7 +1577,7 @@
             this.i35ListView.View = System.Windows.Forms.View.Details;
             this.i35ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i35ListView.SelectedIndexChanged += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
-            this.i35ListView.Enter += new System.EventHandler(this.I35ListViewEnter);
+            this.i35ListView.Enter += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
             // 
             // i35FirstColumn
             // 
@@ -1620,7 +1625,7 @@
             this.caListView.View = System.Windows.Forms.View.Details;
             this.caListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.caListView.SelectedIndexChanged += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
-            this.caListView.Enter += new System.EventHandler(this.CaListViewEnter);
+            this.caListView.Enter += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
             // 
             // caFirstColumn
             // 
@@ -1663,7 +1668,7 @@
             this.i02ListView.View = System.Windows.Forms.View.Details;
             this.i02ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i02ListView.SelectedIndexChanged += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
-            this.i02ListView.Enter += new System.EventHandler(this.I02ListViewEnter);
+            this.i02ListView.Enter += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
             // 
             // i02FirstСolumn
             // 
@@ -1711,7 +1716,7 @@
             this.i68ListView.View = System.Windows.Forms.View.Details;
             this.i68ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i68ListView.SelectedIndexChanged += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
-            this.i68ListView.Enter += new System.EventHandler(this.I68ListViewEnter);
+            this.i68ListView.Enter += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
             // 
             // i68FirstСolumn
             // 
@@ -1752,7 +1757,7 @@
             this.ptListView.View = System.Windows.Forms.View.Details;
             this.ptListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.ptListView.SelectedIndexChanged += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
-            this.ptListView.Enter += new System.EventHandler(this.PtListViewEnter);
+            this.ptListView.Enter += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
             // 
             // ptFirstColumn
             // 
@@ -1795,7 +1800,7 @@
             this.psListView.View = System.Windows.Forms.View.Details;
             this.psListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.psListView.SelectedIndexChanged += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
-            this.psListView.Enter += new System.EventHandler(this.PsListViewEnter);
+            this.psListView.Enter += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
             // 
             // psFirstColumn
             // 
@@ -1875,7 +1880,7 @@
             this.deviceListView.View = System.Windows.Forms.View.Details;
             this.deviceListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.deviceListView.SelectedIndexChanged += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
-            this.deviceListView.Enter += new System.EventHandler(this.DeviceListViewEnter);
+            this.deviceListView.Enter += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
             // 
             // deviceFirstColumn
             // 
@@ -1928,47 +1933,51 @@
             // 
             // led3
             // 
-            this.led3.Image = ((System.Drawing.Image)(resources.GetObject("led3.Image")));
-            this.led3.Location = new System.Drawing.Point(12, 37);
+            this.led3.Location = new System.Drawing.Point(10, 33);
+            this.led3.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.led3.Name = "led3";
-            this.led3.Size = new System.Drawing.Size(12, 12);
-            this.led3.TabIndex = 1;
+            this.led3.Size = new System.Drawing.Size(22, 22);
+            this.led3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.led3.TabIndex = 0;
             this.led3.TabStop = false;
-            this.led3.Click += new System.EventHandler(this.LedClick_);
-            this.led3.DoubleClick += new System.EventHandler(this.LedClick_);
+            this.led3.Click += new System.EventHandler(this.Led3Click_);
+            this.led3.DoubleClick += new System.EventHandler(this.Led3Click_);
             // 
             // led2
             // 
-            this.led2.Image = ((System.Drawing.Image)(resources.GetObject("led2.Image")));
-            this.led2.Location = new System.Drawing.Point(30, 37);
+            this.led2.Location = new System.Drawing.Point(32, 33);
+            this.led2.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.led2.Name = "led2";
-            this.led2.Size = new System.Drawing.Size(12, 12);
-            this.led2.TabIndex = 2;
+            this.led2.Size = new System.Drawing.Size(22, 22);
+            this.led2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.led2.TabIndex = 0;
             this.led2.TabStop = false;
-            this.led2.Click += new System.EventHandler(this.LedClick_);
-            this.led2.DoubleClick += new System.EventHandler(this.LedClick_);
+            this.led2.Click += new System.EventHandler(this.Led2Click_);
+            this.led2.DoubleClick += new System.EventHandler(this.Led2Click_);
             // 
             // led1
             // 
-            this.led1.Image = ((System.Drawing.Image)(resources.GetObject("led1.Image")));
-            this.led1.Location = new System.Drawing.Point(48, 37);
+            this.led1.Location = new System.Drawing.Point(54, 33);
+            this.led1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.led1.Name = "led1";
-            this.led1.Size = new System.Drawing.Size(12, 12);
-            this.led1.TabIndex = 3;
+            this.led1.Size = new System.Drawing.Size(22, 22);
+            this.led1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.led1.TabIndex = 0;
             this.led1.TabStop = false;
-            this.led1.Click += new System.EventHandler(this.LedClick_);
-            this.led1.DoubleClick += new System.EventHandler(this.LedClick_);
+            this.led1.Click += new System.EventHandler(this.Led1Click_);
+            this.led1.DoubleClick += new System.EventHandler(this.Led1Click_);
             // 
             // led0
             // 
-            this.led0.Image = ((System.Drawing.Image)(resources.GetObject("led0.Image")));
-            this.led0.Location = new System.Drawing.Point(66, 37);
+            this.led0.Location = new System.Drawing.Point(76, 33);
+            this.led0.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.led0.Name = "led0";
-            this.led0.Size = new System.Drawing.Size(12, 12);
-            this.led0.TabIndex = 4;
+            this.led0.Size = new System.Drawing.Size(22, 22);
+            this.led0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.led0.TabIndex = 0;
             this.led0.TabStop = false;
-            this.led0.Click += new System.EventHandler(this.LedClick_);
-            this.led0.DoubleClick += new System.EventHandler(this.LedClick_);
+            this.led0.Click += new System.EventHandler(this.Led0Click_);
+            this.led0.DoubleClick += new System.EventHandler(this.Led0Click_);
             // 
             // MainForm
             // 
@@ -2000,9 +2009,9 @@
             this.Controls.Add(this.listLabel);
             this.Controls.Add(this.menu);
             this.DoubleBuffered = true;
-            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
@@ -2020,10 +2029,10 @@
             this.menu.PerformLayout();
             this.flagPanel.ResumeLayout(false);
             this.flagPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.led3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.led2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.led1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.led0)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.led3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.led2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.led1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.led0)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2177,13 +2186,9 @@
         private System.Windows.Forms.RadioButton commandRadioButton;
         private System.Windows.Forms.RadioButton offsetRadioButton;
         private System.Windows.Forms.ColumnHeader jumpComColumn;
-        private System.Windows.Forms.ToolTip saveButtonToolTip;
-        private System.Windows.Forms.ToolTip commandRadioToolTip;
-        private System.Windows.Forms.ToolTip offsetRadioToolTip;
-        private System.Windows.Forms.ToolTip addButtonToolTip;
-        private System.Windows.Forms.ToolTip removeButtonToolTip;
+        private System.Windows.Forms.ToolTip formToolTip;
         private System.Windows.Forms.ToolStripMenuItem schemeMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem extenderSettingsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
         private System.Windows.Forms.Label yLabel;
         private System.Windows.Forms.TextBox yText;
         private System.Windows.Forms.PictureBox led3;
@@ -2191,6 +2196,7 @@
         private System.Windows.Forms.PictureBox led2;
         private System.Windows.Forms.PictureBox led1;
         private System.Windows.Forms.PictureBox led0;
+        private System.Windows.Forms.ToolStripMenuItem extenderSettingsMenuItem;
     }
 }
 

@@ -61,19 +61,9 @@ namespace mtemu
             }
         }
 
-        private void I35ListViewEnter(object sender, EventArgs e)
-        {
-            DefaultListIndexChanged_(WordType.I35);
-        }
-
         private void I35ListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
             DefaultListIndexChanged_(WordType.I35);
-        }
-
-        private void CaListViewEnter(object sender, EventArgs e)
-        {
-            DefaultListIndexChanged_(WordType.CA);
         }
 
         private void CaListViewSelectedIndexChanged_(object sender, EventArgs e)
@@ -81,19 +71,9 @@ namespace mtemu
             DefaultListIndexChanged_(WordType.CA);
         }
 
-        private void I02ListViewEnter(object sender, EventArgs e)
-        {
-            DefaultListIndexChanged_(WordType.I02);
-        }
-
         private void I02ListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
             DefaultListIndexChanged_(WordType.I02);
-        }
-
-        private void I68ListViewEnter(object sender, EventArgs e)
-        {
-            DefaultListIndexChanged_(WordType.I68);
         }
 
         private void I68ListViewSelectedIndexChanged_(object sender, EventArgs e)
@@ -101,29 +81,14 @@ namespace mtemu
             DefaultListIndexChanged_(WordType.I68);
         }
 
-        private void PtListViewEnter(object sender, EventArgs e)
-        {
-            DefaultListIndexChanged_(WordType.PT);
-        }
-
         private void PtListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
             DefaultListIndexChanged_(WordType.PT);
         }
 
-        private void PsListViewEnter(object sender, EventArgs e)
-        {
-            DefaultListIndexChanged_(WordType.PS);
-        }
-
         private void PsListViewSelectedIndexChanged_(object sender, EventArgs e)
         {
             DefaultListIndexChanged_(WordType.PS);
-        }
-
-        private void DeviceListViewEnter(object sender, EventArgs e)
-        {
-            DefaultListIndexChanged_(WordType.DEVICE);
         }
 
         private void DeviceListViewSelectedIndexChanged_(object sender, EventArgs e)

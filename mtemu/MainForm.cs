@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,10 +21,9 @@ namespace mtemu
         private static Color selectedColor_ = Color.FromArgb(0, 190, 200, 234);
         private static Color nextSelectedColor_ = Color.FromArgb(0, 234, 234, 234);
 
-        private Image greenLedOff;
-        private Image greenLedOn;
+        private static int moveDelta_ = 30;
 
-        private int ledClickCounter_;
+        private int easterEggMask_;
 
         private string filenamePrivate_;
         private string filename_ {
@@ -55,12 +55,20 @@ namespace mtemu
         private TextBox[] regTexts_;
         private Dictionary<WordType, ListView> listViewes_;
         private PictureBox[] leds_;
+        private bool[] ledClicked_;
 
-        CallsForm callForm_;
+        bool stickCallsForm_;
+        CallsForm callsForm_;
+
+        bool stickMemoryForm_;
         MemoryForm memoryForm_;
+
+        bool stickStackForm_;
         StackForm stackForm_;
+
         SchemeForm schemeForm_;
         ExtenderSettingsForm extenderSettingsForm_;
+        HelpForm helpForm_;
 
         public MainForm()
         {
@@ -150,27 +158,32 @@ namespace mtemu
             }
 
             // Leds for fun
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));
-            greenLedOff = (Image) (resources.GetObject("led3.Image"));
-            greenLedOn = (Image) (resources.GetObject("led2.Image"));
+            easterEggMask_ = 0;
             leds_ = new PictureBox[] {
                 led0,
                 led1,
                 led2,
                 led3,
             };
+            ledClicked_ = new bool[] { false, false, false, false };
 
             // Memory debug form
-            memoryForm_ = new MemoryForm();
+            stickMemoryForm_ = true;
+            memoryForm_ = new MemoryForm(this);
             for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
                 memoryForm_.memoryListView.Items.Add(new ListViewItem(new string[] { "", $"0x{i:X2}", "0000 0000", "0x00" }));
             }
 
             // Stack debug form
-            stackForm_ = new StackForm();
+            stickStackForm_ = true;
+            stackForm_ = new StackForm(this);
             for (int i = 0; i < Emulator.GetStackSize(); ++i) {
                 stackForm_.stackListView.Items.Add(new ListViewItem(new string[] { "", $"0x{i:X}", "0x000" }));
             }
+
+            // Form with program editing
+            stickCallsForm_ = false;
+            callsForm_ = new CallsForm(this);
 
             // Form with scheme of ALU
             schemeForm_ = new SchemeForm();
@@ -178,20 +191,19 @@ namespace mtemu
             // Form with extenser device settings
             extenderSettingsForm_ = new ExtenderSettingsForm();
 
-            // Form with program editing
-            callForm_ = new CallsForm(this);
+            // Form with help
+            helpForm_ = new HelpForm();
 
             // Reset to initial values
             Reset_();
         }
 
-        private bool Reset_(string filename = null)
+        private bool Reset_(string filename = null, byte[] input = null)
         {
             LoadCommand_(Command.GetDefault());
             LoadCall_(Call.GetDefault());
 
             filename_ = filename;
-            ledClickCounter_ = 0;
             selected_ = -1;
             nextSelected_ = -1;
             isCallSaved_ = true;
@@ -205,16 +217,24 @@ namespace mtemu
 
             emulator_ = new Emulator();
             commandList.Items.Clear();
-            callForm_.callList.Items.Clear();
-            if (filename != null) {
-                if (!emulator_.OpenFile(filename)) {
-                    return false;
+            callsForm_.callList.Items.Clear();
+            if (filename != null || input != null) {
+                if (filename_ != null) {
+                    if (!emulator_.OpenFile(filename)) {
+                        return false;
+                    }
+                }
+                else if (input != null) {
+                    if (!emulator_.OpenRaw(input)) {
+                        return false;
+                    }
+                    filename_ = null;
                 }
                 for (int i = 0; i < emulator_.CommandsCount(); ++i) {
                     commandList.Items.Add(CommandToItems(emulator_.GetCommand(i)));
                 }
                 for (int i = 0; i < emulator_.CallsCount(); ++i) {
-                    callForm_.callList.Items.Add(CallToItems(emulator_.GetCall(i)));
+                    callsForm_.callList.Items.Add(CallToItems(emulator_.GetCall(i)));
                 }
             }
 
@@ -370,16 +390,28 @@ namespace mtemu
 
         private void StackFormMove_()
         {
-            stackForm_.Top = Top;
-            stackForm_.Left = Right; //Left + ClientRectangle.Width;
-            stackForm_.Height = Height / 2;
+            if (stickStackForm_) {
+                stackForm_.Top = Top;
+                stackForm_.Left = Right; // Left + ClientRectangle.Width;
+                stackForm_.Height = Height / 2;
+            }
         }
 
         private void MemoryFormMove_()
         {
-            memoryForm_.Top = Top + stackForm_.Height;
-            memoryForm_.Left = Right; //Left + ClientRectangle.Width;
-            memoryForm_.Height = Height / 2;
+            if (stickMemoryForm_) {
+                memoryForm_.Top = Top + stackForm_.Height;
+                memoryForm_.Left = Right; // Left + ClientRectangle.Width;
+                memoryForm_.Height = Height / 2;
+            }
+        }
+
+        private void CallsFormMove_()
+        {
+            if (stickCallsForm_) {
+                callsForm_.Top = Top;
+                callsForm_.Left = Left - callsForm_.Width;
+            }
         }
 
         private void SchemeFormMove_()
@@ -387,10 +419,55 @@ namespace mtemu
             // TODO: Add a form position if necessary
         }
 
-        private void CallsFormMove_()
+        public void OnStackFormMoved()
         {
-            //callForm_.Top = Top;
-            //callForm_.Left = Left - callForm_.Width;
+            if (
+                Top - moveDelta_ <= stackForm_.Top
+                && stackForm_.Top <= Top + moveDelta_
+                && Right - moveDelta_ <= stackForm_.Left 
+                && stackForm_.Left <= Right + moveDelta_
+            ) {
+                stickStackForm_ = true;
+            }
+            else {
+                stickStackForm_ = false;
+            }
+
+            MoveSubForms_();
+        }
+
+        public void OnMemoryFormMoved()
+        {
+            if (
+                Top - moveDelta_ <= memoryForm_.Top - memoryForm_.Height
+                && memoryForm_.Top - memoryForm_.Height <= Top + moveDelta_
+                && Right - moveDelta_ <= memoryForm_.Left
+                && memoryForm_.Left <= Right + moveDelta_
+            ) {
+                stickMemoryForm_ = true;
+            }
+            else {
+                stickMemoryForm_ = false;
+            }
+
+            MoveSubForms_();
+        }
+
+        public void OnCallsFormMoved()
+        {
+            if (
+                Top - moveDelta_ <= callsForm_.Top
+                && callsForm_.Top <= Top + moveDelta_
+                && Left - moveDelta_ <= callsForm_.Right
+                && callsForm_.Right <= Left + moveDelta_
+            ) {
+                stickCallsForm_ = true;
+            }
+            else {
+                stickCallsForm_ = false;
+            }
+
+            MoveSubForms_();
         }
 
         private void MoveSubForms_()
@@ -446,16 +523,57 @@ namespace mtemu
             return false;
         }
 
-        private void LedClick_(object sender, EventArgs e)
+        public void DisableLeds_(object obj)
         {
-            ++ledClickCounter_;
-            if (ledClickCounter_ == 4) {
+            int number = (int) obj;
+            ledClicked_[number] = false;
+            SetLeds_(emulator_.GetF());
+        }
+
+        private void LedClick_(int number)
+        {
+            if (!ledClicked_[number]) {
+                // Enable led
+                ledClicked_[number] = true;
+                SetLeds_(emulator_.GetF());
+
+                // Disable led after 60 ms
+                TimerCallback callback = new TimerCallback(DisableLeds_);
+                System.Threading.Timer timer = new System.Threading.Timer(callback, number, 60,-1);
+
+                // Remembre click
+                easterEggMask_ <<= 2;
+                easterEggMask_ += number;
+                easterEggMask_ &= (1 << 8) - 1;
+            }
+
+            // Check last 4 clicks
+            byte[] program = EasterEgg.Get(easterEggMask_);
+            if (program != null) {
                 if (BeforeCloseProgram_()) {
-                    Reset_();
-                    LoadMagicProgram_();
+                    Reset_(null, program);
                 }
             }
-            ledClickCounter_ %= 4;
+        }
+
+        private void Led3Click_(object sender, EventArgs e)
+        {
+            LedClick_(3);
+        }
+
+        private void Led2Click_(object sender, EventArgs e)
+        {
+            LedClick_(2);
+        }
+
+        private void Led1Click_(object sender, EventArgs e)
+        {
+            LedClick_(1);
+        }
+
+        private void Led0Click_(object sender, EventArgs e)
+        {
+            LedClick_(0);
         }
     }
 }

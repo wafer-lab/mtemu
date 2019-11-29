@@ -87,6 +87,8 @@
             this.ShowInTaskbar = false;
             this.Text = "Стек";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StackFormClosing_);
+            this.ResizeEnd += new System.EventHandler(this.StackFormResizeEnd_);
+            this.Move += new System.EventHandler(this.StackFormMove_);
             this.ResumeLayout(false);
 
         }

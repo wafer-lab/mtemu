@@ -27,14 +27,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "0x000",
             "1234567890123456789012345678901234567890123"}, -1);
             this.callList = new System.Windows.Forms.ListView();
-            this.firstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.addrColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.firstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.addrColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.nameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.currentPanel = new System.Windows.Forms.Panel();
             this.commentLabel = new System.Windows.Forms.Label();
             this.hexLabel = new System.Windows.Forms.Label();
@@ -47,6 +48,8 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.addressText = new System.Windows.Forms.TextBox();
             this.listLabel = new System.Windows.Forms.Label();
+            this.stepButton = new System.Windows.Forms.Button();
+            this.formToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.currentPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,12 +62,12 @@
             this.addrColumn,
             this.nameColumn});
             this.callList.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.callList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.callList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.callList.FullRowSelect = true;
             this.callList.GridLines = true;
             this.callList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.callList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.callList.Location = new System.Drawing.Point(12, 40);
             this.callList.MultiSelect = false;
             this.callList.Name = "callList";
@@ -73,7 +76,9 @@
             this.callList.TabStop = false;
             this.callList.UseCompatibleStateImageBehavior = false;
             this.callList.View = System.Windows.Forms.View.Details;
+            this.callList.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.callList.SelectedIndexChanged += new System.EventHandler(this.CallListSelectedIndexChanged_);
+            this.callList.Enter += new System.EventHandler(this.CallListSelectedIndexChanged_);
             // 
             // firstColumn
             // 
@@ -185,6 +190,7 @@
             this.addButton.Size = new System.Drawing.Size(90, 24);
             this.addButton.TabIndex = 3;
             this.addButton.Text = "Добавить";
+            this.formToolTip.SetToolTip(this.addButton, "Ctrl + Enter");
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.AddButtonClick_);
             // 
@@ -211,6 +217,7 @@
             this.removeButton.TabIndex = 0;
             this.removeButton.TabStop = false;
             this.removeButton.Text = "Удалить";
+            this.formToolTip.SetToolTip(this.removeButton, "Ctrl + Del");
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.RemoveButtonClick_);
             // 
@@ -224,6 +231,7 @@
             this.saveButton.Size = new System.Drawing.Size(90, 24);
             this.saveButton.TabIndex = 4;
             this.saveButton.Text = "Сохранить";
+            this.formToolTip.SetToolTip(this.saveButton, "Enter");
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveButtonClick_);
             // 
@@ -253,19 +261,35 @@
             this.listLabel.TabIndex = 3;
             this.listLabel.Text = "Список вызовов";
             // 
+            // stepButton
+            // 
+            this.stepButton.Font = new System.Drawing.Font("Consolas", 9F);
+            this.stepButton.Location = new System.Drawing.Point(332, 12);
+            this.stepButton.Name = "stepButton";
+            this.stepButton.Size = new System.Drawing.Size(62, 22);
+            this.stepButton.TabIndex = 4;
+            this.stepButton.TabStop = false;
+            this.stepButton.Text = "Шаг";
+            this.stepButton.UseVisualStyleBackColor = true;
+            this.stepButton.Click += new System.EventHandler(this.StepButtonClick_);
+            // 
             // CallsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(406, 585);
+            this.Controls.Add(this.stepButton);
             this.Controls.Add(this.listLabel);
             this.Controls.Add(this.callList);
             this.Controls.Add(this.currentPanel);
-            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "CallsForm";
-            this.Text = "ProgramForm";
+            this.Text = "Память программы";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProgramFormClosing_);
+            this.ResizeEnd += new System.EventHandler(this.CallsFormResizeEnd_);
+            this.Move += new System.EventHandler(this.CallsFormMove_);
             this.currentPanel.ResumeLayout(false);
             this.currentPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -290,5 +314,7 @@
         public System.Windows.Forms.Button addButton;
         public System.Windows.Forms.Button removeButton;
         public System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button stepButton;
+        private System.Windows.Forms.ToolTip formToolTip;
     }
 }

@@ -6,14 +6,24 @@ namespace mtemu
 {
     partial class MainForm
     {
-        private void SetLeds_(PictureBox[] leds, int value)
+        private void SetLeds_(int value)
         {
-            for (int i = 0; i < leds.Length; ++i) {
+            for (int i = 0; i < leds_.Length; ++i) {
                 if (Helpers.IsBitSet(value, i)) {
-                    leds[i].Image = greenLedOn;
+                    if (ledClicked_[i]) {
+                        leds_[i].Image = Properties.Resources.red_led_on;
+                    }
+                    else {
+                        leds_[i].Image = Properties.Resources.green_led_on;
+                    }
                 }
                 else {
-                    leds[i].Image = greenLedOff;
+                    if (ledClicked_[i]) {
+                        leds_[i].Image = Properties.Resources.red_led_off;
+                    }
+                    else {
+                        leds_[i].Image = Properties.Resources.green_led_off;
+                    }
                 }
             }
         }
@@ -64,7 +74,7 @@ namespace mtemu
 
             SetOut_(schemeForm_.fText, emulator_.GetF(), asNew);
             SetOut_(schemeForm_.yText, emulator_.GetY(), asNew);
-            SetLeds_(leds_, emulator_.GetF());
+            SetLeds_(emulator_.GetF());
 
             Command command = emulator_.ExecutedCommand();
 
@@ -195,6 +205,11 @@ namespace mtemu
         private void AutoButtonClick_(object sender, EventArgs e)
         {
             ResultCodeHandler_(emulator_.ExecAll());
+        }
+
+        public void ExecOneCall()
+        {
+            ResultCodeHandler_(emulator_.ExecOneCall());
         }
     }
 }

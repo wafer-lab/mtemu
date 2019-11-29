@@ -13,12 +13,14 @@ namespace mtemu
     public partial class CallsForm : Form
     {
         MainForm mainForm_;
+        bool moved_;
 
         public CallsForm(MainForm mainForm)
         {
             InitializeComponent();
 
             mainForm_ = mainForm;
+            moved_ = false;
         }
 
         private void ProgramFormClosing_(object sender, FormClosingEventArgs e)
@@ -83,7 +85,7 @@ namespace mtemu
         private void AddressTextChanged_(object sender, EventArgs e)
         {
             TextBox textBox = (TextBox) sender;
-            
+
             // Clear from wrong chars
             int selPos = textBox.SelectionStart;
             int selLen = textBox.SelectionLength;
@@ -105,19 +107,19 @@ namespace mtemu
             int selPos = textBox.SelectionStart;
             int selLen = textBox.SelectionLength;
             int value = Helpers.HexToInt(textBox.Text);
-            
+
             if (CommonKeyDown_(e)) {
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.Up) {
                 if (value > 0) {
-                    textBox.Text = $"{value-1:X3}";
+                    textBox.Text = $"{value - 1:X3}";
                 }
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.Down) {
                 if (value < (1 << Call.ADDRESS_SIZE_BIT) - 1) {
-                    textBox.Text = $"{value+1:X3}";
+                    textBox.Text = $"{value + 1:X3}";
                 }
                 e.Handled = true;
             }
@@ -140,10 +142,34 @@ namespace mtemu
             }
         }
 
+        void ListViewColumnWidthChanging_(object list, ColumnWidthChangingEventArgs e)
+        {
+            e.NewWidth = ((ListView) list).Columns[e.ColumnIndex].Width;
+            e.Cancel = true;
+        }
+
         private void CommentTextKeyDown_(object sender, KeyEventArgs e)
         {
             if (CommonKeyDown_(e)) {
                 e.Handled = true;
+            }
+        }
+
+        private void StepButtonClick_(object sender, EventArgs e)
+        {
+            mainForm_.ExecOneCall();
+        }
+
+        private void CallsFormMove_(object sender, EventArgs e)
+        {
+            moved_ = true;
+        }
+
+        private void CallsFormResizeEnd_(object sender, EventArgs e)
+        {
+            if (moved_) {
+                mainForm_.OnCallsFormMoved();
+                moved_ = false;
             }
         }
     }

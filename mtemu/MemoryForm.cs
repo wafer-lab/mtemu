@@ -12,9 +12,15 @@ namespace mtemu
 {
     public partial class MemoryForm : Form
     {
-        public MemoryForm()
+        MainForm mainForm_;
+        bool moved_;
+
+        public MemoryForm(MainForm mainForm)
         {
             InitializeComponent();
+
+            mainForm_ = mainForm;
+            moved_ = false;
         }
 
         private void MemoryFormClosing_(object sender, FormClosingEventArgs e)
@@ -22,6 +28,19 @@ namespace mtemu
             if (e.CloseReason == CloseReason.UserClosing) {
                 this.Hide();
                 e.Cancel = true;
+            }
+        }
+
+        private void MemoryFormMove_(object sender, EventArgs e)
+        {
+            moved_ = true;
+        }
+
+        private void MemoryFormResizeEnd_(object sender, EventArgs e)
+        {
+            if (moved_) {
+                mainForm_.OnMemoryFormMoved();
+                moved_ = false;
             }
         }
     }

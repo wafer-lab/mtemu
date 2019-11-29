@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace mtemu
 {
@@ -620,6 +621,21 @@ namespace mtemu
             return ResultCode.Ok;
         }
 
+        public ResultCode ExecOneCall()
+        {
+            int oldCall = callIndex_;
+            for (int i = 0; i < maxAutoCount_; ++i) {
+                ResultCode rc = ExecOne();
+                if (rc != ResultCode.Ok) {
+                    return rc;
+                }
+                if (callIndex_ > oldCall || callIndex_ >= calls_.Count || prevPC_ == pc_) {
+                    return ResultCode.Ok;
+                }
+            }
+            return ResultCode.Loop;
+        }
+
         public ResultCode ExecAll()
         {
             for (int i = 0; i < maxAutoCount_; ++i) {
@@ -822,9 +838,9 @@ namespace mtemu
                 output[seek++] = (byte) (callsArr[i].GetAddress() >> 8);
                 output[seek++] = (byte) callsArr[i].GetAddress();
 
-                string comment = callsArr[i].GetComment();
+                byte[] comment = Encoding.UTF8.GetBytes(callsArr[i].GetComment());
                 for (int c = 0; c < Call.COMMENT_MAX_SIZE; ++c) {
-                    output[seek++] = (byte) (c < comment.Length ? comment[c] : '\0');
+                    output[seek++] = (byte) (c < comment.Length ? comment[c] : 0);
                 }
             }
 
@@ -884,55 +900,69 @@ namespace mtemu
             }
         }
 
+        public bool OpenRaw(byte[] input)
+        {
+            if (fileHeader_.Length + 2 * sizeof(UInt16) > input.Length) {
+                return false;
+            }
+
+            int seek = 0;
+            for (; seek < fileHeader_.Length; ++seek) {
+                if (input[seek] != fileHeader_[seek]) {
+                    return false;
+                }
+            }
+
+            calls_.Clear();
+            commands_.Clear();
+            Reset();
+
+            int callsCount = 0;
+            callsCount = (input[seek++] << 8) + input[seek++];
+            if (seek + callsCount * (sizeof(UInt16) + Call.COMMENT_MAX_SIZE) > input.Length) {
+                return false;
+            }
+
+            for (int i = 0; i < callsCount; ++i) {
+                int address = (input[seek++] << 8) + input[seek++];
+
+                byte[] comment = new byte[Call.COMMENT_MAX_SIZE];
+                for (int c = 0; c < Call.COMMENT_MAX_SIZE; ++c) {
+                    if (input[seek++] != 0) {
+                        comment[c] = input[seek - 1];
+                    }
+                }
+
+                calls_.Add(new Call(address, Encoding.UTF8.GetString(comment)));
+            }
+
+            int commandsCount = 0;
+            commandsCount = (input[seek++] << 8) + input[seek++];
+            if (seek + commandsCount * (commandSize_ + 1) > input.Length) {
+                return false;
+            }
+
+            for (int i = 0; i < commandsCount; ++i) {
+                bool isOffset = input[seek++] == 1;
+
+                int[] words = new int[commandSize_ * 2];
+                for (int j = 0; j < commandSize_; ++j, ++seek) {
+                    words[2 * j] = input[seek] >> 4;
+                    words[2 * j + 1] = input[seek] % 16;
+                }
+                commands_.Add(new Command(words));
+                commands_.Last().isOffset = isOffset;
+            }
+            UpdateOffsets_();
+            return true;
+        }
+
         public bool OpenFile(string filename)
         {
             using (FileStream fstream = File.OpenRead(filename)) {
                 byte[] input = new byte[fstream.Length];
                 fstream.Read(input, 0, input.Length);
-
-                int seek = 0;
-                for (; seek < fileHeader_.Length; ++seek) {
-                    if (input[seek] != fileHeader_[seek]) {
-                        return false;
-                    }
-                }
-
-                calls_.Clear();
-                commands_.Clear();
-                Reset();
-
-                int callsCount = 0;
-                callsCount = (input[seek++] << 8) + input[seek++];
-
-                for (int i = 0; i < callsCount; ++i) {
-                    int address = (input[seek++] << 8) + input[seek++];
-
-                    string comment = "";
-                    for (int c = 0; c < Call.COMMENT_MAX_SIZE; ++c) {
-                        if (input[seek++] != 0) {
-                            comment += (char) (input[seek - 1]);
-                        }
-                    }
-
-                    calls_.Add(new Call(address, comment));
-                }
-
-                int commandsCount = 0;
-                commandsCount = (input[seek++] << 8) + input[seek++];
-
-                for (int i = 0; i < commandsCount; ++i) {
-                    bool isOffset = input[seek++] == 1;
-
-                    int[] words = new int[commandSize_ * 2];
-                    for (int j = 0; j < commandSize_; ++j, ++seek) {
-                        words[2 * j] = input[seek] >> 4;
-                        words[2 * j + 1] = input[seek] % 16;
-                    }
-                    commands_.Add(new Command(words));
-                    commands_.Last().isOffset = isOffset;
-                }
-                UpdateOffsets_();
-                return true;
+                return OpenRaw(input);
             }
         }
     }

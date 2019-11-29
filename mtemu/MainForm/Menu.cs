@@ -133,8 +133,8 @@ namespace mtemu
 
         private void ProgramMenuItemClick_(object sender, EventArgs e)
         {
-            if (!callForm_.Visible) {
-                callForm_.Show(this);
+            if (!callsForm_.Visible) {
+                callsForm_.Show(this);
                 CallsFormMove_();
             }
         }
@@ -152,85 +152,7 @@ namespace mtemu
 
         private void HelpMenuItemClick_(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "It will be soon...",
-                "Ooops!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information,
-                MessageBoxDefaultButton.Button1
-            );
-        }
-
-        private void LoadMagicProgram_()
-        {
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 1, 11, 0, 0, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 7 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 2 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 1 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 6 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 2 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 0 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 7 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 0 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 9 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 4 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 6 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 15 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 0, 7 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 3, 7, 0, 0, 1, 2 });
-            AddCommand_();
-            currentCommand_ = new Command(new int[] { 0, 0, 0, 2, 0, 2, 12, 0, 1, 0 });
-            AddCommand_();
-
-            currentCommand_ = new Command(new int[] { 0, 1, 12, 0, 1, 7, 0, 0, 0, 0 });
-            AddCommand_();
+            helpForm_.ShowDialog(this);
         }
     }
 }
