@@ -264,7 +264,7 @@ namespace mtemu
                     new string[] {"","0000","JNZ"},
                     new string[] {"","0001","JMP"},
                     new string[] {"","0010","JNXT"},
-                    new string[] {"","0011","EXIT"},
+                    new string[] {"","0011","END/LDM"},
                     new string[] {"","0100","CLNZ"},
                     new string[] {"","0101","CALL"},
                     new string[] {"","0110","RET"},
