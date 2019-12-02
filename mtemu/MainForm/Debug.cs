@@ -156,12 +156,6 @@ namespace mtemu
             }
         }
 
-        private void ResetButtonClick_(object sender, EventArgs e)
-        {
-            emulator_.Reset();
-            UpdateOutput_();
-        }
-
         private void ResultCodeHandler_(Emulator.ResultCode rc)
         {
             switch (rc) {
@@ -197,19 +191,45 @@ namespace mtemu
             UpdateOutput_();
         }
 
-        private void StepButtonClick_(object sender, EventArgs e)
+        public void ResetEmulator()
+        {
+            emulator_.Reset();
+            UpdateOutput_();
+        }
+
+        public void ExecOneEmulator()
         {
             ResultCodeHandler_(emulator_.ExecOne());
         }
 
-        private void AutoButtonClick_(object sender, EventArgs e)
+        public void ExecOneCallEmulator()
+        {
+            ResultCodeHandler_(emulator_.ExecOneCall());
+        }
+
+        public void ExecAllEmulator()
         {
             ResultCodeHandler_(emulator_.ExecAll());
         }
 
+        private void ResetButtonClick_(object sender, EventArgs e)
+        {
+            ResetEmulator();
+        }
+
+        private void StepButtonClick_(object sender, EventArgs e)
+        {
+            ExecOneEmulator();
+        }
+
         public void ExecOneCall()
         {
-            ResultCodeHandler_(emulator_.ExecOneCall());
+            ExecOneCallEmulator();
+        }
+
+        private void AutoButtonClick_(object sender, EventArgs e)
+        {
+            ExecAllEmulator();
         }
     }
 }

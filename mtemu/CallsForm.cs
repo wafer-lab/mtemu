@@ -56,7 +56,7 @@ namespace mtemu
             mainForm_.SaveCall();
         }
 
-        private bool CommonKeyDown_(KeyEventArgs e)
+        private bool DefaultKeyDown_(KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.Up) {
                 mainForm_.ChangeCallByIndex(mainForm_.GetCallIndex() - 1);
@@ -77,6 +77,22 @@ namespace mtemu
                 else {
                     mainForm_.SaveCall();
                 }
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.R) {
+                mainForm_.ResetEmulator();
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.T) {
+                mainForm_.ExecOneEmulator();
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.Y) {
+                mainForm_.ExecOneCallEmulator();
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.U) {
+                mainForm_.ExecAllEmulator();
                 return true;
             }
             return false;
@@ -108,7 +124,7 @@ namespace mtemu
             int selLen = textBox.SelectionLength;
             int value = Helpers.HexToInt(textBox.Text);
 
-            if (CommonKeyDown_(e)) {
+            if (DefaultKeyDown_(e)) {
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.Up) {
@@ -148,9 +164,9 @@ namespace mtemu
             e.Cancel = true;
         }
 
-        private void CommentTextKeyDown_(object sender, KeyEventArgs e)
+        private void DefaultKeyDown_(object sender, KeyEventArgs e)
         {
-            if (CommonKeyDown_(e)) {
+            if (DefaultKeyDown_(e)) {
                 e.Handled = true;
             }
         }

@@ -112,10 +112,10 @@
             this.r1Text = new System.Windows.Forms.TextBox();
             this.r0Text = new System.Windows.Forms.TextBox();
             this.commandList = new System.Windows.Forms.ListView();
-            this.firstComColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.addrComColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.nameComColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.jumpComColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.firstComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.addrComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.nameComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.jumpComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.stepButton = new System.Windows.Forms.Button();
             this.autoButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
@@ -135,38 +135,38 @@
             this.extenderSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.i35ListView = new System.Windows.Forms.ListView();
-            this.i35FirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.i35CodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.i35NameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.i35C0Column = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i35FirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i35CodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i35NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i35C0Column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.caListView = new System.Windows.Forms.ListView();
-            this.caFirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.caCodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.caNameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.caFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.caCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.caNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.i02ListView = new System.Windows.Forms.ListView();
-            this.i02FirstСolumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.i02CodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.i02RColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.i02SColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i02FirstСolumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i02CodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i02RColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i02SColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.i68ListView = new System.Windows.Forms.ListView();
-            this.i68FirstСolumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.i68CodeСolumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.i68NameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.i68FirstСolumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i68CodeСolumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.i68NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ptListView = new System.Windows.Forms.ListView();
-            this.ptFirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.ptCodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.ptNameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.ptFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ptCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ptNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.psListView = new System.Windows.Forms.ListView();
-            this.psFirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.psCodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.psSizeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.psFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.psCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.psSizeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.flagPanel = new System.Windows.Forms.Panel();
             this.m1CheckBox = new System.Windows.Forms.CheckBox();
             this.m0CheckBox = new System.Windows.Forms.CheckBox();
             this.deviceListView = new System.Windows.Forms.ListView();
-            this.deviceFirstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.deviceCodeColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.deviceNameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.deviceFirstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.deviceCodeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.deviceNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.debugLabel = new System.Windows.Forms.Label();
             this.infoLabel = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -181,10 +181,10 @@
             this.memoryPanel.SuspendLayout();
             this.menu.SuspendLayout();
             this.flagPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.led3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.led2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.led1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.led0)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led0)).BeginInit();
             this.SuspendLayout();
             // 
             // listLabel
@@ -211,6 +211,7 @@
             this.formToolTip.SetToolTip(this.saveButton, "Enter");
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveButtonClick_);
+            this.saveButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // cc0Text
             // 
@@ -292,6 +293,7 @@
             this.yText.Text = "0000";
             this.yText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.yText.WordWrap = false;
+            this.yText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // mpLabel
             // 
@@ -319,6 +321,7 @@
             this.mpText.Text = "0x00";
             this.mpText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.mpText.WordWrap = false;
+            this.mpText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // spLabel
             // 
@@ -346,6 +349,7 @@
             this.spText.Text = "0x0";
             this.spText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.spText.WordWrap = false;
+            this.spText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // pcLabel
             // 
@@ -372,6 +376,7 @@
             this.pcText.Text = "0x000";
             this.pcText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.pcText.WordWrap = false;
+            this.pcText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // fLabel
             // 
@@ -399,6 +404,7 @@
             this.fText.Text = "0000";
             this.fText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.fText.WordWrap = false;
+            this.fText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // pText
             // 
@@ -413,6 +419,7 @@
             this.pText.Text = "/P=0";
             this.pText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.pText.WordWrap = false;
+            this.pText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // gText
             // 
@@ -427,6 +434,7 @@
             this.gText.Text = "/G=0";
             this.gText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.gText.WordWrap = false;
+            this.gText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // zText
             // 
@@ -441,6 +449,7 @@
             this.zText.Text = "Z=0";
             this.zText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.zText.WordWrap = false;
+            this.zText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // f3Text
             // 
@@ -455,6 +464,7 @@
             this.f3Text.Text = "F3=0";
             this.f3Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.f3Text.WordWrap = false;
+            this.f3Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // c4Text
             // 
@@ -471,6 +481,7 @@
             this.c4Text.Text = "C4=0";
             this.c4Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.c4Text.WordWrap = false;
+            this.c4Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // ovrText
             // 
@@ -487,6 +498,7 @@
             this.ovrText.Text = "OVR=0";
             this.ovrText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ovrText.WordWrap = false;
+            this.ovrText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // outputLabel
             // 
@@ -547,6 +559,7 @@
             this.formToolTip.SetToolTip(this.commandRadioButton, "Ctrl + Left");
             this.commandRadioButton.UseVisualStyleBackColor = true;
             this.commandRadioButton.TabStopChanged += new System.EventHandler(this.RadioButtonTabStopChanged);
+            this.commandRadioButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // offsetRadioButton
             // 
@@ -561,6 +574,7 @@
             this.offsetRadioButton.UseVisualStyleBackColor = true;
             this.offsetRadioButton.CheckedChanged += new System.EventHandler(this.OffsetRadioCheckedChanged_);
             this.offsetRadioButton.TabStopChanged += new System.EventHandler(this.RadioButtonTabStopChanged);
+            this.offsetRadioButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // downButton
             // 
@@ -575,6 +589,7 @@
             this.downButton.Text = "▼";
             this.downButton.UseVisualStyleBackColor = true;
             this.downButton.Click += new System.EventHandler(this.DownButtonClick_);
+            this.downButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // upButton
             // 
@@ -589,6 +604,7 @@
             this.upButton.Text = "▲";
             this.upButton.UseVisualStyleBackColor = true;
             this.upButton.Click += new System.EventHandler(this.UpButtonClick_);
+            this.upButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // cc2Text
             // 
@@ -634,6 +650,7 @@
             this.formToolTip.SetToolTip(this.addButton, "Ctrl + Enter");
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.AddButtonClick_);
+            this.addButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // cc7TextLabel
             // 
@@ -801,6 +818,7 @@
             this.formToolTip.SetToolTip(this.removeButton, "Ctrl + Del");
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.RemoveButtonClick_);
+            this.removeButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // cc5Text
             // 
@@ -1083,6 +1101,7 @@
             this.r15Text.Text = "0000";
             this.r15Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r15Text.WordWrap = false;
+            this.r15Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r14Text
             // 
@@ -1097,6 +1116,7 @@
             this.r14Text.Text = "0000";
             this.r14Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r14Text.WordWrap = false;
+            this.r14Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r13Text
             // 
@@ -1111,6 +1131,7 @@
             this.r13Text.Text = "0000";
             this.r13Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r13Text.WordWrap = false;
+            this.r13Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r12Text
             // 
@@ -1125,6 +1146,7 @@
             this.r12Text.Text = "0000";
             this.r12Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r12Text.WordWrap = false;
+            this.r12Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r11Text
             // 
@@ -1139,6 +1161,7 @@
             this.r11Text.Text = "0000";
             this.r11Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r11Text.WordWrap = false;
+            this.r11Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r10Text
             // 
@@ -1153,6 +1176,7 @@
             this.r10Text.Text = "0000";
             this.r10Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r10Text.WordWrap = false;
+            this.r10Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r9Text
             // 
@@ -1167,6 +1191,7 @@
             this.r9Text.Text = "0000";
             this.r9Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r9Text.WordWrap = false;
+            this.r9Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r8Text
             // 
@@ -1181,6 +1206,7 @@
             this.r8Text.Text = "0000";
             this.r8Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r8Text.WordWrap = false;
+            this.r8Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // rqLabel
             // 
@@ -1207,6 +1233,7 @@
             this.rqText.Text = "0000";
             this.rqText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.rqText.WordWrap = false;
+            this.rqText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // rLabel
             // 
@@ -1233,6 +1260,7 @@
             this.r7Text.Text = "0000";
             this.r7Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r7Text.WordWrap = false;
+            this.r7Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r6Text
             // 
@@ -1247,6 +1275,7 @@
             this.r6Text.Text = "0000";
             this.r6Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r6Text.WordWrap = false;
+            this.r6Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r5Text
             // 
@@ -1261,6 +1290,7 @@
             this.r5Text.Text = "0000";
             this.r5Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r5Text.WordWrap = false;
+            this.r5Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r4Text
             // 
@@ -1275,6 +1305,7 @@
             this.r4Text.Text = "0000";
             this.r4Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r4Text.WordWrap = false;
+            this.r4Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r3Text
             // 
@@ -1289,6 +1320,7 @@
             this.r3Text.Text = "0000";
             this.r3Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r3Text.WordWrap = false;
+            this.r3Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r2Text
             // 
@@ -1303,6 +1335,7 @@
             this.r2Text.Text = "0000";
             this.r2Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r2Text.WordWrap = false;
+            this.r2Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r1Text
             // 
@@ -1317,6 +1350,7 @@
             this.r1Text.Text = "0000";
             this.r1Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r1Text.WordWrap = false;
+            this.r1Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // r0Text
             // 
@@ -1331,6 +1365,7 @@
             this.r0Text.Text = "0000";
             this.r0Text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.r0Text.WordWrap = false;
+            this.r0Text.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // commandList
             // 
@@ -1342,7 +1377,7 @@
             this.nameComColumn,
             this.jumpComColumn});
             this.commandList.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.commandList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.commandList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.commandList.FullRowSelect = true;
             this.commandList.GridLines = true;
             this.commandList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -1357,6 +1392,7 @@
             this.commandList.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.commandList.SelectedIndexChanged += new System.EventHandler(this.CommandListSelectedIndexChanged_);
             this.commandList.Enter += new System.EventHandler(this.CommandListSelectedIndexChanged_);
+            this.commandList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // firstComColumn
             // 
@@ -1388,8 +1424,10 @@
             this.stepButton.TabIndex = 0;
             this.stepButton.TabStop = false;
             this.stepButton.Text = "Шаг";
+            this.formToolTip.SetToolTip(this.stepButton, "Ctrl + T");
             this.stepButton.UseVisualStyleBackColor = true;
             this.stepButton.Click += new System.EventHandler(this.StepButtonClick_);
+            this.stepButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // autoButton
             // 
@@ -1400,8 +1438,10 @@
             this.autoButton.TabIndex = 0;
             this.autoButton.TabStop = false;
             this.autoButton.Text = "Авто";
+            this.formToolTip.SetToolTip(this.autoButton, "Ctrl + U");
             this.autoButton.UseVisualStyleBackColor = true;
             this.autoButton.Click += new System.EventHandler(this.AutoButtonClick_);
+            this.autoButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // resetButton
             // 
@@ -1412,8 +1452,10 @@
             this.resetButton.TabIndex = 0;
             this.resetButton.TabStop = false;
             this.resetButton.Text = "Сброс";
+            this.formToolTip.SetToolTip(this.resetButton, "Ctrl + R");
             this.resetButton.UseVisualStyleBackColor = true;
             this.resetButton.Click += new System.EventHandler(this.ResetButtonClick_);
+            this.resetButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // menu
             // 
@@ -1447,7 +1489,7 @@
             // newMenuItem
             // 
             this.newMenuItem.Name = "newMenuItem";
-            this.newMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newMenuItem.Size = new System.Drawing.Size(235, 22);
             this.newMenuItem.Text = "Новый";
             this.newMenuItem.ToolTipText = "N";
@@ -1456,7 +1498,7 @@
             // openMenuItem
             // 
             this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openMenuItem.Size = new System.Drawing.Size(235, 22);
             this.openMenuItem.Text = "Открыть";
             this.openMenuItem.Click += new System.EventHandler(this.OpenMenuItemClick_);
@@ -1465,7 +1507,7 @@
             // 
             this.saveMenuItem.Name = "saveMenuItem";
             this.saveMenuItem.ShortcutKeyDisplayString = "";
-            this.saveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveMenuItem.Size = new System.Drawing.Size(235, 22);
             this.saveMenuItem.Text = "Сохранить";
             this.saveMenuItem.Click += new System.EventHandler(this.SaveMenuItemClick_);
@@ -1473,7 +1515,7 @@
             // saveAsMenuItem
             // 
             this.saveAsMenuItem.Name = "saveAsMenuItem";
-            this.saveAsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) (((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.saveAsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.saveAsMenuItem.Size = new System.Drawing.Size(235, 22);
             this.saveAsMenuItem.Text = "Сохранить как...";
@@ -1500,7 +1542,7 @@
             // programMenuItem
             // 
             this.programMenuItem.Name = "programMenuItem";
-            this.programMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.programMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
             this.programMenuItem.Size = new System.Drawing.Size(225, 22);
             this.programMenuItem.Text = "Память программы";
             this.programMenuItem.Click += new System.EventHandler(this.ProgramMenuItemClick_);
@@ -1508,7 +1550,7 @@
             // stackMenuItem
             // 
             this.stackMenuItem.Name = "stackMenuItem";
-            this.stackMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
+            this.stackMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
             this.stackMenuItem.Size = new System.Drawing.Size(225, 22);
             this.stackMenuItem.Text = "Окно стека";
             this.stackMenuItem.Click += new System.EventHandler(this.StackMenuItemClick_);
@@ -1516,7 +1558,7 @@
             // memoryMenuItem
             // 
             this.memoryMenuItem.Name = "memoryMenuItem";
-            this.memoryMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.memoryMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
             this.memoryMenuItem.Size = new System.Drawing.Size(225, 22);
             this.memoryMenuItem.Text = "Окно памяти";
             this.memoryMenuItem.Click += new System.EventHandler(this.MemoryMenuItemClick_);
@@ -1524,7 +1566,7 @@
             // schemeMenuItem
             // 
             this.schemeMenuItem.Name = "schemeMenuItem";
-            this.schemeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.schemeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
             this.schemeMenuItem.Size = new System.Drawing.Size(225, 22);
             this.schemeMenuItem.Text = "Схема АЛУ";
             this.schemeMenuItem.Click += new System.EventHandler(this.SchemeMenuItemClick_);
@@ -1540,7 +1582,7 @@
             // extenderSettingsMenuItem
             // 
             this.extenderSettingsMenuItem.Name = "extenderSettingsMenuItem";
-            this.extenderSettingsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.extenderSettingsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
             this.extenderSettingsMenuItem.Size = new System.Drawing.Size(231, 22);
             this.extenderSettingsMenuItem.Text = "Внешнее устройство";
             this.extenderSettingsMenuItem.Click += new System.EventHandler(this.ExtenderSettingsMenuItemClick_);
@@ -1578,6 +1620,7 @@
             this.i35ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i35ListView.SelectedIndexChanged += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
             this.i35ListView.Enter += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
+            this.i35ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // i35FirstColumn
             // 
@@ -1626,6 +1669,7 @@
             this.caListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.caListView.SelectedIndexChanged += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
             this.caListView.Enter += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
+            this.caListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // caFirstColumn
             // 
@@ -1669,6 +1713,7 @@
             this.i02ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i02ListView.SelectedIndexChanged += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
             this.i02ListView.Enter += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
+            this.i02ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // i02FirstСolumn
             // 
@@ -1717,6 +1762,7 @@
             this.i68ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i68ListView.SelectedIndexChanged += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
             this.i68ListView.Enter += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
+            this.i68ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // i68FirstСolumn
             // 
@@ -1758,6 +1804,7 @@
             this.ptListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.ptListView.SelectedIndexChanged += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
             this.ptListView.Enter += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
+            this.ptListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // ptFirstColumn
             // 
@@ -1801,6 +1848,7 @@
             this.psListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.psListView.SelectedIndexChanged += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
             this.psListView.Enter += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
+            this.psListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // psFirstColumn
             // 
@@ -1843,6 +1891,7 @@
             this.m1CheckBox.Text = "M1";
             this.m1CheckBox.UseVisualStyleBackColor = true;
             this.m1CheckBox.CheckedChanged += new System.EventHandler(this.M1CheckBoxCheckedChanged_);
+            this.m1CheckBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // m0CheckBox
             // 
@@ -1856,6 +1905,7 @@
             this.m0CheckBox.Text = "M0";
             this.m0CheckBox.UseVisualStyleBackColor = true;
             this.m0CheckBox.CheckedChanged += new System.EventHandler(this.M0CheckBoxCheckedChanged_);
+            this.m0CheckBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // deviceListView
             // 
@@ -1881,6 +1931,7 @@
             this.deviceListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.deviceListView.SelectedIndexChanged += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
             this.deviceListView.Enter += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
+            this.deviceListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // deviceFirstColumn
             // 
@@ -2009,15 +2060,17 @@
             this.Controls.Add(this.listLabel);
             this.Controls.Add(this.menu);
             this.DoubleBuffered = true;
-            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "mtemu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing_);
+            this.Text = "mtemu";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             this.Move += new System.EventHandler(this.MainFormMove_);
             this.outputPanel.ResumeLayout(false);
             this.outputPanel.PerformLayout();
@@ -2029,10 +2082,10 @@
             this.menu.PerformLayout();
             this.flagPanel.ResumeLayout(false);
             this.flagPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.led3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.led2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.led1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.led0)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.led0)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

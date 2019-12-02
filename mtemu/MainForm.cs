@@ -520,7 +520,30 @@ namespace mtemu
                 }
                 return true;
             }
+            if (e.Control && e.KeyCode == Keys.R) {
+                ResetEmulator();
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.T) {
+                ExecOneEmulator();
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.Y) {
+                ExecOneCallEmulator();
+                return true;
+            }
+            if (e.Control && e.KeyCode == Keys.U) {
+                ExecAllEmulator();
+                return true;
+            }
             return false;
+        }
+
+        private void DefaultKeyDown_(object sender, KeyEventArgs e)
+        {
+            if (DefaultKeyDown_(e)) {
+                e.Handled = true;
+            }
         }
 
         public void DisableLeds_(object obj)

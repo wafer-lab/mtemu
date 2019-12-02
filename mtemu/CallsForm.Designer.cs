@@ -79,6 +79,7 @@
             this.callList.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.callList.SelectedIndexChanged += new System.EventHandler(this.CallListSelectedIndexChanged_);
             this.callList.Enter += new System.EventHandler(this.CallListSelectedIndexChanged_);
+            this.callList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // firstColumn
             // 
@@ -152,6 +153,7 @@
             this.downButton.Text = "▼";
             this.downButton.UseVisualStyleBackColor = true;
             this.downButton.Click += new System.EventHandler(this.DownButtonClick_);
+            this.downButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // upButton
             // 
@@ -166,6 +168,7 @@
             this.upButton.Text = "▲";
             this.upButton.UseVisualStyleBackColor = true;
             this.upButton.Click += new System.EventHandler(this.UpButtonClick_);
+            this.upButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // commentText
             // 
@@ -179,7 +182,7 @@
             this.commentText.Text = "MOV r0, 0x33 // result in R0";
             this.commentText.WordWrap = false;
             this.commentText.TextChanged += new System.EventHandler(this.CommentTextChanged_);
-            this.commentText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CommentTextKeyDown_);
+            this.commentText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // addButton
             // 
@@ -193,6 +196,7 @@
             this.formToolTip.SetToolTip(this.addButton, "Ctrl + Enter");
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.AddButtonClick_);
+            this.addButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // addressTextLabel
             // 
@@ -220,6 +224,7 @@
             this.formToolTip.SetToolTip(this.removeButton, "Ctrl + Del");
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.RemoveButtonClick_);
+            this.removeButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // saveButton
             // 
@@ -234,6 +239,7 @@
             this.formToolTip.SetToolTip(this.saveButton, "Enter");
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveButtonClick_);
+            this.saveButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // addressText
             // 
@@ -272,6 +278,8 @@
             this.stepButton.Text = "Шаг";
             this.stepButton.UseVisualStyleBackColor = true;
             this.stepButton.Click += new System.EventHandler(this.StepButtonClick_);
+            this.formToolTip.SetToolTip(this.stepButton, "Ctrl + Y");
+            this.stepButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // CallsForm
             // 
@@ -289,6 +297,7 @@
             this.Text = "Память программы";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProgramFormClosing_);
             this.ResizeEnd += new System.EventHandler(this.CallsFormResizeEnd_);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             this.Move += new System.EventHandler(this.CallsFormMove_);
             this.currentPanel.ResumeLayout(false);
             this.currentPanel.PerformLayout();
