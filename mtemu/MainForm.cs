@@ -13,6 +13,9 @@ namespace mtemu
 {
     public partial class MainForm : Form
     {
+        private static string debugMenuPrefix = "Отладка";
+        private static string infoMenuPrefix = "Справка";
+
         private static Color enabledColor_ = SystemColors.Window;
         private static Color enabledTextColor_ = SystemColors.WindowText;
         private static Color disabledColor_ = SystemColors.Control;

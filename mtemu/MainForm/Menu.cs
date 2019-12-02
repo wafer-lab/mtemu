@@ -154,5 +154,45 @@ namespace mtemu
         {
             helpForm_.ShowDialog(this);
         }
+
+        private void DebugMenuItemClick_(object sender, EventArgs e)
+        {
+            if (debugPanel.Visible) {
+                debugPanel.Hide();
+                Width -= debugPanel.Width;
+                infoPanel.Left -= debugPanel.Width;
+                memoryForm_.Left -= debugPanel.Width;
+                stackForm_.Left -= debugPanel.Width;
+                debugMenuItem.Text = debugMenuPrefix + " (показать)";
+            }
+            else {
+                debugPanel.Show();
+                Width += debugPanel.Width;
+                infoPanel.Left += debugPanel.Width;
+                memoryForm_.Left += debugPanel.Width;
+                stackForm_.Left += debugPanel.Width;
+                debugMenuItem.Text = debugMenuPrefix + " (скрыть)";
+            }
+        }
+
+        private void InfoMenuItemClick_(object sender, EventArgs e)
+        {
+            if (infoPanel.Visible) {
+                infoPanel.Hide();
+                Width -= infoPanel.Width;
+                infoPanel.Left -= infoPanel.Width;
+                memoryForm_.Left -= infoPanel.Width;
+                stackForm_.Left -= infoPanel.Width;
+                infoMenuItem.Text = infoMenuPrefix + " (показать)";
+            }
+            else {
+                infoPanel.Show();
+                Width += infoPanel.Width;
+                infoPanel.Left += infoPanel.Width;
+                memoryForm_.Left += infoPanel.Width;
+                stackForm_.Left += infoPanel.Width;
+                infoMenuItem.Text = infoMenuPrefix + " (скрыть)";
+            }
+        }
     }
 }

@@ -126,7 +126,11 @@
             this.saveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.windowsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stackMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.memoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -176,6 +180,10 @@
             this.led2 = new System.Windows.Forms.PictureBox();
             this.led1 = new System.Windows.Forms.PictureBox();
             this.led0 = new System.Windows.Forms.PictureBox();
+            this.infoPanel = new System.Windows.Forms.Panel();
+            this.debugPanel = new System.Windows.Forms.Panel();
+            this.commandsPanel = new System.Windows.Forms.Panel();
+            this.йцукенToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
             this.memoryPanel.SuspendLayout();
@@ -185,18 +193,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.led2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.led1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.led0)).BeginInit();
+            this.infoPanel.SuspendLayout();
+            this.debugPanel.SuspendLayout();
+            this.commandsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // listLabel
             // 
             this.listLabel.AutoSize = true;
             this.listLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Bold);
-            this.listLabel.Location = new System.Drawing.Point(233, 32);
+            this.listLabel.Location = new System.Drawing.Point(212, 9);
             this.listLabel.Margin = new System.Windows.Forms.Padding(3);
             this.listLabel.Name = "listLabel";
-            this.listLabel.Size = new System.Drawing.Size(140, 22);
+            this.listLabel.Size = new System.Drawing.Size(190, 22);
             this.listLabel.TabIndex = 0;
-            this.listLabel.Text = "Список команд";
+            this.listLabel.Text = "Список микрокоманд";
             // 
             // saveButton
             // 
@@ -261,7 +272,7 @@
             this.outputPanel.Controls.Add(this.c4Text);
             this.outputPanel.Controls.Add(this.ovrText);
             this.outputPanel.Controls.Add(this.outputLabel);
-            this.outputPanel.Location = new System.Drawing.Point(606, 98);
+            this.outputPanel.Location = new System.Drawing.Point(3, 75);
             this.outputPanel.Name = "outputPanel";
             this.outputPanel.Padding = new System.Windows.Forms.Padding(6);
             this.outputPanel.Size = new System.Drawing.Size(200, 187);
@@ -541,7 +552,7 @@
             this.currentPanel.Controls.Add(this.currentLabel);
             this.currentPanel.Controls.Add(this.cc3Text);
             this.currentPanel.Controls.Add(this.cc0Text);
-            this.currentPanel.Location = new System.Drawing.Point(10, 452);
+            this.currentPanel.Location = new System.Drawing.Point(12, 429);
             this.currentPanel.Name = "currentPanel";
             this.currentPanel.Padding = new System.Windows.Forms.Padding(6);
             this.currentPanel.Size = new System.Drawing.Size(591, 122);
@@ -906,7 +917,7 @@
             this.memoryPanel.Controls.Add(this.r2Text);
             this.memoryPanel.Controls.Add(this.r1Text);
             this.memoryPanel.Controls.Add(this.r0Text);
-            this.memoryPanel.Location = new System.Drawing.Point(606, 290);
+            this.memoryPanel.Location = new System.Drawing.Point(3, 268);
             this.memoryPanel.Name = "memoryPanel";
             this.memoryPanel.Padding = new System.Windows.Forms.Padding(6);
             this.memoryPanel.Size = new System.Drawing.Size(200, 284);
@@ -1381,7 +1392,7 @@
             this.commandList.FullRowSelect = true;
             this.commandList.GridLines = true;
             this.commandList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.commandList.Location = new System.Drawing.Point(10, 61);
+            this.commandList.Location = new System.Drawing.Point(12, 38);
             this.commandList.MultiSelect = false;
             this.commandList.Name = "commandList";
             this.commandList.Size = new System.Drawing.Size(590, 385);
@@ -1391,8 +1402,8 @@
             this.commandList.View = System.Windows.Forms.View.Details;
             this.commandList.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.commandList.SelectedIndexChanged += new System.EventHandler(this.CommandListSelectedIndexChanged_);
-            this.commandList.Enter += new System.EventHandler(this.CommandListSelectedIndexChanged_);
             this.commandList.Click += new System.EventHandler(this.CommandListSelectedIndexChanged_);
+            this.commandList.Enter += new System.EventHandler(this.CommandListSelectedIndexChanged_);
             this.commandList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // firstComColumn
@@ -1419,7 +1430,7 @@
             // stepButton
             // 
             this.stepButton.Font = new System.Drawing.Font("Consolas", 10F);
-            this.stepButton.Location = new System.Drawing.Point(675, 61);
+            this.stepButton.Location = new System.Drawing.Point(72, 38);
             this.stepButton.Name = "stepButton";
             this.stepButton.Size = new System.Drawing.Size(62, 30);
             this.stepButton.TabIndex = 0;
@@ -1433,7 +1444,7 @@
             // autoButton
             // 
             this.autoButton.Font = new System.Drawing.Font("Consolas", 10F);
-            this.autoButton.Location = new System.Drawing.Point(744, 61);
+            this.autoButton.Location = new System.Drawing.Point(141, 38);
             this.autoButton.Name = "autoButton";
             this.autoButton.Size = new System.Drawing.Size(62, 30);
             this.autoButton.TabIndex = 0;
@@ -1447,7 +1458,7 @@
             // resetButton
             // 
             this.resetButton.Font = new System.Drawing.Font("Consolas", 10F);
-            this.resetButton.Location = new System.Drawing.Point(606, 61);
+            this.resetButton.Location = new System.Drawing.Point(3, 38);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(62, 30);
             this.resetButton.TabIndex = 0;
@@ -1464,7 +1475,7 @@
             this.menu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenuItem,
-            this.debugMenuItem,
+            this.viewMenuItem,
             this.settingsMenuItem,
             this.helpMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
@@ -1529,46 +1540,82 @@
             this.exitMenuItem.Text = "Выход";
             this.exitMenuItem.Click += new System.EventHandler(this.ExitMenuItemClick_);
             // 
+            // viewMenuItem
+            // 
+            this.viewMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.panelsMenuItem,
+            this.windowsMenuItem});
+            this.viewMenuItem.Name = "viewMenuItem";
+            this.viewMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.viewMenuItem.Text = "Вид";
+            // 
+            // panelsMenuItem
+            // 
+            this.panelsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.debugMenuItem,
+            this.infoMenuItem});
+            this.panelsMenuItem.Name = "panelsMenuItem";
+            this.panelsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.panelsMenuItem.Text = "Панели";
+            // 
             // debugMenuItem
             // 
-            this.debugMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.debugMenuItem.Name = "debugMenuItem";
+            this.debugMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.D)));
+            this.debugMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.debugMenuItem.Text = "Отладка (скрыть)";
+            this.debugMenuItem.Click += new System.EventHandler(this.DebugMenuItemClick_);
+            // 
+            // infoMenuItem
+            // 
+            this.infoMenuItem.Name = "infoMenuItem";
+            this.infoMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.F)));
+            this.infoMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.infoMenuItem.Text = "Справка (скрыть)";
+            this.infoMenuItem.Click += new System.EventHandler(this.InfoMenuItemClick_);
+            // 
+            // windowsMenuItem
+            // 
+            this.windowsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.programMenuItem,
             this.stackMenuItem,
             this.memoryMenuItem,
             this.schemeMenuItem});
-            this.debugMenuItem.Name = "debugMenuItem";
-            this.debugMenuItem.Size = new System.Drawing.Size(64, 20);
-            this.debugMenuItem.Text = "Отладка";
+            this.windowsMenuItem.Name = "windowsMenuItem";
+            this.windowsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.windowsMenuItem.Text = "Окна";
             // 
             // programMenuItem
             // 
             this.programMenuItem.Name = "programMenuItem";
-            this.programMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.programMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.programMenuItem.Text = "Память программы";
+            this.programMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.programMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.programMenuItem.Text = "Команды";
             this.programMenuItem.Click += new System.EventHandler(this.ProgramMenuItemClick_);
             // 
             // stackMenuItem
             // 
             this.stackMenuItem.Name = "stackMenuItem";
             this.stackMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
-            this.stackMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.stackMenuItem.Text = "Окно стека";
+            this.stackMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.stackMenuItem.Text = "Стек";
             this.stackMenuItem.Click += new System.EventHandler(this.StackMenuItemClick_);
             // 
             // memoryMenuItem
             // 
             this.memoryMenuItem.Name = "memoryMenuItem";
             this.memoryMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.memoryMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.memoryMenuItem.Text = "Окно памяти";
+            this.memoryMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.memoryMenuItem.Text = "Память";
             this.memoryMenuItem.Click += new System.EventHandler(this.MemoryMenuItemClick_);
             // 
             // schemeMenuItem
             // 
             this.schemeMenuItem.Name = "schemeMenuItem";
             this.schemeMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.schemeMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.schemeMenuItem.Size = new System.Drawing.Size(178, 22);
             this.schemeMenuItem.Text = "Схема АЛУ";
             this.schemeMenuItem.Click += new System.EventHandler(this.SchemeMenuItemClick_);
             // 
@@ -1609,7 +1656,7 @@
             this.i35ListView.FullRowSelect = true;
             this.i35ListView.GridLines = true;
             this.i35ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.i35ListView.Location = new System.Drawing.Point(922, 61);
+            this.i35ListView.Location = new System.Drawing.Point(112, 38);
             this.i35ListView.MultiSelect = false;
             this.i35ListView.Name = "i35ListView";
             this.i35ListView.Scrollable = false;
@@ -1620,8 +1667,8 @@
             this.i35ListView.View = System.Windows.Forms.View.Details;
             this.i35ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i35ListView.SelectedIndexChanged += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
-            this.i35ListView.Enter += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
             this.i35ListView.Click += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
+            this.i35ListView.Enter += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
             this.i35ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // i35FirstColumn
@@ -1659,7 +1706,7 @@
             this.caListView.FullRowSelect = true;
             this.caListView.GridLines = true;
             this.caListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.caListView.Location = new System.Drawing.Point(813, 61);
+            this.caListView.Location = new System.Drawing.Point(3, 38);
             this.caListView.MultiSelect = false;
             this.caListView.Name = "caListView";
             this.caListView.Scrollable = false;
@@ -1670,8 +1717,8 @@
             this.caListView.View = System.Windows.Forms.View.Details;
             this.caListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.caListView.SelectedIndexChanged += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
-            this.caListView.Enter += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
             this.caListView.Click += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
+            this.caListView.Enter += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
             this.caListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // caFirstColumn
@@ -1704,7 +1751,7 @@
             this.i02ListView.FullRowSelect = true;
             this.i02ListView.GridLines = true;
             this.i02ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.i02ListView.Location = new System.Drawing.Point(813, 397);
+            this.i02ListView.Location = new System.Drawing.Point(3, 374);
             this.i02ListView.MultiSelect = false;
             this.i02ListView.Name = "i02ListView";
             this.i02ListView.Scrollable = false;
@@ -1715,8 +1762,8 @@
             this.i02ListView.View = System.Windows.Forms.View.Details;
             this.i02ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i02ListView.SelectedIndexChanged += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
-            this.i02ListView.Enter += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
             this.i02ListView.Click += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
+            this.i02ListView.Enter += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
             this.i02ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // i02FirstСolumn
@@ -1754,7 +1801,7 @@
             this.i68ListView.FullRowSelect = true;
             this.i68ListView.GridLines = true;
             this.i68ListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.i68ListView.Location = new System.Drawing.Point(1019, 397);
+            this.i68ListView.Location = new System.Drawing.Point(210, 374);
             this.i68ListView.MultiSelect = false;
             this.i68ListView.Name = "i68ListView";
             this.i68ListView.Scrollable = false;
@@ -1765,8 +1812,8 @@
             this.i68ListView.View = System.Windows.Forms.View.Details;
             this.i68ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i68ListView.SelectedIndexChanged += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
-            this.i68ListView.Enter += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
             this.i68ListView.Click += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
+            this.i68ListView.Enter += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
             this.i68ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // i68FirstСolumn
@@ -1797,7 +1844,7 @@
             this.ptListView.FullRowSelect = true;
             this.ptListView.GridLines = true;
             this.ptListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ptListView.Location = new System.Drawing.Point(1062, 61);
+            this.ptListView.Location = new System.Drawing.Point(253, 38);
             this.ptListView.MultiSelect = false;
             this.ptListView.Name = "ptListView";
             this.ptListView.Scrollable = false;
@@ -1808,8 +1855,8 @@
             this.ptListView.View = System.Windows.Forms.View.Details;
             this.ptListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.ptListView.SelectedIndexChanged += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
-            this.ptListView.Enter += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
             this.ptListView.Click += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
+            this.ptListView.Enter += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
             this.ptListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // ptFirstColumn
@@ -1842,7 +1889,7 @@
             this.psListView.FullRowSelect = true;
             this.psListView.GridLines = true;
             this.psListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.psListView.Location = new System.Drawing.Point(1063, 277);
+            this.psListView.Location = new System.Drawing.Point(253, 254);
             this.psListView.MultiSelect = false;
             this.psListView.Name = "psListView";
             this.psListView.Scrollable = false;
@@ -1853,8 +1900,8 @@
             this.psListView.View = System.Windows.Forms.View.Details;
             this.psListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.psListView.SelectedIndexChanged += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
-            this.psListView.Enter += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
             this.psListView.Click += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
+            this.psListView.Enter += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
             this.psListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // psFirstColumn
@@ -1880,7 +1927,7 @@
             this.flagPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flagPanel.Controls.Add(this.m1CheckBox);
             this.flagPanel.Controls.Add(this.m0CheckBox);
-            this.flagPanel.Location = new System.Drawing.Point(1062, 367);
+            this.flagPanel.Location = new System.Drawing.Point(253, 344);
             this.flagPanel.Margin = new System.Windows.Forms.Padding(4);
             this.flagPanel.Name = "flagPanel";
             this.flagPanel.Padding = new System.Windows.Forms.Padding(6);
@@ -1926,7 +1973,7 @@
             this.deviceListView.FullRowSelect = true;
             this.deviceListView.GridLines = true;
             this.deviceListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.deviceListView.Location = new System.Drawing.Point(1062, 169);
+            this.deviceListView.Location = new System.Drawing.Point(253, 146);
             this.deviceListView.MultiSelect = false;
             this.deviceListView.Name = "deviceListView";
             this.deviceListView.Scrollable = false;
@@ -1937,8 +1984,8 @@
             this.deviceListView.View = System.Windows.Forms.View.Details;
             this.deviceListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.deviceListView.SelectedIndexChanged += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
-            this.deviceListView.Enter += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
             this.deviceListView.Click += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
+            this.deviceListView.Enter += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
             this.deviceListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // deviceFirstColumn
@@ -1962,7 +2009,7 @@
             // 
             this.debugLabel.AutoSize = true;
             this.debugLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Bold);
-            this.debugLabel.Location = new System.Drawing.Point(666, 32);
+            this.debugLabel.Location = new System.Drawing.Point(63, 9);
             this.debugLabel.Margin = new System.Windows.Forms.Padding(3);
             this.debugLabel.Name = "debugLabel";
             this.debugLabel.Size = new System.Drawing.Size(80, 22);
@@ -1973,7 +2020,7 @@
             // 
             this.infoLabel.AutoSize = true;
             this.infoLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Bold);
-            this.infoLabel.Location = new System.Drawing.Point(974, 32);
+            this.infoLabel.Location = new System.Drawing.Point(164, 9);
             this.infoLabel.Margin = new System.Windows.Forms.Padding(3);
             this.infoLabel.Name = "infoLabel";
             this.infoLabel.Size = new System.Drawing.Size(80, 22);
@@ -1992,7 +2039,7 @@
             // 
             // led3
             // 
-            this.led3.Location = new System.Drawing.Point(10, 33);
+            this.led3.Location = new System.Drawing.Point(12, 10);
             this.led3.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.led3.Name = "led3";
             this.led3.Size = new System.Drawing.Size(22, 22);
@@ -2004,7 +2051,7 @@
             // 
             // led2
             // 
-            this.led2.Location = new System.Drawing.Point(32, 33);
+            this.led2.Location = new System.Drawing.Point(34, 10);
             this.led2.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.led2.Name = "led2";
             this.led2.Size = new System.Drawing.Size(22, 22);
@@ -2016,7 +2063,7 @@
             // 
             // led1
             // 
-            this.led1.Location = new System.Drawing.Point(54, 33);
+            this.led1.Location = new System.Drawing.Point(56, 10);
             this.led1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.led1.Name = "led1";
             this.led1.Size = new System.Drawing.Size(22, 22);
@@ -2028,7 +2075,7 @@
             // 
             // led0
             // 
-            this.led0.Location = new System.Drawing.Point(76, 33);
+            this.led0.Location = new System.Drawing.Point(78, 10);
             this.led0.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.led0.Name = "led0";
             this.led0.Size = new System.Drawing.Size(22, 22);
@@ -2038,34 +2085,66 @@
             this.led0.Click += new System.EventHandler(this.Led0Click_);
             this.led0.DoubleClick += new System.EventHandler(this.Led0Click_);
             // 
+            // infoPanel
+            // 
+            this.infoPanel.Controls.Add(this.caListView);
+            this.infoPanel.Controls.Add(this.i35ListView);
+            this.infoPanel.Controls.Add(this.i02ListView);
+            this.infoPanel.Controls.Add(this.i68ListView);
+            this.infoPanel.Controls.Add(this.ptListView);
+            this.infoPanel.Controls.Add(this.infoLabel);
+            this.infoPanel.Controls.Add(this.psListView);
+            this.infoPanel.Controls.Add(this.flagPanel);
+            this.infoPanel.Controls.Add(this.deviceListView);
+            this.infoPanel.Location = new System.Drawing.Point(809, 24);
+            this.infoPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.infoPanel.Name = "infoPanel";
+            this.infoPanel.Size = new System.Drawing.Size(413, 560);
+            this.infoPanel.TabIndex = 1;
+            // 
+            // debugPanel
+            // 
+            this.debugPanel.Controls.Add(this.debugLabel);
+            this.debugPanel.Controls.Add(this.outputPanel);
+            this.debugPanel.Controls.Add(this.memoryPanel);
+            this.debugPanel.Controls.Add(this.stepButton);
+            this.debugPanel.Controls.Add(this.autoButton);
+            this.debugPanel.Controls.Add(this.resetButton);
+            this.debugPanel.Location = new System.Drawing.Point(604, 24);
+            this.debugPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.debugPanel.Name = "debugPanel";
+            this.debugPanel.Size = new System.Drawing.Size(205, 560);
+            this.debugPanel.TabIndex = 2;
+            // 
+            // commandsPanel
+            // 
+            this.commandsPanel.Controls.Add(this.led3);
+            this.commandsPanel.Controls.Add(this.listLabel);
+            this.commandsPanel.Controls.Add(this.led0);
+            this.commandsPanel.Controls.Add(this.currentPanel);
+            this.commandsPanel.Controls.Add(this.led1);
+            this.commandsPanel.Controls.Add(this.commandList);
+            this.commandsPanel.Controls.Add(this.led2);
+            this.commandsPanel.Location = new System.Drawing.Point(0, 24);
+            this.commandsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.commandsPanel.Name = "commandsPanel";
+            this.commandsPanel.Size = new System.Drawing.Size(604, 560);
+            this.commandsPanel.TabIndex = 3;
+            // 
+            // йцукенToolStripMenuItem
+            // 
+            this.йцукенToolStripMenuItem.Name = "йцукенToolStripMenuItem";
+            this.йцукенToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1230, 585);
-            this.Controls.Add(this.led0);
-            this.Controls.Add(this.led1);
-            this.Controls.Add(this.led2);
-            this.Controls.Add(this.led3);
-            this.Controls.Add(this.infoLabel);
-            this.Controls.Add(this.debugLabel);
-            this.Controls.Add(this.deviceListView);
-            this.Controls.Add(this.flagPanel);
-            this.Controls.Add(this.psListView);
-            this.Controls.Add(this.ptListView);
-            this.Controls.Add(this.i68ListView);
-            this.Controls.Add(this.i02ListView);
-            this.Controls.Add(this.caListView);
-            this.Controls.Add(this.i35ListView);
-            this.Controls.Add(this.resetButton);
-            this.Controls.Add(this.autoButton);
-            this.Controls.Add(this.stepButton);
-            this.Controls.Add(this.commandList);
-            this.Controls.Add(this.memoryPanel);
-            this.Controls.Add(this.currentPanel);
-            this.Controls.Add(this.outputPanel);
-            this.Controls.Add(this.listLabel);
+            this.Controls.Add(this.commandsPanel);
+            this.Controls.Add(this.debugPanel);
+            this.Controls.Add(this.infoPanel);
             this.Controls.Add(this.menu);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -2093,6 +2172,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.led2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.led1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.led0)).EndInit();
+            this.infoPanel.ResumeLayout(false);
+            this.infoPanel.PerformLayout();
+            this.debugPanel.ResumeLayout(false);
+            this.debugPanel.PerformLayout();
+            this.commandsPanel.ResumeLayout(false);
+            this.commandsPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2219,7 +2304,7 @@
         private System.Windows.Forms.TextBox mpText;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        private System.Windows.Forms.ToolStripMenuItem debugMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stackMenuItem;
         private System.Windows.Forms.ToolStripMenuItem memoryMenuItem;
         private System.Windows.Forms.Label r15Label;
@@ -2252,11 +2337,19 @@
         private System.Windows.Forms.Label yLabel;
         private System.Windows.Forms.TextBox yText;
         private System.Windows.Forms.PictureBox led3;
-        private System.Windows.Forms.ToolStripMenuItem programMenuItem;
         private System.Windows.Forms.PictureBox led2;
         private System.Windows.Forms.PictureBox led1;
         private System.Windows.Forms.PictureBox led0;
         private System.Windows.Forms.ToolStripMenuItem extenderSettingsMenuItem;
+        private System.Windows.Forms.Panel infoPanel;
+        private System.Windows.Forms.Panel debugPanel;
+        private System.Windows.Forms.Panel commandsPanel;
+        private System.Windows.Forms.ToolStripMenuItem programMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem windowsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem йцукенToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem panelsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debugMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem infoMenuItem;
     }
 }
 
