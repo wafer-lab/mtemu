@@ -1392,6 +1392,7 @@
             this.commandList.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.commandList.SelectedIndexChanged += new System.EventHandler(this.CommandListSelectedIndexChanged_);
             this.commandList.Enter += new System.EventHandler(this.CommandListSelectedIndexChanged_);
+            this.commandList.Click += new System.EventHandler(this.CommandListSelectedIndexChanged_);
             this.commandList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // firstComColumn
@@ -1620,6 +1621,7 @@
             this.i35ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i35ListView.SelectedIndexChanged += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
             this.i35ListView.Enter += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
+            this.i35ListView.Click += new System.EventHandler(this.I35ListViewSelectedIndexChanged_);
             this.i35ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // i35FirstColumn
@@ -1669,6 +1671,7 @@
             this.caListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.caListView.SelectedIndexChanged += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
             this.caListView.Enter += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
+            this.caListView.Click += new System.EventHandler(this.CaListViewSelectedIndexChanged_);
             this.caListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // caFirstColumn
@@ -1713,6 +1716,7 @@
             this.i02ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i02ListView.SelectedIndexChanged += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
             this.i02ListView.Enter += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
+            this.i02ListView.Click += new System.EventHandler(this.I02ListViewSelectedIndexChanged_);
             this.i02ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // i02FirstСolumn
@@ -1762,6 +1766,7 @@
             this.i68ListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.i68ListView.SelectedIndexChanged += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
             this.i68ListView.Enter += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
+            this.i68ListView.Click += new System.EventHandler(this.I68ListViewSelectedIndexChanged_);
             this.i68ListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // i68FirstСolumn
@@ -1804,6 +1809,7 @@
             this.ptListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.ptListView.SelectedIndexChanged += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
             this.ptListView.Enter += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
+            this.ptListView.Click += new System.EventHandler(this.PtListViewSelectedIndexChanged_);
             this.ptListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // ptFirstColumn
@@ -1848,6 +1854,7 @@
             this.psListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.psListView.SelectedIndexChanged += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
             this.psListView.Enter += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
+            this.psListView.Click += new System.EventHandler(this.PsListViewSelectedIndexChanged_);
             this.psListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // psFirstColumn
@@ -1931,6 +1938,7 @@
             this.deviceListView.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.deviceListView.SelectedIndexChanged += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
             this.deviceListView.Enter += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
+            this.deviceListView.Click += new System.EventHandler(this.DeviceListViewSelectedIndexChanged_);
             this.deviceListView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // deviceFirstColumn
@@ -2069,7 +2077,6 @@
             this.Name = "MainForm";
             this.Text = "mtemu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing_);
-            this.Text = "mtemu";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             this.Move += new System.EventHandler(this.MainFormMove_);
             this.outputPanel.ResumeLayout(false);

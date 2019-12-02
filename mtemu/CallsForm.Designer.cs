@@ -79,6 +79,7 @@
             this.callList.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.callList.SelectedIndexChanged += new System.EventHandler(this.CallListSelectedIndexChanged_);
             this.callList.Enter += new System.EventHandler(this.CallListSelectedIndexChanged_);
+            this.callList.Click += new System.EventHandler(this.CallListSelectedIndexChanged_);
             this.callList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // firstColumn
