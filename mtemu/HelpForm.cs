@@ -21,5 +21,35 @@ namespace mtemu
         {
             System.Diagnostics.Process.Start("https://t.me/joinchat/AxUgNhRVIPABrfO65znGUw");
         }
+
+        private void CheckCode_()
+        {
+            if (codeText.Text == "raf pidor") {
+                TetrisForm tetrisForm_ = new TetrisForm();
+                tetrisForm_.ShowDialog();
+            }
+            else {
+                MessageBox.Show(
+                    $"Неправильный код!",
+                    "Ошибка!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1
+                );
+            }
+        }
+
+        private void EnterButtonClick_(object sender, EventArgs e)
+        {
+            CheckCode_();
+        }
+
+        private void CodeTextKeyDown_(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) {
+                CheckCode_();
+                e.Handled = true;
+            }
+        }
     }
 }
