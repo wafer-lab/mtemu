@@ -9,7 +9,8 @@ namespace mtemu
         MEMORY_POINTER,
         DEVICE_POINTER,
         LOAD_8BIT,
-        LOAD_4BIT,
+        LOAD_HIGH_4BIT,
+        LOAD_LOW_4BIT,
         OFFSET,
         UNKNOWN = 255,
     }
@@ -120,13 +121,13 @@ namespace mtemu
 
     enum IncType : byte
     {
-        No = 0,
+        NO = 0,
         PLUS,
         MINUS,
         UNKNOWN = 255,
     }
 
-    enum PointerSize : byte
+    public enum DataPointerType : byte
     {
         LOW_4_BIT = 0,
         HIGH_4_BIT = 1,
@@ -223,7 +224,7 @@ namespace mtemu
                     "AR",
                     "CA",
                     "",
-                    "PS",
+                    "PT",
                     "F",
                     "RA",
                     "RB",
@@ -231,11 +232,23 @@ namespace mtemu
                 }
             },
             {
-                ViewType.LOAD_4BIT, new string[] {
+                ViewType.LOAD_HIGH_4BIT, new string[] {
                     "AR",
                     "CA",
                     "",
-                    "PS",
+                    "PT",
+                    "F",
+                    "RA",
+                    "",
+                    "",
+                }
+            },
+            {
+                ViewType.LOAD_LOW_4BIT, new string[] {
+                    "AR",
+                    "CA",
+                    "",
+                    "PT",
                     "F",
                     "",
                     "RB",

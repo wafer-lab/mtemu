@@ -7,7 +7,7 @@ namespace mtemu
         public bool isOffset;
         private int number_;
         private int[] words_;
-
+        
         public Command(string[] strWords)
         {
             if (strWords.Length != length_) {
@@ -95,7 +95,7 @@ namespace mtemu
                 res += $"MemoryPtr=0x{((GetRawValue(WordType.A) << 4) + GetRawValue(WordType.B)):X2}";
                 res += "; NewPtr=";
                 switch (GetIncType()) {
-                case IncType.No:
+                case IncType.NO:
                     res += "OldPtr";
                     break;
                 case IncType.PLUS:
@@ -109,7 +109,8 @@ namespace mtemu
             case ViewType.DEVICE_POINTER:
                 res += $"Interface={GetItem_(WordType.DEVICE)[2]}; DevicePtr=0x{GetRawValue(WordType.B):X}";
                 break;
-            case ViewType.LOAD_4BIT:
+            case ViewType.LOAD_HIGH_4BIT:
+            case ViewType.LOAD_LOW_4BIT:
             case ViewType.LOAD_8BIT:
                 switch (GetFuncType()) {
                 case FuncType.STORE_MEMORY:
@@ -117,7 +118,7 @@ namespace mtemu
                         res += $"LOW(Memory(Ptr))=РОН({ GetRawValue(WordType.B) })";
                     }
                     else if (GetRawValue(WordType.PS) == 1) {
-                        res += $"HIGH(Memory(Ptr))=РОН({ GetRawValue(WordType.B) })";
+                        res += $"HIGH(Memory(Ptr))=РОН({ GetRawValue(WordType.A) })";
                     }
                     else {
                         res += $"Memory(Ptr)=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
@@ -128,7 +129,7 @@ namespace mtemu
                         res += $"РОН({ GetRawValue(WordType.B) })=LOW(Memory(Ptr))";
                     }
                     else if (GetRawValue(WordType.PS) == 1) {
-                        res += $"РОН({ GetRawValue(WordType.B) })=HIGH(Memory(Ptr))";
+                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH(Memory(Ptr))";
                     }
                     else {
                         res += $"РОН({ GetRawValue(WordType.A) })=HIGH(Memory(Ptr))";
@@ -136,10 +137,33 @@ namespace mtemu
                     }
                     break;
                 case FuncType.STORE_DEVICE:
-                    // TODO: Maybe to do device registers
-                    break;
+                            switch (GetPointerType())
+                            {
+                                case DataPointerType.LOW_4_BIT:
+                                    res += $"LOW(PORT{ GetRawValue(WordType.DEVICE) })=РОН({ GetRawValue(WordType.B) })";
+                                    break;
+                                case DataPointerType.HIGH_4_BIT:
+                                    res += $"HIGH(PORT{ GetRawValue(WordType.DEVICE) })=РОН({ GetRawValue(WordType.A) })";
+                                    break;
+                                case DataPointerType.FULL_8_BIT:
+                                    res += $"PORT{ GetRawValue(WordType.DEVICE) }=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
+                                    break;
+                            }
+                            break;
                 case FuncType.LOAD_DEVICE:
-                    // TODO: Maybe to do device registers
+                            switch (GetPointerType())
+                            {
+                                case DataPointerType.LOW_4_BIT:
+                                    res += $"РОН({ GetRawValue(WordType.B) })=LOW(PORT{ GetRawValue(WordType.DEVICE) })";
+                                    break;
+                                case DataPointerType.HIGH_4_BIT:
+                                    res += $"РОН({ GetRawValue(WordType.A) })=HIGH(PORT{ GetRawValue(WordType.DEVICE) })";
+                                    break;
+                                case DataPointerType.FULL_8_BIT:
+                                    res += $"РОН({ GetRawValue(WordType.A) })=HIGH(PORT{ GetRawValue(WordType.DEVICE) })";
+                                    res += $"; РОН({ GetRawValue(WordType.B) })=LOW(PORT{ GetRawValue(WordType.DEVICE) })";
+                                    break;
+                            }
                     break;
                 }
                 break;
@@ -200,8 +224,11 @@ namespace mtemu
                 }
             }
             else if (12 <= GetRawValue(WordType.I35) && GetRawValue(WordType.I35) <= 15) {
-                if (GetRawValue(WordType.PS) < 2) {
-                    return ViewType.LOAD_4BIT;
+                if (GetRawValue(WordType.PS) == 0) {
+                    return ViewType.LOAD_LOW_4BIT;
+                }
+                else if (GetRawValue(WordType.PS) == 1) {
+                    return ViewType.LOAD_HIGH_4BIT;
                 }
                 else {
                     return ViewType.LOAD_8BIT;
@@ -399,22 +426,40 @@ namespace mtemu
             return IncType.UNKNOWN;
         }
 
-        public PointerSize GetPointerSize()
+        public DataPointerType GetPointerType()
         {
             byte value = (byte) GetRawValue(WordType.PS);
-            if (Enum.IsDefined(typeof(PointerSize), value)) {
-                return (PointerSize) value;
+            if (Enum.IsDefined(typeof(DataPointerType), value)) {
+                return (DataPointerType) value;
             }
-            return PointerSize.UNKNOWN;
+            return DataPointerType.UNKNOWN;
         }
 
         public DeviceType GetDevice()
         {
             byte value = (byte) GetRawValue(WordType.DEVICE);
-            if (Enum.IsDefined(typeof(DeviceType), value)) {
+            if (Enum.IsDefined(typeof(DeviceType), value))
                 return (DeviceType) value;
-            }
+
             return DeviceType.UNKNOWN;
+        }
+
+        public PortExtender.InPort GetInPort()
+        {
+            byte value = (byte)GetRawValue(WordType.DEVICE);
+            if (Enum.IsDefined(typeof(PortExtender.InPort), value))
+                return (PortExtender.InPort)value;
+
+            return PortExtender.InPort.PORT_UNKNOWN;
+        }
+
+        public PortExtender.OutPort GetOutPort()
+        {
+            byte value = (byte)GetRawValue(WordType.DEVICE);
+            if (Enum.IsDefined(typeof(PortExtender.OutPort), value))
+                return (PortExtender.OutPort)value;
+
+            return PortExtender.OutPort.PORT_UNKNOWN;
         }
     }
 }

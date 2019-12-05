@@ -51,6 +51,7 @@ namespace mtemu
         private Emulator emulator_;
         private Command currentCommand_;
         private Call currentCall_;
+        private PortExtender portExtender_;
 
         private Label[] textLabels_;
         private TextBox[] textBoxes_;
@@ -194,6 +195,8 @@ namespace mtemu
             // Form with extenser device settings
             extenderSettingsForm_ = new ExtenderSettingsForm();
 
+            portExtender_ = new PortExtender();
+
             // Form with help
             helpForm_ = new HelpForm();
             UpdateEggsCounter_();
@@ -220,7 +223,7 @@ namespace mtemu
             upButton.Enabled = false;
             downButton.Enabled = false;
 
-            emulator_ = new Emulator();
+            emulator_ = new Emulator(portExtender_);
             commandList.Items.Clear();
             callsForm_.callList.Items.Clear();
             if (filename != null || input != null) {
@@ -342,7 +345,20 @@ namespace mtemu
                     deviceListView,
                 });
                 break;
-            case ViewType.LOAD_4BIT:
+            case ViewType.LOAD_HIGH_4BIT:
+                DisableItems_(new Control[] {
+                    flagPanel,
+                    i02ListView,
+                    i68ListView,
+                    cc4Text,
+                    cc8Text,
+                    cc9Text,
+
+                    ptListView,
+                    deviceListView,
+                });
+                break;
+            case ViewType.LOAD_LOW_4BIT:
                 DisableItems_(new Control[] {
                     flagPanel,
                     i02ListView,
@@ -492,6 +508,8 @@ namespace mtemu
             if (!BeforeCloseProgram_()) {
                 e.Cancel = true;
             }
+
+            portExtender_.CloseDevice();
         }
 
         private bool DefaultKeyDown_(KeyEventArgs e)
