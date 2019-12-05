@@ -8,6 +8,8 @@ namespace mtemu
 {
     partial class Emulator
     {
+        private PortExtender portExtender_;
+
         private int prevPC_;
         private int pc_;
         private int callIndex_;
@@ -58,7 +60,7 @@ namespace mtemu
 
             sp_ = 0;
             regQ_ = 0;
-            inc_ = IncType.No;
+            inc_ = IncType.NO;
             mp_ = 0;
 
             prevRegA_ = 0;
@@ -85,8 +87,9 @@ namespace mtemu
             prevP_ = false;
         }
 
-        public Emulator()
+        public Emulator(PortExtender portExtender)
         {
+            portExtender_ = portExtender;
             Reset();
         }
 
@@ -523,42 +526,80 @@ namespace mtemu
         private void LoadData_()
         {
             FuncType func = Current_().GetFuncType();
-            PointerSize pointerSize = Current_().GetPointerSize();
+            DataPointerType pointerType = Current_().GetPointerType();
             int a = Current_().GetRawValue(WordType.A);
             int b = Current_().GetRawValue(WordType.B);
 
             switch (func) {
             case FuncType.STORE_MEMORY:
-                switch (pointerSize) {
-                case PointerSize.LOW_4_BIT:
+                switch (pointerType) {
+                case DataPointerType.LOW_4_BIT:
                     memory_[mp_] = regCommon_[b];
                     break;
-                case PointerSize.HIGH_4_BIT:
-                    memory_[mp_] = regCommon_[b] << 4;
+                case DataPointerType.HIGH_4_BIT:
+                    memory_[mp_] = regCommon_[a] << 4;
                     break;
-                case PointerSize.FULL_8_BIT:
+                case DataPointerType.FULL_8_BIT:
                     memory_[mp_] = (regCommon_[a] << 4) | regCommon_[b];
                     break;
                 }
                 break;
             case FuncType.LOAD_MEMORY:
-                switch (pointerSize) {
-                case PointerSize.LOW_4_BIT:
+                switch (pointerType) {
+                case DataPointerType.LOW_4_BIT:
                     regCommon_[b] = Helpers.Mask(memory_[mp_]);
                     break;
-                case PointerSize.HIGH_4_BIT:
-                    regCommon_[b] = memory_[mp_] >> 4;
+                case DataPointerType.HIGH_4_BIT:
+                    regCommon_[a] = memory_[mp_] >> 4;
                     break;
-                case PointerSize.FULL_8_BIT:
+                case DataPointerType.FULL_8_BIT:
                     regCommon_[a] = memory_[mp_] >> 4;
                     regCommon_[b] = Helpers.Mask(memory_[mp_]);
                     break;
                 }
                 break;
             case FuncType.STORE_DEVICE:
-            // TODO: Maybe to do device registers
+                    PortExtender.OutPort outPort = Current_().GetOutPort();
+                    if (outPort != PortExtender.OutPort.PORT_UNKNOWN)
+                    {
+                        byte tmp_w = 0;
+
+                        switch (pointerType)
+                        {
+                            case DataPointerType.LOW_4_BIT:
+                                tmp_w = (byte)regCommon_[b];
+                                break;
+                            case DataPointerType.HIGH_4_BIT:
+                                tmp_w = (byte)(regCommon_[a] << 4);
+                                break;
+                            case DataPointerType.FULL_8_BIT:
+                                tmp_w = (byte)((regCommon_[a] << 4) | regCommon_[b]);
+                                break;
+                        }
+
+                        portExtender_.WritePort(outPort, pointerType, tmp_w);
+                    }
+                    break;
             case FuncType.LOAD_DEVICE:
-                // TODO: Maybe to do device registers
+                    PortExtender.InPort inPort = Current_().GetInPort();
+                    if (inPort != PortExtender.InPort.PORT_UNKNOWN)
+                    {
+                        byte tmp_r;
+                        tmp_r = portExtender_.ReadPort(inPort, pointerType);
+                        switch (pointerType)
+                        {
+                            case DataPointerType.LOW_4_BIT:
+                                regCommon_[b] = Helpers.Mask(tmp_r);
+                                break;
+                            case DataPointerType.HIGH_4_BIT:
+                                regCommon_[a] = tmp_r >> 4;
+                                break;
+                            case DataPointerType.FULL_8_BIT:
+                                regCommon_[a] = tmp_r >> 4;
+                                regCommon_[b] = Helpers.Mask(tmp_r);
+                                break;
+                        }
+                    }
                 break;
             }
             if (func == FuncType.STORE_MEMORY || func == FuncType.LOAD_MEMORY) {
@@ -613,7 +654,8 @@ namespace mtemu
             case ViewType.DEVICE_POINTER:
                 SetDevicePtr_();
                 break;
-            case ViewType.LOAD_4BIT:
+            case ViewType.LOAD_HIGH_4BIT:
+            case ViewType.LOAD_LOW_4BIT:
             case ViewType.LOAD_8BIT:
                 LoadData_();
                 break;
