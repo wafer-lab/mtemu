@@ -70,6 +70,8 @@ namespace mtemu
                     MessageBoxDefaultButton.Button1
                 );
                 helpForm_.linkLabel.Visible = true;
+                helpForm_.codeText.Visible = true;
+                helpForm_.codeButton.Visible = true;
                 LedsAnimation_();
             }
         }

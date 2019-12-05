@@ -1555,7 +1555,7 @@
             this.debugMenuItem,
             this.infoMenuItem});
             this.panelsMenuItem.Name = "panelsMenuItem";
-            this.panelsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.panelsMenuItem.Size = new System.Drawing.Size(116, 22);
             this.panelsMenuItem.Text = "Панели";
             // 
             // debugMenuItem
@@ -1584,7 +1584,7 @@
             this.memoryMenuItem,
             this.schemeMenuItem});
             this.windowsMenuItem.Name = "windowsMenuItem";
-            this.windowsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.windowsMenuItem.Size = new System.Drawing.Size(116, 22);
             this.windowsMenuItem.Text = "Окна";
             // 
             // programMenuItem

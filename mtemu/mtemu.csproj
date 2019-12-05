@@ -143,6 +143,12 @@
     <Compile Include="StackForm.Designer.cs">
       <DependentUpon>StackForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TetrisForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TetrisForm.Designer.cs">
+      <DependentUpon>TetrisForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ExtenderSettingsForm.resx">
       <DependentUpon>ExtenderSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -171,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StackForm.resx">
       <DependentUpon>StackForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TetrisForm.resx">
+      <DependentUpon>TetrisForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
