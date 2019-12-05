@@ -28,6 +28,10 @@ namespace mtemu
         private int mp_;
         private int[] memory_ = new int[memSize_];
 
+        private int dev_ptr_;
+        // reserved for future use
+        private int dev_if_;
+
         private int prevRegA_;
         private int prevRegB_;
         private int prevRegQ_;
@@ -518,9 +522,30 @@ namespace mtemu
             mp_ = (Current_().GetRawValue(WordType.A) << 4) + Current_().GetRawValue(WordType.B);
         }
 
+        private PortExtender.InPort GetInPort()
+        {
+            var val = (byte)dev_ptr_;
+
+            if (Enum.IsDefined(typeof(PortExtender.InPort), val))
+                return (PortExtender.InPort)val;
+
+            return PortExtender.InPort.PORT_UNKNOWN;
+        }
+
+        private PortExtender.OutPort GetOutPort()
+        {
+            var val = (byte)dev_ptr_;
+
+            if (Enum.IsDefined(typeof(PortExtender.OutPort), val))
+                return (PortExtender.OutPort)val;
+
+            return PortExtender.OutPort.PORT_UNKNOWN;
+        }
+
         private void SetDevicePtr_()
         {
-            // TODO: Maybe to do device registers
+            dev_ptr_ = Current_().GetRawValue(WordType.A);
+            dev_if_ = 0;
         }
 
         private void LoadData_()
@@ -559,47 +584,47 @@ namespace mtemu
                 }
                 break;
             case FuncType.STORE_DEVICE:
-                    PortExtender.OutPort outPort = Current_().GetOutPort();
-                    if (outPort != PortExtender.OutPort.PORT_UNKNOWN)
+                PortExtender.OutPort outPort = GetOutPort();
+                if (outPort != PortExtender.OutPort.PORT_UNKNOWN)
+                {
+                    byte tmp_w = 0;
+
+                    switch (pointerType)
                     {
-                        byte tmp_w = 0;
-
-                        switch (pointerType)
-                        {
-                            case DataPointerType.LOW_4_BIT:
-                                tmp_w = (byte)regCommon_[b];
-                                break;
-                            case DataPointerType.HIGH_4_BIT:
-                                tmp_w = (byte)(regCommon_[a] << 4);
-                                break;
-                            case DataPointerType.FULL_8_BIT:
-                                tmp_w = (byte)((regCommon_[a] << 4) | regCommon_[b]);
-                                break;
-                        }
-
-                        portExtender_.WritePort(outPort, pointerType, tmp_w);
+                    case DataPointerType.LOW_4_BIT:
+                        tmp_w = (byte)regCommon_[b];
+                        break;
+                    case DataPointerType.HIGH_4_BIT:
+                        tmp_w = (byte)(regCommon_[a] << 4);
+                        break;
+                    case DataPointerType.FULL_8_BIT:
+                        tmp_w = (byte)((regCommon_[a] << 4) | regCommon_[b]);
+                        break;
                     }
-                    break;
+
+                    portExtender_.WritePort(outPort, pointerType, tmp_w);
+                }
+                break;
             case FuncType.LOAD_DEVICE:
-                    PortExtender.InPort inPort = Current_().GetInPort();
-                    if (inPort != PortExtender.InPort.PORT_UNKNOWN)
+                PortExtender.InPort inPort = GetInPort();
+                if (inPort != PortExtender.InPort.PORT_UNKNOWN)
+                {
+                    byte tmp_r;
+                    tmp_r = portExtender_.ReadPort(inPort, pointerType);
+                    switch (pointerType)
                     {
-                        byte tmp_r;
-                        tmp_r = portExtender_.ReadPort(inPort, pointerType);
-                        switch (pointerType)
-                        {
-                            case DataPointerType.LOW_4_BIT:
-                                regCommon_[b] = Helpers.Mask(tmp_r);
-                                break;
-                            case DataPointerType.HIGH_4_BIT:
-                                regCommon_[a] = tmp_r >> 4;
-                                break;
-                            case DataPointerType.FULL_8_BIT:
-                                regCommon_[a] = tmp_r >> 4;
-                                regCommon_[b] = Helpers.Mask(tmp_r);
-                                break;
-                        }
+                    case DataPointerType.LOW_4_BIT:
+                        regCommon_[b] = Helpers.Mask(tmp_r);
+                        break;
+                    case DataPointerType.HIGH_4_BIT:
+                        regCommon_[a] = tmp_r >> 4;
+                        break;
+                    case DataPointerType.FULL_8_BIT:
+                        regCommon_[a] = tmp_r >> 4;
+                        regCommon_[b] = Helpers.Mask(tmp_r);
+                        break;
                     }
+                }
                 break;
             }
             if (func == FuncType.STORE_MEMORY || func == FuncType.LOAD_MEMORY) {
