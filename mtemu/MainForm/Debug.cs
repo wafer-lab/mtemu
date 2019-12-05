@@ -232,6 +232,15 @@ namespace mtemu
                     MessageBoxDefaultButton.Button1
                 );
                 break;
+            case Emulator.ResultCode.End:
+                MessageBox.Show(
+                    "Вы дошли до конца программы!",
+                    "Это всё...",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information,
+                    MessageBoxDefaultButton.Button1
+                );
+                break;
             }
 
             UpdateOutput_();

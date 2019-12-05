@@ -50,17 +50,18 @@ namespace mtemu
             selected_ = index;
             if (0 <= selected_ && selected_ < commandList.Items.Count) {
                 commandList.Items[selected_].BackColor = selectedColor;
+                commandList.EnsureVisible(selected_);
             }
         }
 
-        private void ChangeCommand_(int newSelected, Color color)
+        private void ChangeCommand_(int newSelected, Color color, bool force = false)
         {
             if (newSelected < -1 || commandList.Items.Count <= newSelected) {
                 return;
             }
 
-            if (newSelected != selected_) {
-                if (!isCommandSaved_) {
+            if (newSelected != selected_ || force) {
+                if (!isCommandSaved_ && !force) {
                     DialogResult saveRes = MessageBox.Show(
                         "Сохранить текущую команду?",
                         "Сохранение",
@@ -74,8 +75,6 @@ namespace mtemu
                     if (saveRes == DialogResult.Yes) {
                         SaveCommand_();
                     }
-
-                    SelectCommand_(newSelected, color);
                 }
                 SelectCommand_(newSelected, color);
 
@@ -199,14 +198,14 @@ namespace mtemu
                 if (number >= commandList.Items.Count) {
                     number = commandList.Items.Count - 1;
                 }
-                ChangeCommand_(number, selectedColor_);
 
                 if (number != -1) {
                     for (int i = number; i < emulator_.CommandsCount(); ++i) {
                         commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
                     }
-                    SelectCommand_(number, selectedColor_);
                 }
+
+                ChangeCommand_(number, selectedColor_, true);
             }
         }
 
@@ -217,12 +216,12 @@ namespace mtemu
                 return;
             }
             emulator_.MoveCommandUp(index);
-            ChangeCommand_(index - 1, selectedColor_);
 
             for (int i = index - 1; i < emulator_.CommandsCount(); ++i) {
                 commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
             }
-            SelectCommand_(index - 1, selectedColor_);
+
+            ChangeCommand_(index - 1, selectedColor_);
 
             isProgramSaved_ = false;
         }
@@ -234,12 +233,12 @@ namespace mtemu
                 return;
             }
             emulator_.MoveCommandDown(index);
-            ChangeCommand_(index + 1, selectedColor_);
 
             for (int i = index; i < emulator_.CommandsCount(); ++i) {
                 commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
             }
-            SelectCommand_(index + 1, selectedColor_);
+
+            ChangeCommand_(index + 1, selectedColor_);
 
             isProgramSaved_ = false;
         }

@@ -413,6 +413,7 @@ namespace mtemu
             NoCommands,
             IncorrectCommand,
             Loop,
+            End,
         };
 
         public static int GetStackSize()

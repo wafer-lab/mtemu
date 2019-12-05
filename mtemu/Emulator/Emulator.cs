@@ -582,7 +582,7 @@ namespace mtemu
             }
 
             if (end_) {
-                return ResultCode.Ok;
+                return ResultCode.End;
             }
 
             if (pc_ == -1) {

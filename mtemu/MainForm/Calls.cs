@@ -37,17 +37,18 @@ namespace mtemu
             selectedCall_ = index;
             if (0 <= selectedCall_ && selectedCall_ < callsForm_.callList.Items.Count) {
                 callsForm_.callList.Items[selectedCall_].BackColor = selectedColor;
+                callsForm_.callList.EnsureVisible(selectedCall_);
             }
         }
 
-        private void ChangeCall_(int newSelected, Color color)
+        private void ChangeCall_(int newSelected, Color color, bool force = false)
         {
             if (newSelected < -1 || callsForm_.callList.Items.Count <= newSelected) {
                 return;
             }
 
-            if (newSelected != selectedCall_) {
-                if (!isCallSaved_) {
+            if (newSelected != selectedCall_ || force) {
+                if (!isCallSaved_ && !force) {
                     DialogResult saveRes = MessageBox.Show(
                         "Сохранить текущий вызов?",
                         "Сохранение",
@@ -61,8 +62,6 @@ namespace mtemu
                     if (saveRes == DialogResult.Yes) {
                         SaveCall();
                     }
-
-                    SelectCall_(newSelected, color);
                 }
                 SelectCall_(newSelected, color);
 
@@ -161,14 +160,14 @@ namespace mtemu
                 if (number >= callsForm_.callList.Items.Count) {
                     number = callsForm_.callList.Items.Count - 1;
                 }
-                ChangeCall_(number, selectedColor_);
 
                 if (number != -1) {
                     for (int i = number; i < emulator_.CallsCount(); ++i) {
                         callsForm_.callList.Items[i] = CallToItems(emulator_.GetCall(i));
                     }
-                    SelectCall_(number, selectedColor_);
                 }
+
+                ChangeCall_(number, selectedColor_, true);
             }
         }
 
@@ -179,12 +178,12 @@ namespace mtemu
                 return;
             }
             emulator_.MoveCallUp(index);
-            ChangeCall_(index - 1, selectedColor_);
 
             for (int i = index - 1; i < emulator_.CallsCount(); ++i) {
                 callsForm_.callList.Items[i] = CallToItems(emulator_.GetCall(i));
             }
-            SelectCall_(index - 1, selectedColor_);
+
+            ChangeCall_(index - 1, selectedColor_);
 
             isProgramSaved_ = false;
         }
@@ -196,12 +195,12 @@ namespace mtemu
                 return;
             }
             emulator_.MoveCallDown(index);
-            ChangeCall_(index + 1, selectedColor_);
 
             for (int i = index; i < emulator_.CallsCount(); ++i) {
                 callsForm_.callList.Items[i] = CallToItems(emulator_.GetCall(i));
             }
-            SelectCall_(index + 1, selectedColor_);
+
+            ChangeCall_(index + 1, selectedColor_);
 
             isProgramSaved_ = false;
         }
