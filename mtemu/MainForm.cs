@@ -196,6 +196,7 @@ namespace mtemu
 
             // Form with help
             helpForm_ = new HelpForm();
+            UpdateEggsCounter_();
 
             // Reset to initial values
             Reset_();
@@ -549,7 +550,7 @@ namespace mtemu
             }
         }
 
-        public void DisableLeds_(object obj)
+        private void DisableLeds_(object obj)
         {
             int number = (int) obj;
             ledClicked_[number] = false;
@@ -574,10 +575,12 @@ namespace mtemu
             }
 
             // Check last 4 clicks
-            byte[] program = EasterEgg.Get(easterEggMask_);
+            byte[] program = EasterEgg.GetData(easterEggMask_);
             if (program != null) {
                 if (BeforeCloseProgram_()) {
                     Reset_(null, program);
+                    UpdateEggsCounter_();
+                    easterEggMask_ = 0;
                 }
             }
         }

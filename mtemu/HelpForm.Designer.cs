@@ -32,6 +32,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.leftLabel = new System.Windows.Forms.Label();
+            this.linkLabel = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // label1
@@ -92,10 +94,39 @@
             this.label5.Margin = new System.Windows.Forms.Padding(4);
             this.label5.Name = "label5";
             this.label5.Padding = new System.Windows.Forms.Padding(4);
-            this.label5.Size = new System.Drawing.Size(558, 27);
+            this.label5.Size = new System.Drawing.Size(558, 44);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Тут есть 4 пасхалки, чтобы было нескучно учится!";
+            this.label5.Text = "Тут есть пасхалки, чтобы было нескучно учится!\r\nПодсказка: Раз, два, три! Ёлочка," +
+    " гори!";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // leftLabel
+            // 
+            this.leftLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.leftLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.leftLabel.Location = new System.Drawing.Point(495, 186);
+            this.leftLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.leftLabel.Name = "leftLabel";
+            this.leftLabel.Padding = new System.Windows.Forms.Padding(4);
+            this.leftLabel.Size = new System.Drawing.Size(76, 44);
+            this.leftLabel.TabIndex = 5;
+            this.leftLabel.Text = "99/99";
+            this.leftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // linkLabel
+            // 
+            this.linkLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.linkLabel.Location = new System.Drawing.Point(13, 238);
+            this.linkLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.linkLabel.Name = "linkLabel";
+            this.linkLabel.Padding = new System.Windows.Forms.Padding(4);
+            this.linkLabel.Size = new System.Drawing.Size(558, 27);
+            this.linkLabel.TabIndex = 7;
+            this.linkLabel.TabStop = true;
+            this.linkLabel.Text = "https://t.me/joinchat/AxUgNhRVIPABrfO65znGUw";
+            this.linkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabel.Visible = false;
+            this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelClicked);
             // 
             // HelpForm
             // 
@@ -103,6 +134,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.linkLabel);
+            this.Controls.Add(this.leftLabel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -126,5 +159,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        public System.Windows.Forms.Label leftLabel;
+        public System.Windows.Forms.LinkLabel linkLabel;
     }
 }

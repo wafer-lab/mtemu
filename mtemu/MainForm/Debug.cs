@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace mtemu
 {
@@ -25,6 +26,51 @@ namespace mtemu
                         leds_[i].Image = Properties.Resources.green_led_off;
                     }
                 }
+            }
+        }
+
+        private void LedsAnimation_()
+        {
+            Action<object> toggleLed = (object obj) => {
+                int number = (int) obj;
+                for (int i = 0; i < leds_.Length; ++i) {
+                    if (Helpers.IsBitSet(number, i)) {
+                        ledClicked_[i] = true;
+                    }
+                    else {
+                        ledClicked_[i] = false;
+                    }
+                }
+                SetLeds_(15);
+            };
+            TimerCallback callback = new TimerCallback(toggleLed);
+
+            int count = 8;
+            for (int i = 0; i < count; ++i) {
+                new System.Threading.Timer(callback, 8, i * 600, -1);
+                new System.Threading.Timer(callback, 4, i * 600 + 100, -1);
+                new System.Threading.Timer(callback, 2, i * 600 + 200, -1);
+                new System.Threading.Timer(callback, 1, i * 600 + 300, -1);
+                new System.Threading.Timer(callback, 2, i * 600 + 400, -1);
+                new System.Threading.Timer(callback, 4, i * 600 + 500, -1);
+            }
+            new System.Threading.Timer(callback, 0, count * 600, -1);
+        }
+
+        private void UpdateEggsCounter_()
+        {
+            helpForm_.leftLabel.Text = $"{EasterEgg.FoundEggsCount()}/{EasterEgg.EggsCount()}";
+            if (EasterEgg.EggsCount() - EasterEgg.FoundEggsCount() == 0 && !EasterEgg.IsNotified()) {
+                EasterEgg.SetNotified();
+                MessageBox.Show(
+                    "Воу, ты нашел все пасхалки!\nНапиши в телеграме!\nCсылка будет в разделе помощи!",
+                    "Поздравляю!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information,
+                    MessageBoxDefaultButton.Button1
+                );
+                helpForm_.linkLabel.Visible = true;
+                LedsAnimation_();
             }
         }
 

@@ -63,9 +63,149 @@ namespace mtemu.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] egg {
+        internal static byte[] egg_01_3333 {
             get {
-                object obj = ResourceManager.GetObject("egg", resourceCulture);
+                object obj = ResourceManager.GetObject("egg_01_3333", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_02_0130 {
+            get {
+                object obj = ResourceManager.GetObject("egg_02_0130", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_03_1213 {
+            get {
+                object obj = ResourceManager.GetObject("egg_03_1213", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_04_2301 {
+            get {
+                object obj = ResourceManager.GetObject("egg_04_2301", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_05_1323 {
+            get {
+                object obj = ResourceManager.GetObject("egg_05_1323", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_06_1200 {
+            get {
+                object obj = ResourceManager.GetObject("egg_06_1200", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_07_1330 {
+            get {
+                object obj = ResourceManager.GetObject("egg_07_1330", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_08_3023 {
+            get {
+                object obj = ResourceManager.GetObject("egg_08_3023", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_09_0213 {
+            get {
+                object obj = ResourceManager.GetObject("egg_09_0213", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_10_0121 {
+            get {
+                object obj = ResourceManager.GetObject("egg_10_0121", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_11_2031 {
+            get {
+                object obj = ResourceManager.GetObject("egg_11_2031", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_12_3110 {
+            get {
+                object obj = ResourceManager.GetObject("egg_12_3110", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_13_2311 {
+            get {
+                object obj = ResourceManager.GetObject("egg_13_2311", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_14_0210 {
+            get {
+                object obj = ResourceManager.GetObject("egg_14_0210", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] egg_15_final {
+            get {
+                object obj = ResourceManager.GetObject("egg_15_final", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -87,26 +227,6 @@ namespace mtemu.Properties {
             get {
                 object obj = ResourceManager.GetObject("green_led_on", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] leds_3210 {
-            get {
-                object obj = ResourceManager.GetObject("leds_3210", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] raf {
-            get {
-                object obj = ResourceManager.GetObject("raf", resourceCulture);
-                return ((byte[])(obj));
             }
         }
         

@@ -430,49 +430,4 @@ namespace mtemu
             return memSize_;
         }
     }
-
-    class EasterEgg
-    {
-        private static int GetEggNumber_(int led3, int led2, int led1, int led0)
-        {
-            return led3 << 6 | led2 << 4 | led1 << 2 | led0;
-        }
-
-        // Max sum of led clicks = 4
-        private static Dictionary<int, byte[]> easterEggs_ = new Dictionary<int, byte[]> {
-            { GetEggNumber_(3, 3, 3, 3), Properties.Resources.egg },
-            { GetEggNumber_(3, 2, 1, 0), Properties.Resources.leds_3210 },
-            { GetEggNumber_(0, 1, 2, 3), Properties.Resources.raf },
-            //{ GetEggNumber_(0, 1, 3, 2), Properties.Resources.leds_0132 },
-            //{ GetEggNumber_(0, 2, 1, 3), Properties.Resources.leds_0213 },
-            //{ GetEggNumber_(0, 2, 3, 1), Properties.Resources.leds_0231 },
-            //{ GetEggNumber_(0, 3, 1, 2), Properties.Resources.leds_0312 },
-            //{ GetEggNumber_(0, 3, 2, 1), Properties.Resources.leds_0321 },
-            //{ GetEggNumber_(1, 0, 2, 3), Properties.Resources.leds_1023 },
-            //{ GetEggNumber_(1, 0, 3, 2), Properties.Resources.leds_1032 },
-            //{ GetEggNumber_(1, 2, 0, 3), Properties.Resources.leds_1203 },
-            //{ GetEggNumber_(1, 2, 3, 0), Properties.Resources.leds_1230 },
-            //{ GetEggNumber_(1, 3, 0, 2), Properties.Resources.leds_1302 },
-            //{ GetEggNumber_(1, 3, 2, 0), Properties.Resources.leds_1320 },
-            //{ GetEggNumber_(2, 0, 1, 3), Properties.Resources.leds_2013 },
-            //{ GetEggNumber_(2, 0, 3, 1), Properties.Resources.leds_2031 },
-            //{ GetEggNumber_(2, 1, 0, 3), Properties.Resources.leds_2103 },
-            //{ GetEggNumber_(2, 1, 3, 0), Properties.Resources.leds_2130 },
-            //{ GetEggNumber_(2, 3, 0, 1), Properties.Resources.leds_2301 },
-            //{ GetEggNumber_(2, 3, 1, 0), Properties.Resources.leds_2310 },
-            //{ GetEggNumber_(3, 0, 1, 2), Properties.Resources.leds_3012 },
-            //{ GetEggNumber_(3, 0, 2, 1), Properties.Resources.leds_3021 },
-            //{ GetEggNumber_(3, 1, 0, 2), Properties.Resources.leds_3102 },
-            //{ GetEggNumber_(3, 1, 2, 0), Properties.Resources.leds_3120 },
-            //{ GetEggNumber_(3, 2, 0, 1), Properties.Resources.leds_3201 },
-        };
-
-        public static byte[] Get(int number)
-        {
-            if (easterEggs_.ContainsKey(number)) {
-                return easterEggs_[number];
-            }
-            return null;
-        }
-    }
 }

@@ -16,5 +16,10 @@ namespace mtemu
         {
             InitializeComponent();
         }
+
+        private void linkLabelClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://t.me/joinchat/AxUgNhRVIPABrfO65znGUw");
+        }
     }
 }
