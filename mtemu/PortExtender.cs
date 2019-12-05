@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Management;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO.Ports;
 using System.Threading;
-using System.Reflection;
-using Microsoft.Win32.SafeHandles;
 
 namespace mtemu
 {
@@ -163,7 +157,7 @@ namespace mtemu
 
             byte[] serial = (byte[])res;
 
-            if (serial.Length >= SERIAL_LENGTH)
+            if (serial != null && serial.Length >= SERIAL_LENGTH)
             {
                 if (serial[0] == 'T' &&
                     serial[1] == 'M' &&
@@ -185,6 +179,34 @@ namespace mtemu
             mre.Set();
         }
 
+        private static bool ParseResponse(ref byte[] buf, out byte[] resp_data)
+        {
+            resp_data = null;
+
+            byte resp_start = buf[0];
+            if (((resp_start >> CMD_SHIFT) & CMD_MARKER_MASK) == CMD_MARKER_START)
+            {
+                if (((resp_start >> CMD_SHIFT) & CMD_MASK) == CMD_RESPONSE)
+                {
+                    byte resp_size = Convert.ToByte(resp_start & CMD_DATA_LEN_MASK);
+                    byte resp_end = buf[resp_size + 1];
+
+                    if (((resp_end >> CMD_SHIFT) & CMD_MARKER_MASK) == CMD_MARKER_END)
+                    {
+                        if ((resp_end & CMD_DATA_LEN_MASK) == resp_size)
+                        {
+                            resp_data = new byte[resp_size];
+                            Array.Copy(buf, 1, resp_data, 0, resp_size);
+
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private static void CmdSendRecv(ref SerialPort dev, byte[] in_buf, out object res)
         {
             res = null;
@@ -196,33 +218,32 @@ namespace mtemu
 
                 dev.Write(in_buf, 0, in_buf.Length);
 
-                mre.WaitOne();
+                var signal = mre.WaitOne(1000, false);
                 dev.DataReceived -= new SerialDataReceivedEventHandler(SerialPort_DataReceived);
 
-                var buf_size = dev.ReadBufferSize;
-                byte[] buf = new byte[buf_size];
-                dev.Read(buf, 0, buf_size);
-
-                byte resp_start = buf[0];
-                if (((resp_start >> CMD_SHIFT) & CMD_MARKER_MASK) == CMD_MARKER_START)
+                if (signal)
                 {
-                    if (((resp_start >> CMD_SHIFT) & CMD_MASK) == CMD_RESPONSE)
+                    var buf_size = dev.ReadBufferSize;
+                    if (buf_size > 0)
                     {
-                        byte resp_size = Convert.ToByte(resp_start & CMD_DATA_LEN_MASK);
-                        byte resp_end = buf[resp_size + 1];
+                        byte[] buf = new byte[buf_size];
+                        dev.Read(buf, 0, buf_size);
 
-                        if (((resp_end >> CMD_SHIFT) & CMD_MARKER_MASK) == CMD_MARKER_END)
-                        {
-                            if ((resp_end & CMD_DATA_LEN_MASK) == resp_start)
-                            {
-                                byte[] out_buf = new byte[resp_size];
-                                Array.Copy(buf, 1, out_buf, 0, resp_size);
+                        byte[] resp_data;
 
-                                res = out_buf;
-                            }
-                        }
+                        ParseResponse(ref buf, out resp_data);
+                        res = resp_data;
+
+                        if (resp_data == null ||
+                            ((resp_data.Length == 1) && (Convert.ToSByte(resp_data[0]) < 0))
+                            )
+                            throw new Exception("Device returned request failed");
                     }
+                    else
+                        throw new Exception("Received buffer size is zero");
                 }
+                else
+                    throw new Exception("Device timeout occured");
             }
             else
                 throw new Exception("MTPE is not connected");
