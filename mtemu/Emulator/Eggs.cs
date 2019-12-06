@@ -42,21 +42,21 @@ namespace mtemu
 
         // Max sum of led clicks = 4
         private static Dictionary<int, Egg> easterEggs_ = new Dictionary<int, Egg> {
-            { GetEggNumber_(3, 2, 1, 0), new Egg(Properties.Resources.egg_01_3333) },
-            { GetEggNumber_(3, 3, 3, 3), new Egg(Properties.Resources.egg_02_0130) },
-            { GetEggNumber_(0, 1, 3, 0), new Egg(Properties.Resources.egg_03_1213) },
+            { GetEggNumber_(0, 3, 2, 1), new Egg(Properties.Resources.egg_01_3333) },
+            { GetEggNumber_(3, 3, 3, 3), new Egg(Properties.Resources.egg_02_3130) },
+            { GetEggNumber_(3, 1, 3, 0), new Egg(Properties.Resources.egg_03_1213) },
             { GetEggNumber_(1, 2, 1, 3), new Egg(Properties.Resources.egg_04_2301) },
             { GetEggNumber_(2, 3, 0, 1), new Egg(Properties.Resources.egg_05_1323) },
             { GetEggNumber_(1, 3, 2, 3), new Egg(Properties.Resources.egg_06_1200) },
             { GetEggNumber_(1, 2, 0, 0), new Egg(Properties.Resources.egg_07_1330) },
             { GetEggNumber_(1, 3, 3, 0), new Egg(Properties.Resources.egg_08_3023) },
-            { GetEggNumber_(3, 0, 2, 3), new Egg(Properties.Resources.egg_09_0213) },
-            { GetEggNumber_(0, 2, 1, 3), new Egg(Properties.Resources.egg_10_0121) },
-            { GetEggNumber_(0, 1, 2, 1), new Egg(Properties.Resources.egg_11_2031) },
+            { GetEggNumber_(3, 0, 2, 3), new Egg(Properties.Resources.egg_09_2213) },
+            { GetEggNumber_(2, 2, 1, 3), new Egg(Properties.Resources.egg_10_3121) },
+            { GetEggNumber_(3, 1, 2, 1), new Egg(Properties.Resources.egg_11_2031) },
             { GetEggNumber_(2, 0, 3, 1), new Egg(Properties.Resources.egg_12_3110) },
             { GetEggNumber_(3, 1, 1, 0), new Egg(Properties.Resources.egg_13_2311) },
-            { GetEggNumber_(2, 3, 1, 1), new Egg(Properties.Resources.egg_14_0210) },
-            { GetEggNumber_(0, 2, 1, 0), new Egg(Properties.Resources.egg_15_final) },
+            { GetEggNumber_(2, 3, 1, 1), new Egg(Properties.Resources.egg_14_1210) },
+            { GetEggNumber_(1, 2, 1, 0), new Egg(Properties.Resources.egg_15_final) },
         };
 
         public static byte[] GetData(int number)

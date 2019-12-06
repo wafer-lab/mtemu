@@ -124,8 +124,6 @@
             this.linkLabel.Padding = new System.Windows.Forms.Padding(4);
             this.linkLabel.Size = new System.Drawing.Size(558, 27);
             this.linkLabel.TabIndex = 7;
-            this.linkLabel.TabStop = true;
-            this.linkLabel.Text = "https://t.me/joinchat/AxUgNhRVIPABrfO65znGUw";
             this.linkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel.Visible = false;
             this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelClicked);
