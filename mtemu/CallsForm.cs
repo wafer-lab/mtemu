@@ -21,6 +21,9 @@ namespace mtemu
 
             mainForm_ = mainForm;
             moved_ = false;
+
+            Console.WriteLine(ClientRectangle.Height);
+            Console.WriteLine(ClientRectangle.Width);
         }
 
         private void ProgramFormClosing_(object sender, FormClosingEventArgs e)

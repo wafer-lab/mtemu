@@ -33,9 +33,9 @@
             "0x000",
             "1234567890123456789012345678901234567890123"}, -1);
             this.callList = new System.Windows.Forms.ListView();
-            this.firstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.addrColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
-            this.nameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.firstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.addrColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.currentPanel = new System.Windows.Forms.Panel();
             this.commentLabel = new System.Windows.Forms.Label();
             this.hexLabel = new System.Windows.Forms.Label();
@@ -62,24 +62,24 @@
             this.addrColumn,
             this.nameColumn});
             this.callList.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.callList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.callList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.callList.FullRowSelect = true;
             this.callList.GridLines = true;
             this.callList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.callList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem2});
-            this.callList.Location = new System.Drawing.Point(12, 40);
+            this.callList.Location = new System.Drawing.Point(9, 37);
             this.callList.MultiSelect = false;
             this.callList.Name = "callList";
-            this.callList.Size = new System.Drawing.Size(382, 429);
+            this.callList.Size = new System.Drawing.Size(382, 434);
             this.callList.TabIndex = 1;
             this.callList.TabStop = false;
             this.callList.UseCompatibleStateImageBehavior = false;
             this.callList.View = System.Windows.Forms.View.Details;
             this.callList.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.ListViewColumnWidthChanging_);
             this.callList.SelectedIndexChanged += new System.EventHandler(this.CallListSelectedIndexChanged_);
-            this.callList.Enter += new System.EventHandler(this.CallListSelectedIndexChanged_);
             this.callList.Click += new System.EventHandler(this.CallListSelectedIndexChanged_);
+            this.callList.Enter += new System.EventHandler(this.CallListSelectedIndexChanged_);
             this.callList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // firstColumn
@@ -111,7 +111,7 @@
             this.currentPanel.Controls.Add(this.removeButton);
             this.currentPanel.Controls.Add(this.saveButton);
             this.currentPanel.Controls.Add(this.addressText);
-            this.currentPanel.Location = new System.Drawing.Point(12, 475);
+            this.currentPanel.Location = new System.Drawing.Point(9, 477);
             this.currentPanel.Name = "currentPanel";
             this.currentPanel.Padding = new System.Windows.Forms.Padding(6);
             this.currentPanel.Size = new System.Drawing.Size(382, 98);
@@ -261,7 +261,7 @@
             // 
             this.listLabel.AutoSize = true;
             this.listLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Bold);
-            this.listLabel.Location = new System.Drawing.Point(128, 12);
+            this.listLabel.Location = new System.Drawing.Point(128, 9);
             this.listLabel.Margin = new System.Windows.Forms.Padding(3);
             this.listLabel.Name = "listLabel";
             this.listLabel.Size = new System.Drawing.Size(150, 22);
@@ -271,28 +271,28 @@
             // stepButton
             // 
             this.stepButton.Font = new System.Drawing.Font("Consolas", 9F);
-            this.stepButton.Location = new System.Drawing.Point(332, 12);
+            this.stepButton.Location = new System.Drawing.Point(329, 9);
             this.stepButton.Name = "stepButton";
             this.stepButton.Size = new System.Drawing.Size(62, 22);
             this.stepButton.TabIndex = 4;
             this.stepButton.TabStop = false;
             this.stepButton.Text = "Шаг";
+            this.formToolTip.SetToolTip(this.stepButton, "Ctrl + Y");
             this.stepButton.UseVisualStyleBackColor = true;
             this.stepButton.Click += new System.EventHandler(this.StepButtonClick_);
-            this.formToolTip.SetToolTip(this.stepButton, "Ctrl + Y");
             this.stepButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
             // 
             // CallsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(406, 585);
+            this.ClientSize = new System.Drawing.Size(400, 584);
             this.Controls.Add(this.stepButton);
             this.Controls.Add(this.listLabel);
             this.Controls.Add(this.callList);
             this.Controls.Add(this.currentPanel);
             this.DoubleBuffered = true;
-            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "CallsForm";
             this.Text = "Память программы";
