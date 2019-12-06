@@ -522,22 +522,52 @@ namespace mtemu
             mp_ = (Current_().GetRawValue(WordType.A) << 4) + Current_().GetRawValue(WordType.B);
         }
 
-        private PortExtender.InPort GetInPort()
+        private PortExtender.InPort GetInPort(DataPointerType type)
         {
-            var val = (byte)dev_ptr_;
+            var val = dev_ptr_ << 2;
 
-            if (Enum.IsDefined(typeof(PortExtender.InPort), val))
-                return (PortExtender.InPort)val;
+            switch (type)
+            {
+            case DataPointerType.LOW_4_BIT:
+                val |= 1;
+                break;
+            case DataPointerType.HIGH_4_BIT:
+                val |= 2;
+                break;
+            case DataPointerType.FULL_8_BIT:
+                val |= 3;
+                break;
+            }
+
+            var val_b = Convert.ToByte(val);
+
+            if (Enum.IsDefined(typeof(PortExtender.InPort), val_b))
+                return (PortExtender.InPort)val_b;
 
             return PortExtender.InPort.PORT_UNKNOWN;
         }
 
-        private PortExtender.OutPort GetOutPort()
+        private PortExtender.OutPort GetOutPort(DataPointerType type)
         {
-            var val = (byte)dev_ptr_;
+            var val = dev_ptr_ << 2;
 
-            if (Enum.IsDefined(typeof(PortExtender.OutPort), val))
-                return (PortExtender.OutPort)val;
+            switch (type)
+            {
+            case DataPointerType.LOW_4_BIT:
+                val |= 1;
+                break;
+            case DataPointerType.HIGH_4_BIT:
+                val |= 2;
+                break;
+            case DataPointerType.FULL_8_BIT:
+                val |= 3;
+                break;
+            }
+
+            var val_b = Convert.ToByte(val);
+
+            if (Enum.IsDefined(typeof(PortExtender.OutPort), val_b))
+                return (PortExtender.OutPort)val_b;
 
             return PortExtender.OutPort.PORT_UNKNOWN;
         }
@@ -584,7 +614,7 @@ namespace mtemu
                 }
                 break;
             case FuncType.STORE_DEVICE:
-                PortExtender.OutPort outPort = GetOutPort();
+                PortExtender.OutPort outPort = GetOutPort(pointerType);
                 if (outPort != PortExtender.OutPort.PORT_UNKNOWN)
                 {
                     byte tmp_w = 0;
@@ -606,7 +636,7 @@ namespace mtemu
                 }
                 break;
             case FuncType.LOAD_DEVICE:
-                PortExtender.InPort inPort = GetInPort();
+                PortExtender.InPort inPort = GetInPort(pointerType);
                 if (inPort != PortExtender.InPort.PORT_UNKNOWN)
                 {
                     byte tmp_r;

@@ -44,17 +44,27 @@ namespace mtemu
 
         public enum InPort : byte
         {
-            //PORT0 = 0,
-            //PORT1 = 1,
-            PORT2 = 2,
-            PORT3 = 3,
+            PORT2_4_LOW = (2 << 2) | 1,
+            PORT2_4_HIGH = (2 << 2) | 2,
+            PORT2_8 = (2 << 2) | 3,
+
+            PORT3_4_LOW = (3 << 2) | 1,
+            PORT3_4_HIGH = (3 << 2) | 2,
+            PORT3_8 = (3 << 2) | 3,
+
             PORT_UNKNOWN = 255,
         }
 
         public enum OutPort : byte
         {
-            PORT0 = 0,
-            PORT1 = 1,
+            PORT0_4_LOW = (0 << 2) | 1,
+            PORT0_4_HIGH = (0 << 2) | 2,
+            PORT0_8 = (0 << 2) | 3,
+
+            PORT1_4_LOW = (1 << 2) | 1,
+            PORT1_4_HIGH = (1 << 2) | 2,
+            PORT1_8 = (1 << 2) | 3,
+
             PORT_UNKNOWN = 255,
         }
 
