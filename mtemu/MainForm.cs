@@ -143,6 +143,9 @@ namespace mtemu
                 regLabels_[i].Text = $"R{i:d}";
             }
 
+            // Command list
+            Helpers.DoubleBuffered(commandList, true);
+
             // Info lists
             listViewes_ = new Dictionary<WordType, ListView> {
                 { WordType.CA, caListView },
@@ -154,6 +157,7 @@ namespace mtemu
                 { WordType.DEVICE, deviceListView },
             };
             foreach (KeyValuePair<WordType, ListView> listView in listViewes_) {
+                Helpers.DoubleBuffered(listView.Value, true);
                 listView.Value.Items.Clear();
                 string[][] lists = Command.GetItems(listView.Key);
                 foreach (string[] list in lists) {
@@ -174,6 +178,7 @@ namespace mtemu
             // Memory debug form
             stickMemoryForm_ = true;
             memoryForm_ = new MemoryForm(this);
+            Helpers.DoubleBuffered(memoryForm_.memoryListView, true);
             for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
                 memoryForm_.memoryListView.Items.Add(new ListViewItem(new string[] { "", $"0x{i:X2}", "0000 0000", "0x00" }));
             }
@@ -181,6 +186,7 @@ namespace mtemu
             // Stack debug form
             stickStackForm_ = true;
             stackForm_ = new StackForm(this);
+            Helpers.DoubleBuffered(stackForm_.stackListView, true);
             for (int i = 0; i < Emulator.GetStackSize(); ++i) {
                 stackForm_.stackListView.Items.Add(new ListViewItem(new string[] { "", $"0x{i:X}", "0x000" }));
             }
@@ -188,6 +194,7 @@ namespace mtemu
             // Form with program editing
             stickCallsForm_ = false;
             callsForm_ = new CallsForm(this);
+            Helpers.DoubleBuffered(callsForm_.callList, true);
 
             // Form with scheme of ALU
             schemeForm_ = new SchemeForm();
