@@ -7,7 +7,7 @@ namespace mtemu
         public bool isOffset;
         private int number_;
         private int[] words_;
-        
+
         public Command(string[] strWords)
         {
             if (strWords.Length != length_) {
@@ -112,63 +112,54 @@ namespace mtemu
             case ViewType.LOAD_HIGH_4BIT:
             case ViewType.LOAD_LOW_4BIT:
             case ViewType.LOAD_8BIT:
-                switch (GetFuncType())
-                {
+                switch (GetFuncType()) {
                 case FuncType.STORE_MEMORY:
-                    if (GetRawValue(WordType.PS) == 0)
-                    {
+                    if (GetRawValue(WordType.PS) == 0) {
                         res += $"LOW(Memory(Ptr))=РОН({ GetRawValue(WordType.B) })";
                     }
-                    else if (GetRawValue(WordType.PS) == 1)
-                    {
+                    else if (GetRawValue(WordType.PS) == 1) {
                         res += $"HIGH(Memory(Ptr))=РОН({ GetRawValue(WordType.A) })";
                     }
-                    else
-                    {
+                    else {
                         res += $"Memory(Ptr)=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
                     }
                     break;
                 case FuncType.LOAD_MEMORY:
-                    if (GetRawValue(WordType.PS) == 0)
-                    {
+                    if (GetRawValue(WordType.PS) == 0) {
                         res += $"РОН({ GetRawValue(WordType.B) })=LOW(Memory(Ptr))";
                     }
-                    else if (GetRawValue(WordType.PS) == 1)
-                    {
+                    else if (GetRawValue(WordType.PS) == 1) {
                         res += $"РОН({ GetRawValue(WordType.A) })=HIGH(Memory(Ptr))";
                     }
-                    else
-                    {
+                    else {
                         res += $"РОН({ GetRawValue(WordType.A) })=HIGH(Memory(Ptr))";
                         res += $"; РОН({ GetRawValue(WordType.B) })=LOW(Memory(Ptr))";
                     }
                     break;
                 case FuncType.STORE_DEVICE:
-                    switch (GetPointerType())
-                    {
+                    switch (GetPointerType()) {
                     case DataPointerType.LOW_4_BIT:
-                        res += $"LOW(PORT_ptr)=РОН({ GetRawValue(WordType.B) })";
+                        res += $"LOW(PORT)=РОН({ GetRawValue(WordType.B) })";
                         break;
                     case DataPointerType.HIGH_4_BIT:
-                        res += $"HIGH(PORT_ptr)=РОН({ GetRawValue(WordType.A) })";
+                        res += $"HIGH(PORT)=РОН({ GetRawValue(WordType.A) })";
                         break;
                     case DataPointerType.FULL_8_BIT:
-                        res += $"PORT_ptr=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
+                        res += $"PORT=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
                         break;
                     }
                     break;
                 case FuncType.LOAD_DEVICE:
-                    switch (GetPointerType())
-                    {
+                    switch (GetPointerType()) {
                     case DataPointerType.LOW_4_BIT:
-                        res += $"РОН({ GetRawValue(WordType.B) })=LOW(PORT_ptr)";
+                        res += $"РОН({ GetRawValue(WordType.B) })=LOW(PORT)";
                         break;
                     case DataPointerType.HIGH_4_BIT:
-                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH(PORT_ptr)";
+                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH(PORT)";
                         break;
                     case DataPointerType.FULL_8_BIT:
-                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH(PORT_ptr)";
-                        res += $"; РОН({ GetRawValue(WordType.B) })=LOW(PORT_ptr)";
+                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH(PORT)";
+                        res += $"; РОН({ GetRawValue(WordType.B) })=LOW(PORT)";
                         break;
                     }
                     break;
@@ -182,7 +173,8 @@ namespace mtemu
             return res;
         }
 
-        public string GetJumpName() { 
+        public string GetJumpName()
+        {
             string res = GetItem_(WordType.CA)[2];
             JumpType jt = GetJumpType();
             if (jt == JumpType.JNZ || jt == JumpType.JMP || jt == JumpType.CLNZ
