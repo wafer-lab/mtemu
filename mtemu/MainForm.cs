@@ -195,7 +195,7 @@ namespace mtemu
             // Form with extenser device settings
             extenderSettingsForm_ = new ExtenderSettingsForm();
 
-            portExtender_ = new PortExtender();
+            portExtender_ = new PortExtender(DeviceRemovedHandler);
 
             // Form with help
             helpForm_ = new HelpForm();

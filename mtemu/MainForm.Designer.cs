@@ -183,6 +183,7 @@
             this.infoPanel = new System.Windows.Forms.Panel();
             this.debugPanel = new System.Windows.Forms.Panel();
             this.commandsPanel = new System.Windows.Forms.Panel();
+            this.deviceInfoBox = new System.Windows.Forms.TextBox();
             this.йцукенToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
@@ -1555,7 +1556,7 @@
             this.debugMenuItem,
             this.infoMenuItem});
             this.panelsMenuItem.Name = "panelsMenuItem";
-            this.panelsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.panelsMenuItem.Size = new System.Drawing.Size(116, 22);
             this.panelsMenuItem.Text = "Панели";
             // 
             // debugMenuItem
@@ -1584,7 +1585,7 @@
             this.memoryMenuItem,
             this.schemeMenuItem});
             this.windowsMenuItem.Name = "windowsMenuItem";
-            this.windowsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.windowsMenuItem.Size = new System.Drawing.Size(116, 22);
             this.windowsMenuItem.Text = "Окна";
             // 
             // programMenuItem
@@ -2131,6 +2132,22 @@
             this.commandsPanel.Size = new System.Drawing.Size(604, 560);
             this.commandsPanel.TabIndex = 3;
             // 
+            // deviceInfoBox
+            // 
+            this.deviceInfoBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.deviceInfoBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.deviceInfoBox.Enabled = false;
+            this.deviceInfoBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.deviceInfoBox.Location = new System.Drawing.Point(240, 4);
+            this.deviceInfoBox.Margin = new System.Windows.Forms.Padding(0);
+            this.deviceInfoBox.Name = "deviceInfoBox";
+            this.deviceInfoBox.ReadOnly = true;
+            this.deviceInfoBox.ShortcutsEnabled = false;
+            this.deviceInfoBox.Size = new System.Drawing.Size(300, 16);
+            this.deviceInfoBox.TabIndex = 1;
+            this.deviceInfoBox.TabStop = false;
+            this.deviceInfoBox.Text = "Устройство: нет подключения";
+            // 
             // йцукенToolStripMenuItem
             // 
             this.йцукенToolStripMenuItem.Name = "йцукенToolStripMenuItem";
@@ -2142,6 +2159,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1230, 585);
+            this.Controls.Add(this.deviceInfoBox);
             this.Controls.Add(this.commandsPanel);
             this.Controls.Add(this.debugPanel);
             this.Controls.Add(this.infoPanel);
@@ -2350,6 +2368,7 @@
         private System.Windows.Forms.ToolStripMenuItem panelsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugMenuItem;
         private System.Windows.Forms.ToolStripMenuItem infoMenuItem;
+        private System.Windows.Forms.TextBox deviceInfoBox;
     }
 }
 

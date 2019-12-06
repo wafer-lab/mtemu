@@ -150,16 +150,71 @@ namespace mtemu
             if (dr == DialogResult.OK) {
                 PortExtender.DeviceInfo devInfo = extenderSettingsForm_.GetSelectedDeviceInfo();
                 bool res = portExtender_.SelectDevice(devInfo);
-                if (!res)
+                if (!res) {
+                    deviceInfoBox.Text = "Устройство: нет подключения";
+
                     MessageBox.Show(
                         "Не удалось выбрать внешнее устройство",
                         "Ошибка!",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else {
+                    portExtender_.StatusPoll();
+                    deviceInfoBox.Text = "Устройство: MTPE-" + devInfo.serial;
+                }
             }
             else {
                 if (deviceOpened)
+                {
                     portExtender_.ReopenLastDevice();
+                    portExtender_.StatusPoll();
+                }
             }
+        }
+
+        private void DeviceRemovedStatusUpdate()
+        {
+            deviceInfoBox.BeginInvoke(
+                (MethodInvoker)(() => 
+                deviceInfoBox.Text = "Устройство: нет подключения"
+                ));
+
+            MessageBox.Show(
+                "Устройство было отключено",
+                "Информация",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Asterisk);
+        }
+
+        public void DeviceRemovedHandler(object sender, System.Management.EventArrivedEventArgs e)
+        {
+            System.Management.ManagementEventWatcher removal = (System.Management.ManagementEventWatcher)sender;
+
+            var targetInstanceData = e.NewEvent.Properties["TargetInstance"];
+            var targetInstanceObject = (System.Management.ManagementBaseObject)targetInstanceData.Value;
+
+            foreach (var prop in targetInstanceObject.Properties)
+            {
+                if (prop.Name == "PNPDeviceID")
+                {
+                    var pnpDeviceId = targetInstanceObject["PNPDeviceID"].ToString();
+
+                    if (pnpDeviceId.Contains("USB\\VID_0483&PID_5740"))
+                    {
+                        var deviceId = targetInstanceObject["DeviceID"].ToString();
+                        if (portExtender_.CheckDeviceRemoved())
+                        {
+                            removal.Stop();
+                            portExtender_.CloseDevice();
+
+                            DeviceRemovedStatusUpdate();
+                        }
+                    }
+                    return;
+                }
+            }
+
+            removal.WaitForNextEvent();
         }
 
         private void HelpMenuItemClick_(object sender, EventArgs e)
