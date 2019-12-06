@@ -51,7 +51,7 @@ namespace mtemu
             Close();
         }
 
-        private void ExtenderSettingsForm_Load(object sender, EventArgs e)
+        private void UpdateDeviceList()
         {
             ResetDevicesList();
 
@@ -70,6 +70,16 @@ namespace mtemu
             }
             else
                 devicesComboBox.SelectedIndex = 0;
+        }
+
+        private void ExtenderSettingsForm_Load(object sender, EventArgs e)
+        {
+            UpdateDeviceList();
+        }
+
+        private void updateListButton_Click(object sender, EventArgs e)
+        {
+            UpdateDeviceList();
         }
     }
 }
