@@ -7,6 +7,11 @@ namespace mtemu
 {
     partial class MainForm
     {
+
+        ////////////////////
+        //       LED      //
+        ////////////////////
+
         private void SetLeds_(int value)
         {
             for (int i = 0; i < leds_.Length; ++i) {
@@ -76,6 +81,10 @@ namespace mtemu
             }
         }
 
+        ////////////////////
+        //  EMULATOR OUT  //
+        ////////////////////
+
         private void SetFlag_(TextBox textBox, string prefix, bool value)
         {
             textBox.Text = prefix + (value ? "1" : "0");
@@ -102,6 +111,82 @@ namespace mtemu
         private void SetOut_(TextBox textBox, int value, bool asNew, int size = 4)
         {
             SetOut_(textBox, Helpers.IntToBinary(value, size), asNew);
+        }
+
+        private void UpdateCommmandList()
+        {
+            if (emulator_.CommandsCount() > 0) {
+                ChangeCommand_(emulator_.GetNextIndex(), selectedColor_);
+                SelectPrevCommand_(emulator_.GetPrevIndex());
+                ChangeCall_(emulator_.GetCallIndex(), selectedColor_);
+            }
+        } 
+
+        private void UpdateOutPanel(bool asNew = false)
+        {
+
+            SetFlag_(ovrText, "OVR=", emulator_.GetOvr());
+            SetFlag_(c4Text, "C4=", emulator_.GetC4());
+            SetFlag_(f3Text, "F3=", emulator_.GetF3());
+            SetFlag_(zText, "Z=", emulator_.GetZ());
+            SetFlag_(gText, "/G=", emulator_.GetG());
+            SetFlag_(pText, "/P=", emulator_.GetP());
+
+            SetOut_(fText, emulator_.GetF(), asNew);
+            SetOut_(yText, emulator_.GetY(), asNew);
+            SetOut_(spText, $"0x{emulator_.GetSP():X1}", asNew);
+            SetOut_(mpText, $"0x{emulator_.GetMP():X2}", asNew);
+
+            int pc = emulator_.GetPC();
+            if (pc == -1) {
+                pc = 0;
+            }
+            SetOut_(pcText, $"0x{pc:X3}", asNew);
+
+            SetOut_(rqText, emulator_.GetRegQ(), asNew);
+            for (int i = 0; i < Emulator.GetRegSize(); ++i) {
+                SetOut_(regTexts_[i], emulator_.GetRegValue(i), asNew);
+            }
+        }
+
+        private void UpdateStack_(bool asNew = false)
+        {
+            for (int i = 0; i < Emulator.GetStackSize(); ++i) {
+                ListViewItem item = stackForm_.stackListView.Items[i];
+                ListViewItem.ListViewSubItem subitem = item.SubItems[2];
+                string newText = $"0x{emulator_.GetStackValue(i):X3}";
+                if (item.BackColor != enabledColor_) {
+                    item.BackColor = enabledColor_;
+                }
+                if (subitem.Text != newText) {
+                    subitem.Text = newText;
+                    if (!asNew) {
+                        item.BackColor = changedColor_;
+                        stackForm_.stackListView.EnsureVisible(i);
+                    }
+                }
+            }
+        }
+
+        private void UpdateMemory_(bool asNew = false)
+        {
+            for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
+                ListViewItem item = memoryForm_.memoryListView.Items[i];
+                string newText = Helpers.IntToBinary(emulator_.GetMemValue(i), 8, 4);
+                string newText2 = $"0x{emulator_.GetMemValue(i):X2}";
+
+                if (item.BackColor != enabledColor_) {
+                    item.BackColor = enabledColor_;
+                }
+
+                if (item.SubItems[2].Text != newText) {
+                    item.SubItems[2].Text = newText;
+                    item.SubItems[3].Text = newText2;
+                    if (!asNew) {
+                        item.BackColor = changedColor_;
+                    }
+                }
+            }
         }
 
         private void UpdateScheme_(bool asNew = false)
@@ -139,70 +224,16 @@ namespace mtemu
 
         private void UpdateOutput_(bool asNew = false)
         {
+            UpdateCommmandList();
+            UpdateOutPanel(asNew);
+            UpdateStack_(asNew);
+            UpdateMemory_(asNew);
             UpdateScheme_(asNew);
-
-            SetFlag_(ovrText, "OVR=", emulator_.GetOvr());
-            SetFlag_(c4Text, "C4=", emulator_.GetC4());
-            SetFlag_(f3Text, "F3=", emulator_.GetF3());
-            SetFlag_(zText, "Z=", emulator_.GetZ());
-            SetFlag_(gText, "/G=", emulator_.GetG());
-            SetFlag_(pText, "/P=", emulator_.GetP());
-
-            SetOut_(fText, emulator_.GetF(), asNew);
-            SetOut_(yText, emulator_.GetY(), asNew);
-            SetOut_(spText, $"0x{emulator_.GetSP():X1}", asNew);
-            SetOut_(mpText, $"0x{emulator_.GetMP():X2}", asNew);
-
-            int pc = emulator_.GetPC();
-            if (pc == -1) {
-                pc = 0;
-            }
-            SetOut_(pcText, $"0x{pc:X3}", asNew);
-
-            SetOut_(rqText, emulator_.GetRegQ(), asNew);
-            for (int i = 0; i < Emulator.GetRegSize(); ++i) {
-                SetOut_(regTexts_[i], emulator_.GetRegValue(i), asNew);
-            }
-
-            if (emulator_.CommandsCount() > 0) {
-                ChangeCommand_(emulator_.GetNextIndex(), selectedColor_);
-                SelectPrevCommand_(emulator_.GetPrevIndex());
-                ChangeCall_(emulator_.GetCallIndex(), selectedColor_);
-            }
-
-            for (int i = 0; i < Emulator.GetStackSize(); ++i) {
-                ListViewItem item = stackForm_.stackListView.Items[i];
-                ListViewItem.ListViewSubItem subitem = item.SubItems[2];
-                string newText = $"0x{emulator_.GetStackValue(i):X3}";
-                if (item.BackColor != enabledColor_) {
-                    item.BackColor = enabledColor_;
-                }
-                if (subitem.Text != newText) {
-                    subitem.Text = newText;
-                    if (!asNew) {
-                        item.BackColor = changedColor_;
-                    }
-                }
-            }
-
-            for (int i = 0; i < Emulator.GetMemorySize(); ++i) {
-                ListViewItem item = memoryForm_.memoryListView.Items[i];
-                string newText = Helpers.IntToBinary(emulator_.GetMemValue(i), 8, 4);
-                string newText2 = $"0x{emulator_.GetMemValue(i):X2}";
-
-                if (item.BackColor != enabledColor_) {
-                    item.BackColor = enabledColor_;
-                }
-
-                if (item.SubItems[2].Text != newText) {
-                    item.SubItems[2].Text = newText;
-                    item.SubItems[3].Text = newText2;
-                    if (!asNew) {
-                        item.BackColor = changedColor_;
-                    }
-                }
-            }
         }
+
+        ////////////////////
+        //     BUTTONS    //
+        ////////////////////
 
         private void ResultCodeHandler_(Emulator.ResultCode rc)
         {
