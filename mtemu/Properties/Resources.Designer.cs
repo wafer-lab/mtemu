@@ -73,9 +73,9 @@ namespace mtemu.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] egg_02_0130 {
+        internal static byte[] egg_02_3130 {
             get {
-                object obj = ResourceManager.GetObject("egg_02_0130", resourceCulture);
+                object obj = ResourceManager.GetObject("egg_02_3130", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace mtemu.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] egg_09_0213 {
+        internal static byte[] egg_09_2213 {
             get {
-                object obj = ResourceManager.GetObject("egg_09_0213", resourceCulture);
+                object obj = ResourceManager.GetObject("egg_09_2213", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace mtemu.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] egg_10_0121 {
+        internal static byte[] egg_10_3121 {
             get {
-                object obj = ResourceManager.GetObject("egg_10_0121", resourceCulture);
+                object obj = ResourceManager.GetObject("egg_10_3121", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -193,9 +193,9 @@ namespace mtemu.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] egg_14_0210 {
+        internal static byte[] egg_14_1210 {
             get {
-                object obj = ResourceManager.GetObject("egg_14_0210", resourceCulture);
+                object obj = ResourceManager.GetObject("egg_14_1210", resourceCulture);
                 return ((byte[])(obj));
             }
         }

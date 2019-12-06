@@ -40,6 +40,7 @@ namespace mtemu
 
         private bool OpenDialog_()
         {
+            openFileDialog.FileName = Path.GetFileName(filename_);
             DialogResult openRes = openFileDialog.ShowDialog();
             if (openRes == DialogResult.OK) {
                 if (openFileDialog.FileName != filename_) {
@@ -69,7 +70,7 @@ namespace mtemu
         private bool SaveDialog_(bool asNew = false)
         {
             if (filename_ == null || asNew) {
-                saveFileDialog.FileName = filename_;
+                saveFileDialog.FileName = Path.GetFileName(filename_);
                 DialogResult saveRes = saveFileDialog.ShowDialog();
                 if (saveRes != DialogResult.OK) {
                     return false;

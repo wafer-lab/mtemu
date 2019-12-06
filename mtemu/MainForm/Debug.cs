@@ -74,6 +74,8 @@ namespace mtemu
                     MessageBoxIcon.Information,
                     MessageBoxDefaultButton.Button1
                 );
+                var linkBytes = Convert.FromBase64String("aHR0cHM6Ly90Lm1lL2pvaW5jaGF0L0F4VWdOaFJWSVBBQnJmTzY1em5HVXc=");
+                helpForm_.linkLabel.Text = System.Text.Encoding.UTF8.GetString(linkBytes);
                 helpForm_.linkLabel.Visible = true;
                 helpForm_.codeText.Visible = true;
                 helpForm_.codeButton.Visible = true;

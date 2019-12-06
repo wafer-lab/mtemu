@@ -24,7 +24,8 @@ namespace mtemu
 
         private void CheckCode_()
         {
-            if (codeText.Text == "raf pidor") {
+            var plainTextBytes = Encoding.UTF8.GetBytes(codeText.Text);
+            if (Convert.ToBase64String(plainTextBytes) == "cmFmIHBpZG9y") {
                 TetrisForm tetrisForm_ = new TetrisForm();
                 tetrisForm_.ShowDialog();
             }
