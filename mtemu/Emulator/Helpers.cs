@@ -115,5 +115,32 @@ namespace mtemu
             }
             return value & ((1 << size) - 1);
         }
+
+        public static int LowNibble(int value)
+        {
+            return value & 0x0F;
+        }
+
+        public static int HighNibble(int value)
+        {
+            return (value >> 4) & 0x0F;
+        }
+
+        public static byte MakeLowNibble(int value)
+        {
+            return Convert.ToByte(value & 0x0F);
+        }
+
+        public static byte MakeHighNibble(int value)
+        {
+            return Convert.ToByte((value << 4) & 0xF0);
+        }
+
+        public static byte MakeByte(int highNibble, int lowNibble)
+        {
+            return Convert.ToByte(
+                MakeHighNibble(highNibble) |
+                MakeLowNibble(lowNibble));
+        }
     }
 }

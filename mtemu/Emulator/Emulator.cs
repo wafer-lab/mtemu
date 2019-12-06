@@ -589,27 +589,33 @@ namespace mtemu
             case FuncType.STORE_MEMORY:
                 switch (pointerType) {
                 case DataPointerType.LOW_4_BIT:
-                    memory_[mp_] = regCommon_[b];
+                    memory_[mp_] = Helpers.MakeByte(
+                        Helpers.HighNibble(memory_[mp_]),
+                        regCommon_[b]);
                     break;
                 case DataPointerType.HIGH_4_BIT:
-                    memory_[mp_] = regCommon_[a] << 4;
+                    memory_[mp_] = Helpers.MakeByte(
+                        regCommon_[a],
+                        Helpers.LowNibble(memory_[mp_]));
                     break;
                 case DataPointerType.FULL_8_BIT:
-                    memory_[mp_] = (regCommon_[a] << 4) | regCommon_[b];
+                    memory_[mp_] = Helpers.MakeByte(
+                        regCommon_[a],
+                        regCommon_[b]);
                     break;
                 }
                 break;
             case FuncType.LOAD_MEMORY:
                 switch (pointerType) {
                 case DataPointerType.LOW_4_BIT:
-                    regCommon_[b] = Helpers.Mask(memory_[mp_]);
+                    regCommon_[b] = Helpers.LowNibble(memory_[mp_]);
                     break;
                 case DataPointerType.HIGH_4_BIT:
-                    regCommon_[a] = memory_[mp_] >> 4;
+                    regCommon_[a] = Helpers.HighNibble(memory_[mp_]);
                     break;
                 case DataPointerType.FULL_8_BIT:
-                    regCommon_[a] = memory_[mp_] >> 4;
-                    regCommon_[b] = Helpers.Mask(memory_[mp_]);
+                    regCommon_[a] = Helpers.HighNibble(memory_[mp_]);
+                    regCommon_[b] = Helpers.LowNibble(memory_[mp_]);
                     break;
                 }
                 break;
@@ -622,13 +628,13 @@ namespace mtemu
                     switch (pointerType)
                     {
                     case DataPointerType.LOW_4_BIT:
-                        tmp_w = (byte)regCommon_[b];
+                        tmp_w = Helpers.MakeLowNibble(regCommon_[b]);
                         break;
                     case DataPointerType.HIGH_4_BIT:
-                        tmp_w = (byte)(regCommon_[a] << 4);
+                        tmp_w = Helpers.MakeHighNibble(regCommon_[a]);
                         break;
                     case DataPointerType.FULL_8_BIT:
-                        tmp_w = (byte)((regCommon_[a] << 4) | regCommon_[b]);
+                        tmp_w = Helpers.MakeByte(regCommon_[a], regCommon_[b]);
                         break;
                     }
 
@@ -644,14 +650,14 @@ namespace mtemu
                     switch (pointerType)
                     {
                     case DataPointerType.LOW_4_BIT:
-                        regCommon_[b] = Helpers.Mask(tmp_r);
+                        regCommon_[b] = Helpers.LowNibble(tmp_r);
                         break;
                     case DataPointerType.HIGH_4_BIT:
-                        regCommon_[a] = tmp_r >> 4;
+                        regCommon_[a] = Helpers.HighNibble(tmp_r);
                         break;
                     case DataPointerType.FULL_8_BIT:
-                        regCommon_[a] = tmp_r >> 4;
-                        regCommon_[b] = Helpers.Mask(tmp_r);
+                        regCommon_[a] = Helpers.HighNibble(tmp_r);
+                        regCommon_[b] = Helpers.LowNibble(tmp_r);
                         break;
                     }
                 }
