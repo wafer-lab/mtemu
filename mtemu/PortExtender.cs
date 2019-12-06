@@ -73,6 +73,7 @@ namespace mtemu
 
         private DeviceInfo currentDeviceInfo_ = new DeviceInfo();
         private SerialPort deviceComPort_ = new SerialPort();
+        private bool isDeviceOpened_ = false;
 
 
         public static DeviceInfo[] GetAvailableDevices()
@@ -122,13 +123,31 @@ namespace mtemu
             deviceComPort_.StopBits = StopBits.One;
             deviceComPort_.Open();
 
+            isDeviceOpened_ = true;
+
             return true;
+        }
+
+        public void ReopenLastDevice()
+        {
+            if (deviceComPort_.IsOpen)
+                deviceComPort_.Close();
+
+            deviceComPort_.Open();
+        }
+
+        public bool IsDeviceOpened()
+        {
+            return isDeviceOpened_;
         }
 
         public void CloseDevice()
         {
             if (deviceComPort_.IsOpen)
+            {
                 deviceComPort_.Close();
+                isDeviceOpened_ = false;
+            }
         }
 
         private static bool CheckDeviceIsValid(string deviceId, out string serial_str)

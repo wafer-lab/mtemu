@@ -141,17 +141,24 @@ namespace mtemu
 
         private void ExtenderSettingsMenuItemClick_(object sender, EventArgs e)
         {
+            var deviceOpened = portExtender_.IsDeviceOpened();
+            if (deviceOpened)
+                portExtender_.CloseDevice();
+
             DialogResult dr = extenderSettingsForm_.ShowDialog(this);
 
             if (dr == DialogResult.OK) {
-                // TODO: Add react to result
                 PortExtender.DeviceInfo devInfo = extenderSettingsForm_.GetSelectedDeviceInfo();
                 bool res = portExtender_.SelectDevice(devInfo);
-                if(!res)
-                    MessageBox.Show("Не удалось выбрать внешнее устройство", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!res)
+                    MessageBox.Show(
+                        "Не удалось выбрать внешнее устройство",
+                        "Ошибка!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else {
-                // TODO: Add react to result
+                if (deviceOpened)
+                    portExtender_.ReopenLastDevice();
             }
         }
 
