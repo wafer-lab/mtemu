@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace mtemu
 {
-    class Helpers
+    public static class Helpers
     {
         public static string ClearBinary(string str, ref int pos)
         {
@@ -114,6 +116,12 @@ namespace mtemu
                 size = Command.WORD_SIZE;
             }
             return value & ((1 << size) - 1);
+        }
+
+        public static void DoubleBuffered(this Control control, bool enable)
+        {
+            var doubleBufferPropertyInfo = control.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            doubleBufferPropertyInfo.SetValue(control, enable, null);
         }
 
         public static int LowNibble(int value)

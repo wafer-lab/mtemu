@@ -121,8 +121,8 @@
   <data name="egg_01_3333" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\egg_01_3333.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="egg_02_0130" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\egg_02_0130.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="egg_02_3130" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\egg_02_3130.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="egg_03_1213" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\egg_03_1213.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -142,11 +142,11 @@
   <data name="egg_08_3023" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\egg_08_3023.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="egg_09_0213" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\egg_09_0213.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="egg_09_2213" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\egg_09_2213.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="egg_10_0121" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\egg_10_0121.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="egg_10_3121" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\egg_10_3121.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="egg_11_2031" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\egg_11_2031.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -157,8 +157,8 @@
   <data name="egg_13_2311" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\egg_13_2311.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="egg_14_0210" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\egg_14_0210.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="egg_14_1210" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\egg_14_1210.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="egg_15_final" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\egg_15_final.mte;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

@@ -34,6 +34,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.leftLabel = new System.Windows.Forms.Label();
             this.linkLabel = new System.Windows.Forms.LinkLabel();
+            this.codeButton = new System.Windows.Forms.Button();
+            this.codeText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -122,11 +124,32 @@
             this.linkLabel.Padding = new System.Windows.Forms.Padding(4);
             this.linkLabel.Size = new System.Drawing.Size(558, 27);
             this.linkLabel.TabIndex = 7;
-            this.linkLabel.TabStop = true;
-            this.linkLabel.Text = "https://t.me/joinchat/AxUgNhRVIPABrfO65znGUw";
             this.linkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel.Visible = false;
             this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelClicked);
+            // 
+            // codeButton
+            // 
+            this.codeButton.Location = new System.Drawing.Point(495, 239);
+            this.codeButton.Margin = new System.Windows.Forms.Padding(0);
+            this.codeButton.Name = "codeButton";
+            this.codeButton.Size = new System.Drawing.Size(75, 25);
+            this.codeButton.TabIndex = 8;
+            this.codeButton.Text = "Ввод";
+            this.codeButton.UseVisualStyleBackColor = true;
+            this.codeButton.Visible = false;
+            this.codeButton.Click += new System.EventHandler(this.EnterButtonClick_);
+            // 
+            // codeText
+            // 
+            this.codeText.Location = new System.Drawing.Point(420, 240);
+            this.codeText.Margin = new System.Windows.Forms.Padding(0);
+            this.codeText.Name = "codeText";
+            this.codeText.Size = new System.Drawing.Size(75, 23);
+            this.codeText.TabIndex = 9;
+            this.codeText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.codeText.Visible = false;
+            this.codeText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CodeTextKeyDown_);
             // 
             // HelpForm
             // 
@@ -134,6 +157,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.codeText);
+            this.Controls.Add(this.codeButton);
             this.Controls.Add(this.linkLabel);
             this.Controls.Add(this.leftLabel);
             this.Controls.Add(this.label5);
@@ -161,5 +186,7 @@
         private System.Windows.Forms.Label label5;
         public System.Windows.Forms.Label leftLabel;
         public System.Windows.Forms.LinkLabel linkLabel;
+        public System.Windows.Forms.Button codeButton;
+        public System.Windows.Forms.TextBox codeText;
     }
 }

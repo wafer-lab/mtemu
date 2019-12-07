@@ -143,6 +143,12 @@
     <Compile Include="StackForm.Designer.cs">
       <DependentUpon>StackForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TetrisForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TetrisForm.Designer.cs">
+      <DependentUpon>TetrisForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ExtenderSettingsForm.resx">
       <DependentUpon>ExtenderSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -172,6 +178,9 @@
     <EmbeddedResource Include="StackForm.resx">
       <DependentUpon>StackForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TetrisForm.resx">
+      <DependentUpon>TetrisForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -182,19 +191,19 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Resources\egg_01_3333.mte" />
-    <None Include="Resources\egg_02_0130.mte" />
+    <None Include="Resources\egg_02_3130.mte" />
     <None Include="Resources\egg_03_1213.mte" />
     <None Include="Resources\egg_04_2301.mte" />
     <None Include="Resources\egg_05_1323.mte" />
     <None Include="Resources\egg_06_1200.mte" />
     <None Include="Resources\egg_07_1330.mte" />
     <None Include="Resources\egg_08_3023.mte" />
-    <None Include="Resources\egg_09_0213.mte" />
-    <None Include="Resources\egg_10_0121.mte" />
+    <None Include="Resources\egg_09_2213.mte" />
+    <None Include="Resources\egg_10_3121.mte" />
     <None Include="Resources\egg_11_2031.mte" />
     <None Include="Resources\egg_12_3110.mte" />
     <None Include="Resources\egg_13_2311.mte" />
-    <None Include="Resources\egg_14_0210.mte" />
+    <None Include="Resources\egg_14_1210.mte" />
     <None Include="Resources\egg_15_final.mte" />
   </ItemGroup>
   <ItemGroup>

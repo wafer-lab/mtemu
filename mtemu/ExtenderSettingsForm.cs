@@ -20,7 +20,7 @@ namespace mtemu
         private void ResetDevicesList()
         {
             devicesComboBox.Items.Clear();
-            devicesComboBox.Items.Add(" --------------Не выбрано-------------- ");
+            devicesComboBox.Items.Add(" ------------- Не выбрано ------------- ");
         }
 
         private PortExtender.DeviceInfo selectedDeviceInfo_ = new PortExtender.DeviceInfo();
