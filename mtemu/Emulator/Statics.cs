@@ -160,6 +160,8 @@ namespace mtemu
 
         private static int length_ = 10;
 
+        private static string dev_ptr_str_ = "";
+
         // Numbers of text boxes
         private static Dictionary<WordType, int> wordIndexes_ =
             new Dictionary<WordType, int>

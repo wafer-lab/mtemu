@@ -31,6 +31,7 @@
             this.devicesComboBox = new System.Windows.Forms.ComboBox();
             this.selectDeviceButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.updateListButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -75,11 +76,22 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
+            // updateListButton
+            // 
+            this.updateListButton.Location = new System.Drawing.Point(15, 58);
+            this.updateListButton.Name = "updateListButton";
+            this.updateListButton.Size = new System.Drawing.Size(75, 23);
+            this.updateListButton.TabIndex = 4;
+            this.updateListButton.Text = "Обновить";
+            this.updateListButton.UseVisualStyleBackColor = true;
+            this.updateListButton.Click += new System.EventHandler(this.updateListButton_Click);
+            // 
             // ExtenderSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(334, 93);
+            this.Controls.Add(this.updateListButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.selectDeviceButton);
             this.Controls.Add(this.devicesComboBox);
@@ -101,5 +113,6 @@
         private System.Windows.Forms.ComboBox devicesComboBox;
         private System.Windows.Forms.Button selectDeviceButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Button updateListButton;
     }
 }

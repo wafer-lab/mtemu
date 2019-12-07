@@ -522,22 +522,52 @@ namespace mtemu
             mp_ = (Current_().GetRawValue(WordType.A) << 4) + Current_().GetRawValue(WordType.B);
         }
 
-        private PortExtender.InPort GetInPort()
+        private PortExtender.InPort GetInPort(DataPointerType type)
         {
-            var val = (byte)dev_ptr_;
+            var val = dev_ptr_ << 2;
 
-            if (Enum.IsDefined(typeof(PortExtender.InPort), val))
-                return (PortExtender.InPort)val;
+            switch (type)
+            {
+            case DataPointerType.LOW_4_BIT:
+                val |= 1;
+                break;
+            case DataPointerType.HIGH_4_BIT:
+                val |= 2;
+                break;
+            case DataPointerType.FULL_8_BIT:
+                val |= 3;
+                break;
+            }
+
+            var val_b = Convert.ToByte(val);
+
+            if (Enum.IsDefined(typeof(PortExtender.InPort), val_b))
+                return (PortExtender.InPort)val_b;
 
             return PortExtender.InPort.PORT_UNKNOWN;
         }
 
-        private PortExtender.OutPort GetOutPort()
+        private PortExtender.OutPort GetOutPort(DataPointerType type)
         {
-            var val = (byte)dev_ptr_;
+            var val = dev_ptr_ << 2;
 
-            if (Enum.IsDefined(typeof(PortExtender.OutPort), val))
-                return (PortExtender.OutPort)val;
+            switch (type)
+            {
+            case DataPointerType.LOW_4_BIT:
+                val |= 1;
+                break;
+            case DataPointerType.HIGH_4_BIT:
+                val |= 2;
+                break;
+            case DataPointerType.FULL_8_BIT:
+                val |= 3;
+                break;
+            }
+
+            var val_b = Convert.ToByte(val);
+
+            if (Enum.IsDefined(typeof(PortExtender.OutPort), val_b))
+                return (PortExtender.OutPort)val_b;
 
             return PortExtender.OutPort.PORT_UNKNOWN;
         }
@@ -559,32 +589,38 @@ namespace mtemu
             case FuncType.STORE_MEMORY:
                 switch (pointerType) {
                 case DataPointerType.LOW_4_BIT:
-                    memory_[mp_] = regCommon_[b];
+                    memory_[mp_] = Helpers.MakeByte(
+                        Helpers.HighNibble(memory_[mp_]),
+                        regCommon_[b]);
                     break;
                 case DataPointerType.HIGH_4_BIT:
-                    memory_[mp_] = regCommon_[a] << 4;
+                    memory_[mp_] = Helpers.MakeByte(
+                        regCommon_[a],
+                        Helpers.LowNibble(memory_[mp_]));
                     break;
                 case DataPointerType.FULL_8_BIT:
-                    memory_[mp_] = (regCommon_[a] << 4) | regCommon_[b];
+                    memory_[mp_] = Helpers.MakeByte(
+                        regCommon_[a],
+                        regCommon_[b]);
                     break;
                 }
                 break;
             case FuncType.LOAD_MEMORY:
                 switch (pointerType) {
                 case DataPointerType.LOW_4_BIT:
-                    regCommon_[b] = Helpers.Mask(memory_[mp_]);
+                    regCommon_[b] = Helpers.LowNibble(memory_[mp_]);
                     break;
                 case DataPointerType.HIGH_4_BIT:
-                    regCommon_[a] = memory_[mp_] >> 4;
+                    regCommon_[a] = Helpers.HighNibble(memory_[mp_]);
                     break;
                 case DataPointerType.FULL_8_BIT:
-                    regCommon_[a] = memory_[mp_] >> 4;
-                    regCommon_[b] = Helpers.Mask(memory_[mp_]);
+                    regCommon_[a] = Helpers.HighNibble(memory_[mp_]);
+                    regCommon_[b] = Helpers.LowNibble(memory_[mp_]);
                     break;
                 }
                 break;
             case FuncType.STORE_DEVICE:
-                PortExtender.OutPort outPort = GetOutPort();
+                PortExtender.OutPort outPort = GetOutPort(pointerType);
                 if (outPort != PortExtender.OutPort.PORT_UNKNOWN)
                 {
                     byte tmp_w = 0;
@@ -592,13 +628,13 @@ namespace mtemu
                     switch (pointerType)
                     {
                     case DataPointerType.LOW_4_BIT:
-                        tmp_w = (byte)regCommon_[b];
+                        tmp_w = Helpers.MakeLowNibble(regCommon_[b]);
                         break;
                     case DataPointerType.HIGH_4_BIT:
-                        tmp_w = (byte)(regCommon_[a] << 4);
+                        tmp_w = Helpers.MakeHighNibble(regCommon_[a]);
                         break;
                     case DataPointerType.FULL_8_BIT:
-                        tmp_w = (byte)((regCommon_[a] << 4) | regCommon_[b]);
+                        tmp_w = Helpers.MakeByte(regCommon_[a], regCommon_[b]);
                         break;
                     }
 
@@ -606,7 +642,7 @@ namespace mtemu
                 }
                 break;
             case FuncType.LOAD_DEVICE:
-                PortExtender.InPort inPort = GetInPort();
+                PortExtender.InPort inPort = GetInPort(pointerType);
                 if (inPort != PortExtender.InPort.PORT_UNKNOWN)
                 {
                     byte tmp_r;
@@ -614,14 +650,14 @@ namespace mtemu
                     switch (pointerType)
                     {
                     case DataPointerType.LOW_4_BIT:
-                        regCommon_[b] = Helpers.Mask(tmp_r);
+                        regCommon_[b] = Helpers.LowNibble(tmp_r);
                         break;
                     case DataPointerType.HIGH_4_BIT:
-                        regCommon_[a] = tmp_r >> 4;
+                        regCommon_[a] = Helpers.HighNibble(tmp_r);
                         break;
                     case DataPointerType.FULL_8_BIT:
-                        regCommon_[a] = tmp_r >> 4;
-                        regCommon_[b] = Helpers.Mask(tmp_r);
+                        regCommon_[a] = Helpers.HighNibble(tmp_r);
+                        regCommon_[b] = Helpers.LowNibble(tmp_r);
                         break;
                     }
                 }

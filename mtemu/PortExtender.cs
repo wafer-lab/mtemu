@@ -13,6 +13,11 @@ namespace mtemu
 
         }
 
+        public PortExtender(EventArrivedEventHandler deviceRemovedHandler)
+        {
+            DeviceRemovedHandler_ = deviceRemovedHandler;
+        }
+
         private const byte CMD_SERIAL_GET = 0x03;
         private const byte CMD_PORT_WRITE = 0x02;
         private const byte CMD_PORT_READ = 0x01;
@@ -39,17 +44,27 @@ namespace mtemu
 
         public enum InPort : byte
         {
-            //PORT0 = 0,
-            //PORT1 = 1,
-            PORT2 = 2,
-            PORT3 = 3,
+            PORT2_4_LOW = (2 << 2) | 1,
+            PORT2_4_HIGH = (2 << 2) | 2,
+            PORT2_8 = (2 << 2) | 3,
+
+            PORT3_4_LOW = (3 << 2) | 1,
+            PORT3_4_HIGH = (3 << 2) | 2,
+            PORT3_8 = (3 << 2) | 3,
+
             PORT_UNKNOWN = 255,
         }
 
         public enum OutPort : byte
         {
-            PORT0 = 0,
-            PORT1 = 1,
+            PORT0_4_LOW = (0 << 2) | 1,
+            PORT0_4_HIGH = (0 << 2) | 2,
+            PORT0_8 = (0 << 2) | 3,
+
+            PORT1_4_LOW = (1 << 2) | 1,
+            PORT1_4_HIGH = (1 << 2) | 2,
+            PORT1_8 = (1 << 2) | 3,
+
             PORT_UNKNOWN = 255,
         }
 
@@ -73,16 +88,17 @@ namespace mtemu
 
         private DeviceInfo currentDeviceInfo_ = new DeviceInfo();
         private SerialPort deviceComPort_ = new SerialPort();
+        private bool isDeviceOpened_ = false;
 
 
-        public static DeviceInfo[] GetAvailableDevices()
+        private static List<string> GetComDevices()
         {
             ManagementObjectCollection ManObjReturn;
             ManagementObjectSearcher ManObjSearch;
             ManObjSearch = new ManagementObjectSearcher("Select * from Win32_SerialPort");
             ManObjReturn = ManObjSearch.Get();
 
-            List<DeviceInfo> devices = new List<DeviceInfo>();
+            List<string> devices = new List<string>();
 
             foreach (ManagementObject ManObj in ManObjReturn)
             {
@@ -91,15 +107,28 @@ namespace mtemu
                 if (pnpDeviceId.Contains("USB\\VID_0483&PID_5740"))
                 {
                     var deviceId = ManObj["DeviceID"].ToString();
-                    string serial;
+                    devices.Add(deviceId);
+                }
+            }
 
-                    if (CheckDeviceIsValid(deviceId, out serial))
-                    {
-                        devices.Add(
-                                new DeviceInfo(
-                                    deviceId,
-                                    serial));
-                    }
+            return devices;
+        }
+
+        public static DeviceInfo[] GetAvailableDevices()
+        {
+            var comDevices = GetComDevices();
+
+            List<DeviceInfo> devices = new List<DeviceInfo>();
+            foreach (var comDevice in comDevices)
+            {
+                string serial;
+
+                if (CheckDeviceIsValid(comDevice, out serial))
+                {
+                    devices.Add(
+                            new DeviceInfo(
+                                comDevice,
+                                serial));
                 }
             }
 
@@ -122,13 +151,57 @@ namespace mtemu
             deviceComPort_.StopBits = StopBits.One;
             deviceComPort_.Open();
 
+            isDeviceOpened_ = true;
+
             return true;
+        }
+
+        public void ReopenLastDevice()
+        {
+            if (deviceComPort_.IsOpen)
+                deviceComPort_.Close();
+
+            deviceComPort_.Open();
+        }
+
+        public bool IsDeviceOpened()
+        {
+            return isDeviceOpened_;
         }
 
         public void CloseDevice()
         {
             if (deviceComPort_.IsOpen)
                 deviceComPort_.Close();
+
+            isDeviceOpened_ = false;
+        }
+
+        private static ManagementEventWatcher removal_;
+
+        private EventArrivedEventHandler DeviceRemovedHandler_;
+
+        public bool CheckDeviceRemoved()
+        {
+            var comDevices = GetComDevices();
+
+            foreach (var device in comDevices)
+            {
+                if (device == currentDeviceInfo_.com_id)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public void StatusPoll()
+        {
+            const string unpluggedSql = "SELECT * FROM __InstanceDeletionEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_PnPEntity'";
+            var scope = new ManagementScope("root\\CIMV2") { Options = { EnablePrivileges = true } };
+            var unPluggedQuery = new WqlEventQuery(unpluggedSql);
+            removal_ = new ManagementEventWatcher(scope, unPluggedQuery);
+            removal_.EventArrived += DeviceRemovedHandler_;
+            removal_.Start();
         }
 
         private static bool CheckDeviceIsValid(string deviceId, out string serial_str)
@@ -150,33 +223,44 @@ namespace mtemu
             byte data_size = 0;
             object res;
 
+            bool result = false;
+
             PrepareRequestBuf(ref req_buf, CMD_REQUEST_SERIAL_GET_LENGTH, data_buf, data_size, CMD_SERIAL_GET);
-            CmdSendRecv(ref sp, req_buf, out res);
-
-            sp.Close();
-
-            byte[] serial = (byte[])res;
-
-            if (serial != null && serial.Length >= SERIAL_LENGTH)
+            try
             {
-                if (serial[0] == 'T' &&
-                    serial[1] == 'M' &&
-                    serial[SERIAL_LENGTH - 2] == 'E' &&
-                    serial[SERIAL_LENGTH - 1] == 'P')
+                CmdSendRecv(ref sp, req_buf, out res);
+
+                byte[] serial = (byte[])res;
+
+                if (serial != null && serial.Length >= SERIAL_LENGTH)
                 {
-                    serial_str = BitConverter.ToString(serial, 2, 12).Replace("-", "");
-                    return true;
+                    if (serial[0] == 'T' &&
+                        serial[1] == 'M' &&
+                        serial[SERIAL_LENGTH - 2] == 'E' &&
+                        serial[SERIAL_LENGTH - 1] == 'P')
+                    {
+                        serial_str = BitConverter.ToString(serial, 2, 12).Replace("-", "");
+                        result = true;
+                    }
                 }
             }
+            catch (TimeoutException e)
+            {
+                result = false;
+            }
+            finally
+            {
+                sp.Close();
+            }
 
-            return false;
+            return result;
         }
 
-        private static ManualResetEvent mre = new ManualResetEvent(false);
+        private static ManualResetEvent mre_ = new ManualResetEvent(false);
 
         private static void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            mre.Set();
+            mre_.Set();
         }
 
         private static bool ParseResponse(ref byte[] buf, out byte[] resp_data)
@@ -213,12 +297,12 @@ namespace mtemu
 
             if (dev.IsOpen)
             {
-                mre.Reset();
+                mre_.Reset();
                 dev.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);
 
                 dev.Write(in_buf, 0, in_buf.Length);
 
-                var signal = mre.WaitOne(1000, false);
+                var signal = mre_.WaitOne(1000, false);
                 dev.DataReceived -= new SerialDataReceivedEventHandler(SerialPort_DataReceived);
 
                 if (signal)
@@ -237,16 +321,16 @@ namespace mtemu
                         if (resp_data == null ||
                             ((resp_data.Length == 1) && (Convert.ToSByte(resp_data[0]) < 0))
                             )
-                            throw new Exception("Device returned request failed");
+                            throw new ArgumentException("Device returned request failed");
                     }
                     else
-                        throw new Exception("Received buffer size is zero");
+                        throw new ArgumentNullException("Received buffer size is zero");
                 }
                 else
-                    throw new Exception("Device timeout occured");
+                    throw new TimeoutException("Device timeout occured");
             }
             else
-                throw new Exception("MTPE is not connected");
+                throw new AccessViolationException("MTPE is not connected");
         }
 
         private static void PrepareRequestBuf(ref byte[] req_buf, byte buf_size, byte[] data_buf, byte data_size, byte cmd)
@@ -304,12 +388,12 @@ namespace mtemu
             CmdSendRecv(ref deviceComPort_, req_buf, out res);
 
             if (res == null)
-                throw new Exception("received value is null");
+                throw new ArgumentNullException("received value is null");
 
             byte[] buf = (byte[])res;
             var port = buf[0] & CMD_DATA_LEN_MASK;
             if (port != (byte)inPort)
-                throw new Exception("response port is invalid");
+                throw new ArgumentException("response port is invalid");
 
             byte val = buf[1];
 
