@@ -13,7 +13,7 @@ namespace mtemu
 
         private void linkLabelClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://t.me/joinchat/AxUgNhRVIPABrfO65znGUw");
+            System.Diagnostics.Process.Start(linkLabel.Text);
         }
 
         private void CheckCode_()

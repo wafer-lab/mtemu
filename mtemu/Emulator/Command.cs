@@ -91,6 +91,7 @@ namespace mtemu
                 res += "; M1=" + (GetFlag(FlagType.M1) ? "1" : "0");
                 res += "; M0=" + (GetFlag(FlagType.M0) ? "1" : "0");
                 break;
+
             case ViewType.MEMORY_POINTER:
                 res += $"MemoryPtr=0x{((GetRawValue(WordType.A) << 4) + GetRawValue(WordType.B)):X2}";
                 res += "; NewPtr=";
@@ -106,10 +107,12 @@ namespace mtemu
                     break;
                 }
                 break;
+
             case ViewType.DEVICE_POINTER:
                 dev_ptr_str_ = GetItem_(WordType.DEVICE)[2];
                 res += $"Interface={ dev_ptr_str_ }";
                 break;
+
             case ViewType.LOAD_HIGH_4BIT:
             case ViewType.LOAD_LOW_4BIT:
             case ViewType.LOAD_8BIT:
@@ -125,6 +128,7 @@ namespace mtemu
                         res += $"Memory(Ptr)=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
                     }
                     break;
+
                 case FuncType.LOAD_MEMORY:
                     if (GetRawValue(WordType.PS) == 0) {
                         res += $"РОН({ GetRawValue(WordType.B) })=LOW(Memory(Ptr))";
@@ -137,6 +141,7 @@ namespace mtemu
                         res += $"; РОН({ GetRawValue(WordType.B) })=LOW(Memory(Ptr))";
                     }
                     break;
+
                 case FuncType.STORE_DEVICE:
                     switch (GetPointerType()) {
                     case DataPointerType.LOW_4_BIT:
@@ -150,6 +155,7 @@ namespace mtemu
                         break;
                     }
                     break;
+
                 case FuncType.LOAD_DEVICE:
                     switch (GetPointerType()) {
                     case DataPointerType.LOW_4_BIT:
@@ -166,6 +172,7 @@ namespace mtemu
                     break;
                 }
                 break;
+
             default:
                 res += String.Join(" ", words_);
                 break;
