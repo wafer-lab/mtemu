@@ -2134,7 +2134,7 @@
             this.deviceInfoBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.deviceInfoBox.Enabled = false;
             this.deviceInfoBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.deviceInfoBox.Location = new System.Drawing.Point(240, 4);
+            this.deviceInfoBox.Location = new System.Drawing.Point(248, 4);
             this.deviceInfoBox.Margin = new System.Windows.Forms.Padding(0);
             this.deviceInfoBox.Name = "deviceInfoBox";
             this.deviceInfoBox.ReadOnly = true;
