@@ -59,7 +59,7 @@
             this.schemePicture.Location = new System.Drawing.Point(0, 0);
             this.schemePicture.Margin = new System.Windows.Forms.Padding(4);
             this.schemePicture.Name = "schemePicture";
-            this.schemePicture.Size = new System.Drawing.Size(584, 770);
+            this.schemePicture.Size = new System.Drawing.Size(584, 749);
             this.schemePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.schemePicture.TabIndex = 1;
             this.schemePicture.TabStop = false;
@@ -368,7 +368,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(584, 770);
+            this.ClientSize = new System.Drawing.Size(584, 749);
             this.Controls.Add(this.regQText);
             this.Controls.Add(this.c0Text);
             this.Controls.Add(this.sText);
@@ -392,6 +392,7 @@
             this.Controls.Add(this.schemePicture);
             this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SchemeForm";
             this.Text = "Схема АЛУ";

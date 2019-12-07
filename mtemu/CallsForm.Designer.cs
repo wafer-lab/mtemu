@@ -28,10 +28,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "0x000",
             "1234567890123456789012345678901234567890123"}, -1);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CallsForm));
             this.callList = new System.Windows.Forms.ListView();
             this.firstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.addrColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -67,7 +68,7 @@
             this.callList.GridLines = true;
             this.callList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.callList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
             this.callList.Location = new System.Drawing.Point(9, 37);
             this.callList.MultiSelect = false;
             this.callList.Name = "callList";
@@ -294,6 +295,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CallsForm";
             this.Text = "Память программы";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProgramFormClosing_);
