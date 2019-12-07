@@ -376,7 +376,7 @@ namespace mtemu
                 }
                 e.Handled = true;
             }
-            
+
             textBox.SelectionStart = selPos;
             textBox.SelectionLength = selLen;
             return true;

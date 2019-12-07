@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace mtemu
@@ -165,8 +161,7 @@ namespace mtemu
                 }
             }
             else {
-                if (deviceOpened)
-                {
+                if (deviceOpened) {
                     portExtender_.ReopenLastDevice();
                     portExtender_.StatusPoll();
                 }
@@ -176,8 +171,8 @@ namespace mtemu
         private void DeviceRemovedStatusUpdate()
         {
             deviceInfoBox.BeginInvoke(
-                (MethodInvoker)(() => 
-                deviceInfoBox.Text = "Устройство: нет подключения"
+                (MethodInvoker) (() =>
+                 deviceInfoBox.Text = "Устройство: нет подключения"
                 ));
 
             MessageBox.Show(
@@ -189,22 +184,18 @@ namespace mtemu
 
         public void DeviceRemovedHandler(object sender, System.Management.EventArrivedEventArgs e)
         {
-            System.Management.ManagementEventWatcher removal = (System.Management.ManagementEventWatcher)sender;
+            System.Management.ManagementEventWatcher removal = (System.Management.ManagementEventWatcher) sender;
 
             var targetInstanceData = e.NewEvent.Properties["TargetInstance"];
-            var targetInstanceObject = (System.Management.ManagementBaseObject)targetInstanceData.Value;
+            var targetInstanceObject = (System.Management.ManagementBaseObject) targetInstanceData.Value;
 
-            foreach (var prop in targetInstanceObject.Properties)
-            {
-                if (prop.Name == "PNPDeviceID")
-                {
+            foreach (var prop in targetInstanceObject.Properties) {
+                if (prop.Name == "PNPDeviceID") {
                     var pnpDeviceId = targetInstanceObject["PNPDeviceID"].ToString();
 
-                    if (pnpDeviceId.Contains("USB\\VID_0483&PID_5740"))
-                    {
+                    if (pnpDeviceId.Contains("USB\\VID_0483&PID_5740")) {
                         var deviceId = targetInstanceObject["DeviceID"].ToString();
-                        if (portExtender_.CheckDeviceRemoved())
-                        {
+                        if (portExtender_.CheckDeviceRemoved()) {
                             removal.Stop();
                             portExtender_.CloseDevice();
 

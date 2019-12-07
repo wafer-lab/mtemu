@@ -7,7 +7,7 @@ namespace mtemu
         public bool isOffset;
         private int number_;
         private int[] words_;
-        
+
         public Command(string[] strWords)
         {
             if (strWords.Length != length_) {
@@ -113,40 +113,32 @@ namespace mtemu
             case ViewType.LOAD_HIGH_4BIT:
             case ViewType.LOAD_LOW_4BIT:
             case ViewType.LOAD_8BIT:
-                switch (GetFuncType())
-                {
+                switch (GetFuncType()) {
                 case FuncType.STORE_MEMORY:
-                    if (GetRawValue(WordType.PS) == 0)
-                    {
+                    if (GetRawValue(WordType.PS) == 0) {
                         res += $"LOW(Memory(Ptr))=РОН({ GetRawValue(WordType.B) })";
                     }
-                    else if (GetRawValue(WordType.PS) == 1)
-                    {
+                    else if (GetRawValue(WordType.PS) == 1) {
                         res += $"HIGH(Memory(Ptr))=РОН({ GetRawValue(WordType.A) })";
                     }
-                    else
-                    {
+                    else {
                         res += $"Memory(Ptr)=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
                     }
                     break;
                 case FuncType.LOAD_MEMORY:
-                    if (GetRawValue(WordType.PS) == 0)
-                    {
+                    if (GetRawValue(WordType.PS) == 0) {
                         res += $"РОН({ GetRawValue(WordType.B) })=LOW(Memory(Ptr))";
                     }
-                    else if (GetRawValue(WordType.PS) == 1)
-                    {
+                    else if (GetRawValue(WordType.PS) == 1) {
                         res += $"РОН({ GetRawValue(WordType.A) })=HIGH(Memory(Ptr))";
                     }
-                    else
-                    {
+                    else {
                         res += $"РОН({ GetRawValue(WordType.A) })=HIGH(Memory(Ptr))";
                         res += $"; РОН({ GetRawValue(WordType.B) })=LOW(Memory(Ptr))";
                     }
                     break;
                 case FuncType.STORE_DEVICE:
-                    switch (GetPointerType())
-                    {
+                    switch (GetPointerType()) {
                     case DataPointerType.LOW_4_BIT:
                         res += $"LOW({ dev_ptr_str_ })=РОН({ GetRawValue(WordType.B) })";
                         break;
@@ -159,8 +151,7 @@ namespace mtemu
                     }
                     break;
                 case FuncType.LOAD_DEVICE:
-                    switch (GetPointerType())
-                    {
+                    switch (GetPointerType()) {
                     case DataPointerType.LOW_4_BIT:
                         res += $"РОН({ GetRawValue(WordType.B) })=LOW({ dev_ptr_str_ })";
                         break;
@@ -183,7 +174,8 @@ namespace mtemu
             return res;
         }
 
-        public string GetJumpName() { 
+        public string GetJumpName()
+        {
             string res = GetItem_(WordType.CA)[2];
             JumpType jt = GetJumpType();
             if (jt == JumpType.JNZ || jt == JumpType.JMP || jt == JumpType.CLNZ

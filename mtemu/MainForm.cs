@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace mtemu
@@ -452,7 +448,7 @@ namespace mtemu
             if (
                 Top - moveDelta_ <= stackForm_.Top
                 && stackForm_.Top <= Top + moveDelta_
-                && Right - moveDelta_ <= stackForm_.Left 
+                && Right - moveDelta_ <= stackForm_.Left
                 && stackForm_.Left <= Right + moveDelta_
             ) {
                 stickStackForm_ = true;
@@ -592,7 +588,7 @@ namespace mtemu
 
                 // Disable led after 60 ms
                 TimerCallback callback = new TimerCallback(DisableLeds_);
-                System.Threading.Timer timer = new System.Threading.Timer(callback, number, 60,-1);
+                System.Threading.Timer timer = new System.Threading.Timer(callback, number, 60, -1);
 
                 // Remembre click
                 easterEggMask_ <<= 2;

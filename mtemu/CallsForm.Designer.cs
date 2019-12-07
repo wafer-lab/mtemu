@@ -34,9 +34,9 @@
             "1234567890123456789012345678901234567890123"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CallsForm));
             this.callList = new System.Windows.Forms.ListView();
-            this.firstColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.addrColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.firstColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.addrColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
+            this.nameColumn = ((System.Windows.Forms.ColumnHeader) (new System.Windows.Forms.ColumnHeader()));
             this.currentPanel = new System.Windows.Forms.Panel();
             this.commentLabel = new System.Windows.Forms.Label();
             this.hexLabel = new System.Windows.Forms.Label();
@@ -53,9 +53,9 @@
             this.formToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.currentPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // callList
-            // 
+            //
             this.callList.AutoArrange = false;
             this.callList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.callList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -63,7 +63,7 @@
             this.addrColumn,
             this.nameColumn});
             this.callList.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.callList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.callList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.callList.FullRowSelect = true;
             this.callList.GridLines = true;
             this.callList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -82,25 +82,25 @@
             this.callList.Click += new System.EventHandler(this.CallListSelectedIndexChanged_);
             this.callList.Enter += new System.EventHandler(this.CallListSelectedIndexChanged_);
             this.callList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
-            // 
+            //
             // firstColumn
-            // 
+            //
             this.firstColumn.Text = "";
             this.firstColumn.Width = 0;
-            // 
+            //
             // addrColumn
-            // 
+            //
             this.addrColumn.Text = "Адрес";
             this.addrColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.addrColumn.Width = 47;
-            // 
+            //
             // nameColumn
-            // 
+            //
             this.nameColumn.Text = "Коментарий";
             this.nameColumn.Width = 317;
-            // 
+            //
             // currentPanel
-            // 
+            //
             this.currentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.currentPanel.Controls.Add(this.commentLabel);
             this.currentPanel.Controls.Add(this.hexLabel);
@@ -117,9 +117,9 @@
             this.currentPanel.Padding = new System.Windows.Forms.Padding(6);
             this.currentPanel.Size = new System.Drawing.Size(382, 98);
             this.currentPanel.TabIndex = 2;
-            // 
+            //
             // commentLabel
-            // 
+            //
             this.commentLabel.AutoSize = true;
             this.commentLabel.Font = new System.Drawing.Font("Consolas", 10F);
             this.commentLabel.Location = new System.Drawing.Point(178, 10);
@@ -129,9 +129,9 @@
             this.commentLabel.TabIndex = 14;
             this.commentLabel.Text = "Комментарий";
             this.commentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
             // hexLabel
-            // 
+            //
             this.hexLabel.AutoSize = true;
             this.hexLabel.Font = new System.Drawing.Font("Consolas", 10F);
             this.hexLabel.Location = new System.Drawing.Point(10, 34);
@@ -141,9 +141,9 @@
             this.hexLabel.TabIndex = 13;
             this.hexLabel.Text = "0x";
             this.hexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // downButton
-            // 
+            //
             this.downButton.Enabled = false;
             this.downButton.Font = new System.Drawing.Font("Consolas", 10F);
             this.downButton.Location = new System.Drawing.Point(108, 62);
@@ -156,9 +156,9 @@
             this.downButton.UseVisualStyleBackColor = true;
             this.downButton.Click += new System.EventHandler(this.DownButtonClick_);
             this.downButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
-            // 
+            //
             // upButton
-            // 
+            //
             this.upButton.Enabled = false;
             this.upButton.Font = new System.Drawing.Font("Consolas", 10F);
             this.upButton.Location = new System.Drawing.Point(140, 62);
@@ -171,9 +171,9 @@
             this.upButton.UseVisualStyleBackColor = true;
             this.upButton.Click += new System.EventHandler(this.UpButtonClick_);
             this.upButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
-            // 
+            //
             // commentText
-            // 
+            //
             this.commentText.Font = new System.Drawing.Font("Consolas", 10F);
             this.commentText.Location = new System.Drawing.Point(74, 31);
             this.commentText.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
@@ -185,9 +185,9 @@
             this.commentText.WordWrap = false;
             this.commentText.TextChanged += new System.EventHandler(this.CommentTextChanged_);
             this.commentText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
-            // 
+            //
             // addButton
-            // 
+            //
             this.addButton.Font = new System.Drawing.Font("Consolas", 10F);
             this.addButton.Location = new System.Drawing.Point(172, 62);
             this.addButton.Margin = new System.Windows.Forms.Padding(4);
@@ -199,9 +199,9 @@
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.AddButtonClick_);
             this.addButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
-            // 
+            //
             // addressTextLabel
-            // 
+            //
             this.addressTextLabel.AutoSize = true;
             this.addressTextLabel.Font = new System.Drawing.Font("Consolas", 10F);
             this.addressTextLabel.Location = new System.Drawing.Point(14, 10);
@@ -211,9 +211,9 @@
             this.addressTextLabel.TabIndex = 0;
             this.addressTextLabel.Text = "Адрес";
             this.addressTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
             // removeButton
-            // 
+            //
             this.removeButton.Enabled = false;
             this.removeButton.Font = new System.Drawing.Font("Consolas", 10F);
             this.removeButton.Location = new System.Drawing.Point(10, 62);
@@ -227,9 +227,9 @@
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.RemoveButtonClick_);
             this.removeButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
-            // 
+            //
             // saveButton
-            // 
+            //
             this.saveButton.Enabled = false;
             this.saveButton.Font = new System.Drawing.Font("Consolas", 10F);
             this.saveButton.Location = new System.Drawing.Point(280, 62);
@@ -242,9 +242,9 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveButtonClick_);
             this.saveButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
-            // 
+            //
             // addressText
-            // 
+            //
             this.addressText.Font = new System.Drawing.Font("Consolas", 10F);
             this.addressText.Location = new System.Drawing.Point(34, 31);
             this.addressText.Margin = new System.Windows.Forms.Padding(0, 2, 4, 4);
@@ -257,9 +257,9 @@
             this.addressText.WordWrap = false;
             this.addressText.TextChanged += new System.EventHandler(this.AddressTextChanged_);
             this.addressText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddressTextKeyDown_);
-            // 
+            //
             // listLabel
-            // 
+            //
             this.listLabel.AutoSize = true;
             this.listLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Bold);
             this.listLabel.Location = new System.Drawing.Point(128, 9);
@@ -268,9 +268,9 @@
             this.listLabel.Size = new System.Drawing.Size(150, 22);
             this.listLabel.TabIndex = 3;
             this.listLabel.Text = "Список вызовов";
-            // 
+            //
             // stepButton
-            // 
+            //
             this.stepButton.Font = new System.Drawing.Font("Consolas", 9F);
             this.stepButton.Location = new System.Drawing.Point(329, 9);
             this.stepButton.Name = "stepButton";
@@ -282,9 +282,9 @@
             this.stepButton.UseVisualStyleBackColor = true;
             this.stepButton.Click += new System.EventHandler(this.StepButtonClick_);
             this.stepButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
-            // 
+            //
             // CallsForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(400, 584);
@@ -293,9 +293,9 @@
             this.Controls.Add(this.callList);
             this.Controls.Add(this.currentPanel);
             this.DoubleBuffered = true;
-            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Name = "CallsForm";
             this.Text = "Память программы";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProgramFormClosing_);

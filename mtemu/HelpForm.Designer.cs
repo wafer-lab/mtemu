@@ -39,9 +39,9 @@
             this.codeText = new System.Windows.Forms.TextBox();
             this.codeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label1.Location = new System.Drawing.Point(13, 13);
             this.label1.Margin = new System.Windows.Forms.Padding(4);
@@ -52,9 +52,9 @@
             this.label1.Text = "Чтобы узнать, какое сочетание клавиш работает также, как нажатие кнопки, просто н" +
     "аведите на кнопку!";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label2.Location = new System.Drawing.Point(13, 134);
             this.label2.Margin = new System.Windows.Forms.Padding(4);
@@ -65,9 +65,9 @@
             this.label2.Text = "Можно \"приклеить\" окна стека, памяти к главному окну, просто разместив их рядом с" +
     " правой стороны, а память программы с левой!";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label3.Location = new System.Drawing.Point(13, 65);
             this.label3.Margin = new System.Windows.Forms.Padding(4);
@@ -79,9 +79,9 @@
     "ожно воспользоваться соответствующими сочетаниями клавиш Ctrl + Вверх и Ctrl + В" +
     "низ!";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // label4
-            // 
+            //
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(176, 331);
             this.label4.Margin = new System.Windows.Forms.Padding(4);
@@ -90,9 +90,9 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "hackallcode, malexkiy @ 2019";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
             // label5
-            // 
+            //
             this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label5.Location = new System.Drawing.Point(13, 186);
             this.label5.Margin = new System.Windows.Forms.Padding(4);
@@ -103,11 +103,11 @@
             this.label5.Text = "Тут есть пасхалки, чтобы было нескучно учится!\r\nПодсказка: Раз, два, три! Ёлочка," +
     " гори!";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // leftLabel
-            // 
+            //
             this.leftLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.leftLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.leftLabel.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.leftLabel.Location = new System.Drawing.Point(495, 186);
             this.leftLabel.Margin = new System.Windows.Forms.Padding(4);
             this.leftLabel.Name = "leftLabel";
@@ -116,9 +116,9 @@
             this.leftLabel.TabIndex = 5;
             this.leftLabel.Text = "99/99";
             this.leftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
             // linkLabel
-            // 
+            //
             this.linkLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.linkLabel.Location = new System.Drawing.Point(13, 238);
             this.linkLabel.Margin = new System.Windows.Forms.Padding(4);
@@ -129,9 +129,9 @@
             this.linkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel.Visible = false;
             this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelClicked);
-            // 
+            //
             // codeLabel
-            // 
+            //
             this.codeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.codeLabel.Location = new System.Drawing.Point(13, 273);
             this.codeLabel.Margin = new System.Windows.Forms.Padding(4);
@@ -142,9 +142,9 @@
             this.codeLabel.Text = "Посторонним вход воспрещен!";
             this.codeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.codeLabel.Visible = false;
-            // 
+            //
             // codeText
-            // 
+            //
             this.codeText.Location = new System.Drawing.Point(245, 275);
             this.codeText.Margin = new System.Windows.Forms.Padding(0);
             this.codeText.Name = "codeText";
@@ -153,9 +153,9 @@
             this.codeText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.codeText.Visible = false;
             this.codeText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CodeTextKeyDown_);
-            // 
+            //
             // codeButton
-            // 
+            //
             this.codeButton.Location = new System.Drawing.Point(495, 274);
             this.codeButton.Margin = new System.Windows.Forms.Padding(0);
             this.codeButton.Name = "codeButton";
@@ -165,9 +165,9 @@
             this.codeButton.UseVisualStyleBackColor = true;
             this.codeButton.Visible = false;
             this.codeButton.Click += new System.EventHandler(this.CodeButtonClick_);
-            // 
+            //
             // HelpForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Window;
@@ -183,9 +183,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.DoubleBuffered = true;
-            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HelpForm";
             this.Text = "Помощь";

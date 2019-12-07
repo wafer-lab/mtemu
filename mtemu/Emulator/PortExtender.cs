@@ -100,12 +100,10 @@ namespace mtemu
 
             List<string> devices = new List<string>();
 
-            foreach (ManagementObject ManObj in ManObjReturn)
-            {
+            foreach (ManagementObject ManObj in ManObjReturn) {
                 var pnpDeviceId = ManObj["PNPDeviceID"].ToString();
 
-                if (pnpDeviceId.Contains("USB\\VID_0483&PID_5740"))
-                {
+                if (pnpDeviceId.Contains("USB\\VID_0483&PID_5740")) {
                     var deviceId = ManObj["DeviceID"].ToString();
                     devices.Add(deviceId);
                 }
@@ -119,12 +117,10 @@ namespace mtemu
             var comDevices = GetComDevices();
 
             List<DeviceInfo> devices = new List<DeviceInfo>();
-            foreach (var comDevice in comDevices)
-            {
+            foreach (var comDevice in comDevices) {
                 string serial;
 
-                if (CheckDeviceIsValid(comDevice, out serial))
-                {
+                if (CheckDeviceIsValid(comDevice, out serial)) {
                     devices.Add(
                             new DeviceInfo(
                                 comDevice,
@@ -185,8 +181,7 @@ namespace mtemu
         {
             var comDevices = GetComDevices();
 
-            foreach (var device in comDevices)
-            {
+            foreach (var device in comDevices) {
                 if (device == currentDeviceInfo_.com_id)
                     return false;
             }
@@ -226,30 +221,25 @@ namespace mtemu
             bool result = false;
 
             PrepareRequestBuf(ref req_buf, CMD_REQUEST_SERIAL_GET_LENGTH, data_buf, data_size, CMD_SERIAL_GET);
-            try
-            {
+            try {
                 CmdSendRecv(ref sp, req_buf, out res);
 
-                byte[] serial = (byte[])res;
+                byte[] serial = (byte[]) res;
 
-                if (serial != null && serial.Length >= SERIAL_LENGTH)
-                {
+                if (serial != null && serial.Length >= SERIAL_LENGTH) {
                     if (serial[0] == 'T' &&
                         serial[1] == 'M' &&
                         serial[SERIAL_LENGTH - 2] == 'E' &&
-                        serial[SERIAL_LENGTH - 1] == 'P')
-                    {
+                        serial[SERIAL_LENGTH - 1] == 'P') {
                         serial_str = BitConverter.ToString(serial, 2, 12).Replace("-", "");
                         result = true;
                     }
                 }
             }
-            catch (TimeoutException e)
-            {
+            catch (TimeoutException e) {
                 result = false;
             }
-            finally
-            {
+            finally {
                 sp.Close();
             }
 
@@ -268,17 +258,13 @@ namespace mtemu
             resp_data = null;
 
             byte resp_start = buf[0];
-            if (((resp_start >> CMD_SHIFT) & CMD_MARKER_MASK) == CMD_MARKER_START)
-            {
-                if (((resp_start >> CMD_SHIFT) & CMD_MASK) == CMD_RESPONSE)
-                {
+            if (((resp_start >> CMD_SHIFT) & CMD_MARKER_MASK) == CMD_MARKER_START) {
+                if (((resp_start >> CMD_SHIFT) & CMD_MASK) == CMD_RESPONSE) {
                     byte resp_size = Convert.ToByte(resp_start & CMD_DATA_LEN_MASK);
                     byte resp_end = buf[resp_size + 1];
 
-                    if (((resp_end >> CMD_SHIFT) & CMD_MARKER_MASK) == CMD_MARKER_END)
-                    {
-                        if ((resp_end & CMD_DATA_LEN_MASK) == resp_size)
-                        {
+                    if (((resp_end >> CMD_SHIFT) & CMD_MARKER_MASK) == CMD_MARKER_END) {
+                        if ((resp_end & CMD_DATA_LEN_MASK) == resp_size) {
                             resp_data = new byte[resp_size];
                             Array.Copy(buf, 1, resp_data, 0, resp_size);
 
@@ -295,8 +281,7 @@ namespace mtemu
         {
             res = null;
 
-            if (dev.IsOpen)
-            {
+            if (dev.IsOpen) {
                 mre_.Reset();
                 dev.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);
 
@@ -305,11 +290,9 @@ namespace mtemu
                 var signal = mre_.WaitOne(1000, false);
                 dev.DataReceived -= new SerialDataReceivedEventHandler(SerialPort_DataReceived);
 
-                if (signal)
-                {
+                if (signal) {
                     var buf_size = dev.ReadBufferSize;
-                    if (buf_size > 0)
-                    {
+                    if (buf_size > 0) {
                         byte[] buf = new byte[buf_size];
                         dev.Read(buf, 0, buf_size);
 
@@ -338,16 +321,14 @@ namespace mtemu
             req_buf[0] = Convert.ToByte(((cmd | CMD_MARKER_START) << CMD_SHIFT) | data_size);
             req_buf[buf_size - 1] = Convert.ToByte(((cmd | CMD_MARKER_END) << CMD_SHIFT) | data_size);
 
-            for (byte i = 0; i < data_size; i++)
-            {
+            for (byte i = 0; i < data_size; i++) {
                 req_buf[i + 1] = data_buf[i];
             }
         }
 
         public void WritePort(OutPort outPort, DataPointerType pointerType, byte val)
         {
-            if (deviceComPort_ == null || !deviceComPort_.IsOpen)
-            {
+            if (deviceComPort_ == null || !deviceComPort_.IsOpen) {
                 System.Windows.Forms.MessageBox.Show(
                     "Внешнее устройство не подключено",
                     "Ошибка!",
@@ -358,8 +339,8 @@ namespace mtemu
             }
 
             byte[] req_buf = new byte[CMD_REQUEST_PORT_WRITE_LENGTH];
-            byte[] data_buf = { (byte)outPort, val };
-            byte data_size = (byte)data_buf.Length;
+            byte[] data_buf = { (byte) outPort, val };
+            byte data_size = (byte) data_buf.Length;
             object res;
 
             PrepareRequestBuf(ref req_buf, CMD_REQUEST_PORT_WRITE_LENGTH, data_buf, data_size, CMD_PORT_WRITE);
@@ -368,8 +349,7 @@ namespace mtemu
 
         public byte ReadPort(InPort inPort, DataPointerType pointerType)
         {
-            if (deviceComPort_ == null || !deviceComPort_.IsOpen)
-            {
+            if (deviceComPort_ == null || !deviceComPort_.IsOpen) {
                 System.Windows.Forms.MessageBox.Show(
                     "Внешнее устройство не подключено",
                     "Ошибка!",
@@ -380,8 +360,8 @@ namespace mtemu
             }
 
             byte[] req_buf = new byte[CMD_REQUEST_PORT_READ_LENGTH];
-            byte[] data_buf = { (byte)inPort };
-            byte data_size = (byte)data_buf.Length;
+            byte[] data_buf = { (byte) inPort };
+            byte data_size = (byte) data_buf.Length;
             object res;
 
             PrepareRequestBuf(ref req_buf, CMD_REQUEST_PORT_READ_LENGTH, data_buf, data_size, CMD_PORT_READ);
@@ -390,9 +370,9 @@ namespace mtemu
             if (res == null)
                 throw new ArgumentNullException("received value is null");
 
-            byte[] buf = (byte[])res;
+            byte[] buf = (byte[]) res;
             var port = buf[0] & CMD_DATA_LEN_MASK;
-            if (port != (byte)inPort)
+            if (port != (byte) inPort)
                 throw new ArgumentException("response port is invalid");
 
             byte val = buf[1];
@@ -410,7 +390,7 @@ namespace mtemu
             PrepareRequestBuf(ref req_buf, CMD_REQUEST_SERIAL_GET_LENGTH, data_buf, data_size, CMD_SERIAL_GET);
             CmdSendRecv(ref deviceComPort_, req_buf, out res);
 
-            string serial = (string)res;
+            string serial = (string) res;
 
             return serial;
         }

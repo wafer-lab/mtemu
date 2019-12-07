@@ -34,30 +34,30 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.updateListButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(84, 14);
             this.label1.TabIndex = 0;
             this.label1.Text = "Устройство:";
-            // 
+            //
             // devicesComboBox
-            // 
+            //
             this.devicesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.devicesComboBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.devicesComboBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.devicesComboBox.FormattingEnabled = true;
             this.devicesComboBox.Location = new System.Drawing.Point(15, 29);
             this.devicesComboBox.Name = "devicesComboBox";
             this.devicesComboBox.Size = new System.Drawing.Size(307, 22);
             this.devicesComboBox.TabIndex = 1;
-            // 
+            //
             // selectDeviceButton
-            // 
-            this.selectDeviceButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            //
+            this.selectDeviceButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.selectDeviceButton.Location = new System.Drawing.Point(166, 58);
             this.selectDeviceButton.Name = "selectDeviceButton";
             this.selectDeviceButton.Size = new System.Drawing.Size(75, 23);
@@ -65,10 +65,10 @@
             this.selectDeviceButton.Text = "Выбрать";
             this.selectDeviceButton.UseVisualStyleBackColor = true;
             this.selectDeviceButton.Click += new System.EventHandler(this.selectDeviceButton_Click);
-            // 
+            //
             // cancelButton
-            // 
-            this.cancelButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            //
+            this.cancelButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.cancelButton.Location = new System.Drawing.Point(247, 58);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
@@ -76,9 +76,9 @@
             this.cancelButton.Text = "Отмена";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
-            // 
+            //
             // updateListButton
-            // 
+            //
             this.updateListButton.Location = new System.Drawing.Point(15, 58);
             this.updateListButton.Name = "updateListButton";
             this.updateListButton.Size = new System.Drawing.Size(75, 23);
@@ -86,9 +86,9 @@
             this.updateListButton.Text = "Обновить";
             this.updateListButton.UseVisualStyleBackColor = true;
             this.updateListButton.Click += new System.EventHandler(this.updateListButton_Click);
-            // 
+            //
             // ExtenderSettingsForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(334, 93);
@@ -97,9 +97,9 @@
             this.Controls.Add(this.selectDeviceButton);
             this.Controls.Add(this.devicesComboBox);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Name = "ExtenderSettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройка внешнего устройства";

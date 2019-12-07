@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
@@ -23,7 +20,7 @@ namespace mtemu
         }
 
         /// <summary>
-        /// WinAPI SetProcessDPIAware 
+        /// WinAPI SetProcessDPIAware
         /// </summary>
         /// <returns></returns>
         [DllImport("user32.dll")]

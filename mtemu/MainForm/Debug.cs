@@ -126,7 +126,7 @@ namespace mtemu
                 SelectPrevCommand_(emulator_.GetPrevIndex());
                 ChangeCall_(emulator_.GetCallIndex(), selectedColor_);
             }
-        } 
+        }
 
         private void UpdateOutPanel(bool asNew = false)
         {

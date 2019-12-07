@@ -526,8 +526,7 @@ namespace mtemu
         {
             var val = dev_ptr_ << 2;
 
-            switch (type)
-            {
+            switch (type) {
             case DataPointerType.LOW_4_BIT:
                 val |= 1;
                 break;
@@ -542,7 +541,7 @@ namespace mtemu
             var val_b = Convert.ToByte(val);
 
             if (Enum.IsDefined(typeof(PortExtender.InPort), val_b))
-                return (PortExtender.InPort)val_b;
+                return (PortExtender.InPort) val_b;
 
             return PortExtender.InPort.PORT_UNKNOWN;
         }
@@ -551,8 +550,7 @@ namespace mtemu
         {
             var val = dev_ptr_ << 2;
 
-            switch (type)
-            {
+            switch (type) {
             case DataPointerType.LOW_4_BIT:
                 val |= 1;
                 break;
@@ -567,7 +565,7 @@ namespace mtemu
             var val_b = Convert.ToByte(val);
 
             if (Enum.IsDefined(typeof(PortExtender.OutPort), val_b))
-                return (PortExtender.OutPort)val_b;
+                return (PortExtender.OutPort) val_b;
 
             return PortExtender.OutPort.PORT_UNKNOWN;
         }
@@ -621,12 +619,10 @@ namespace mtemu
                 break;
             case FuncType.STORE_DEVICE:
                 PortExtender.OutPort outPort = GetOutPort(pointerType);
-                if (outPort != PortExtender.OutPort.PORT_UNKNOWN)
-                {
+                if (outPort != PortExtender.OutPort.PORT_UNKNOWN) {
                     byte tmp_w = 0;
 
-                    switch (pointerType)
-                    {
+                    switch (pointerType) {
                     case DataPointerType.LOW_4_BIT:
                         tmp_w = Helpers.MakeLowNibble(regCommon_[b]);
                         break;
@@ -643,12 +639,10 @@ namespace mtemu
                 break;
             case FuncType.LOAD_DEVICE:
                 PortExtender.InPort inPort = GetInPort(pointerType);
-                if (inPort != PortExtender.InPort.PORT_UNKNOWN)
-                {
+                if (inPort != PortExtender.InPort.PORT_UNKNOWN) {
                     byte tmp_r;
                     tmp_r = portExtender_.ReadPort(inPort, pointerType);
-                    switch (pointerType)
-                    {
+                    switch (pointerType) {
                     case DataPointerType.LOW_4_BIT:
                         regCommon_[b] = Helpers.LowNibble(tmp_r);
                         break;
