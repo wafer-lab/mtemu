@@ -8,7 +8,7 @@ namespace mtemu
     public partial class TetrisForm : Form
     {
         private int score_ = 0;
-        private int tick_ = 0;
+        private int prevRowsCount = 0;
         private const int width_ = 15, height_ = 25, k_ = 20;
         private int[,] shape_ = new int[2, 4];
         private int[,] field_ = new int[width_, height_];
@@ -53,16 +53,33 @@ namespace mtemu
 
         private void IncTickScore_()
         {
-            ++tick_;
-            if (tick_ % 3 == 0) {
-                SetScore_(score_ + 1);
-                tick_ = 0;
-            }
+            SetScore_(score_ + 15);
         }
 
-        private void IncRowScore_()
+        private void IncRowScore_(int rowsCount)
         {
-            SetScore_(score_ + width_ * 100);
+            if (rowsCount > 0) {
+                rowsCount += prevRowsCount;
+            }
+            prevRowsCount = rowsCount;
+
+            int scoreInc = 0;
+            switch (rowsCount) {
+            case 1:
+                scoreInc = 100;
+                break;
+            case 2:
+                scoreInc = 200;
+                break;
+            case 3:
+                scoreInc = 400;
+                break;
+            case 4:
+                scoreInc = 800;
+                break;
+            }
+
+            SetScore_(score_ + scoreInc);
         }
 
         private void FillField_()
@@ -83,25 +100,24 @@ namespace mtemu
 
         private void TickTimerTick_(object sender, EventArgs e)
         {
-            IncTickScore_();
-
             if (field_[8, 4] == 1) {
                 Close();
                 return;
             }
+            int rowsCount = 0;
             foreach (int i in (
                 from i in Enumerable.Range(0, field_.GetLength(1))
                 where (Enumerable.Range(0, field_.GetLength(0)).Select(j => field_[j, i]).Sum() >= width_ - 1)
-                select i).ToArray().Take(1)
-            ) {
-                IncRowScore_();
-
+                select i
+            ).ToArray().Take(1)) {
+                ++rowsCount;
                 for (int k = i; k > 1; k--) {
                     for (int l = 1; l < width_; l++) {
                         field_[l, k] = field_[l, k - 1];
                     }
                 }
             }
+            IncRowScore_(rowsCount);
             Move(0, 1);
         }
 
@@ -133,6 +149,9 @@ namespace mtemu
             case Keys.S:
             case Keys.Down:
                 TickTimer.Interval = 50;
+                break;
+            case Keys.Enter:
+                TickTimer.Enabled = !TickTimer.Enabled;
                 break;
             }
         }
@@ -178,6 +197,7 @@ namespace mtemu
                     for (int i = 0; i < 4; i++) {
                         field_[shape_[1, i], shape_[0, i]]++;
                     }
+                    IncTickScore_();
                     SetShape_();
                 }
             }
