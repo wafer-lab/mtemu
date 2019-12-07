@@ -65,7 +65,7 @@ namespace mtemu
         private void UpdateEggsCounter_()
         {
             helpForm_.leftLabel.Text = $"{EasterEgg.FoundEggsCount()}/{EasterEgg.EggsCount()}";
-            if (EasterEgg.EggsCount() - EasterEgg.FoundEggsCount() == 0 && !EasterEgg.IsNotified()) {
+            if (/*EasterEgg.EggsCount() -*/ EasterEgg.FoundEggsCount() > 0 && !EasterEgg.IsNotified()) {
                 EasterEgg.SetNotified();
                 MessageBox.Show(
                     "Воу, ты нашел все пасхалки!\nНапиши в телеграме!\nCсылка будет в разделе помощи!",
