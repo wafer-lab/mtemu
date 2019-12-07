@@ -59,13 +59,16 @@ namespace mtemu
                 new System.Threading.Timer(callback, 2, i * 600 + 400, -1);
                 new System.Threading.Timer(callback, 4, i * 600 + 500, -1);
             }
-            new System.Threading.Timer(callback, 0, count * 600, -1);
+            new System.Threading.Timer(callback, 8, count * 600, -1);
+            // Double disable because bugs with slow computers
+            new System.Threading.Timer(callback, 0, count * 600 + 100, -1);
+            new System.Threading.Timer(callback, 0, (count + 1) * 600, -1);
         }
 
         private void UpdateEggsCounter_()
         {
             helpForm_.leftLabel.Text = $"{EasterEgg.FoundEggsCount()}/{EasterEgg.EggsCount()}";
-            if (/*EasterEgg.EggsCount() -*/ EasterEgg.FoundEggsCount() > 0 && !EasterEgg.IsNotified()) {
+            if (EasterEgg.EggsCount() - EasterEgg.FoundEggsCount() > 0 && !EasterEgg.IsNotified()) {
                 EasterEgg.SetNotified();
                 MessageBox.Show(
                     "Воу, ты нашел все пасхалки!\nНапиши в телеграме!\nCсылка будет в разделе помощи!",
@@ -77,6 +80,7 @@ namespace mtemu
                 var linkBytes = Convert.FromBase64String("aHR0cHM6Ly90Lm1lL2pvaW5jaGF0L0F4VWdOaFJWSVBBQnJmTzY1em5HVXc=");
                 helpForm_.linkLabel.Text = System.Text.Encoding.UTF8.GetString(linkBytes);
                 helpForm_.linkLabel.Visible = true;
+                helpForm_.codeLabel.Visible = true;
                 helpForm_.codeText.Visible = true;
                 helpForm_.codeButton.Visible = true;
                 LedsAnimation_();

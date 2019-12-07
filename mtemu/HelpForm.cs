@@ -40,7 +40,7 @@ namespace mtemu
             }
         }
 
-        private void EnterButtonClick_(object sender, EventArgs e)
+        private void CodeButtonClick_(object sender, EventArgs e)
         {
             CheckCode_();
         }

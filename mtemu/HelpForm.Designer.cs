@@ -35,8 +35,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.leftLabel = new System.Windows.Forms.Label();
             this.linkLabel = new System.Windows.Forms.LinkLabel();
-            this.codeButton = new System.Windows.Forms.Button();
+            this.codeLabel = new System.Windows.Forms.Label();
             this.codeText = new System.Windows.Forms.TextBox();
+            this.codeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -129,28 +130,41 @@
             this.linkLabel.Visible = false;
             this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelClicked);
             // 
-            // codeButton
+            // codeLabel
             // 
-            this.codeButton.Location = new System.Drawing.Point(495, 239);
-            this.codeButton.Margin = new System.Windows.Forms.Padding(0);
-            this.codeButton.Name = "codeButton";
-            this.codeButton.Size = new System.Drawing.Size(75, 25);
-            this.codeButton.TabIndex = 8;
-            this.codeButton.Text = "Ввод";
-            this.codeButton.UseVisualStyleBackColor = true;
-            this.codeButton.Visible = false;
-            this.codeButton.Click += new System.EventHandler(this.EnterButtonClick_);
+            this.codeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.codeLabel.Location = new System.Drawing.Point(13, 273);
+            this.codeLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.codeLabel.Name = "codeLabel";
+            this.codeLabel.Padding = new System.Windows.Forms.Padding(4);
+            this.codeLabel.Size = new System.Drawing.Size(558, 27);
+            this.codeLabel.TabIndex = 13;
+            this.codeLabel.Text = "Посторонним вход воспрещен!";
+            this.codeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.codeLabel.Visible = false;
             // 
             // codeText
             // 
-            this.codeText.Location = new System.Drawing.Point(420, 240);
+            this.codeText.Location = new System.Drawing.Point(245, 275);
             this.codeText.Margin = new System.Windows.Forms.Padding(0);
             this.codeText.Name = "codeText";
-            this.codeText.Size = new System.Drawing.Size(75, 23);
-            this.codeText.TabIndex = 9;
+            this.codeText.Size = new System.Drawing.Size(250, 23);
+            this.codeText.TabIndex = 15;
             this.codeText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.codeText.Visible = false;
             this.codeText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CodeTextKeyDown_);
+            // 
+            // codeButton
+            // 
+            this.codeButton.Location = new System.Drawing.Point(495, 274);
+            this.codeButton.Margin = new System.Windows.Forms.Padding(0);
+            this.codeButton.Name = "codeButton";
+            this.codeButton.Size = new System.Drawing.Size(75, 25);
+            this.codeButton.TabIndex = 14;
+            this.codeButton.Text = "Ввод";
+            this.codeButton.UseVisualStyleBackColor = true;
+            this.codeButton.Visible = false;
+            this.codeButton.Click += new System.EventHandler(this.CodeButtonClick_);
             // 
             // HelpForm
             // 
@@ -160,6 +174,7 @@
             this.ClientSize = new System.Drawing.Size(584, 361);
             this.Controls.Add(this.codeText);
             this.Controls.Add(this.codeButton);
+            this.Controls.Add(this.codeLabel);
             this.Controls.Add(this.linkLabel);
             this.Controls.Add(this.leftLabel);
             this.Controls.Add(this.label5);
@@ -188,7 +203,8 @@
         private System.Windows.Forms.Label label5;
         public System.Windows.Forms.Label leftLabel;
         public System.Windows.Forms.LinkLabel linkLabel;
-        public System.Windows.Forms.Button codeButton;
         public System.Windows.Forms.TextBox codeText;
+        public System.Windows.Forms.Button codeButton;
+        public System.Windows.Forms.Label codeLabel;
     }
 }
