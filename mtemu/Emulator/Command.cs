@@ -183,13 +183,33 @@ namespace mtemu
 
         public string GetJumpName()
         {
-            string res = GetItem_(WordType.CA)[2];
-            JumpType jt = GetJumpType();
-            if (jt == JumpType.JNZ || jt == JumpType.JMP || jt == JumpType.CLNZ
-                || jt == JumpType.CALL || jt == JumpType.JZ || jt == JumpType.JF3
-                || jt == JumpType.JOVR || jt == JumpType.JC4) {
-                res += " " + $"0x{GetNextAddr():X3}";
+            if (GetJumpType() == JumpType.END) {
+                if (GetDiffAddr() == 0) {
+                    return "END";
+                }
+                else if (GetDiffAddr() > 0) {
+                    return $"LDM +0x{GetDiffAddr():X3}";
+                }
+                else {
+                    return $"LDM -0x{-GetDiffAddr():X3}";
+                }
             }
+
+            string res = GetItem_(WordType.CA)[2];
+
+            switch (GetJumpType()) {
+            case JumpType.JNZ:
+            case JumpType.JMP:
+            case JumpType.CLNZ:
+            case JumpType.CALL:
+            case JumpType.JZ:
+            case JumpType.JF3:
+            case JumpType.JOVR:
+            case JumpType.JC4:
+                res += $" 0x{GetNextAddr():X3}";
+                break;
+            }
+
             return res;
         }
 
@@ -354,6 +374,15 @@ namespace mtemu
             return (GetRawValue(WordType.AR_HIGH) << (2 * WORD_SIZE))
                 + (GetRawValue(WordType.AR_MID) << WORD_SIZE)
                 + GetRawValue(WordType.AR_LOW);
+        }
+
+        public int GetDiffAddr()
+        {
+            int addr = GetNextAddr();
+            if (Helpers.IsBitSet(GetRawValue(WordType.AR_HIGH), WORD_SIZE - 1)) {
+                addr = -Helpers.Mask(~addr + 1, WORD_SIZE * 3 - 1);
+            }
+            return addr;
         }
 
         public int GetI02()

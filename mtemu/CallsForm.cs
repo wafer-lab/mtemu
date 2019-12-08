@@ -55,18 +55,28 @@ namespace mtemu
         private bool DefaultKeyDown_(KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.Up) {
-                mainForm_.ChangeCallByIndex(mainForm_.GetCallIndex() - 1);
+                if (e.Shift) {
+                    mainForm_.MoveUpCall();
+                }
+                else {
+                    mainForm_.ChangeCallByIndex(mainForm_.GetCallIndex() - 1);
+                }
                 return true;
             }
-            else if (e.Control && e.KeyCode == Keys.Down) {
-                mainForm_.ChangeCallByIndex(mainForm_.GetCallIndex() + 1);
+            if (e.Control && e.KeyCode == Keys.Down) {
+                if (e.Shift) {
+                    mainForm_.MoveDownCall();
+                }
+                else {
+                    mainForm_.ChangeCallByIndex(mainForm_.GetCallIndex() + 1);
+                }
                 return true;
             }
-            else if (e.Control && e.KeyCode == Keys.Delete) {
+            if (e.Control && e.KeyCode == Keys.Delete) {
                 mainForm_.RemoveCall();
                 return true;
             }
-            else if (e.KeyCode == Keys.Enter) {
+            if (e.KeyCode == Keys.Enter) {
                 if (e.Control) {
                     mainForm_.AddCall();
                 }
@@ -75,19 +85,19 @@ namespace mtemu
                 }
                 return true;
             }
-            if (e.Control && e.KeyCode == Keys.R) {
+            if (e.Control && e.KeyCode == Keys.F2) {
                 mainForm_.ResetEmulator();
                 return true;
             }
-            if (e.Control && e.KeyCode == Keys.T) {
+            if (e.KeyCode == Keys.F7) {
                 mainForm_.ExecOneEmulator();
                 return true;
             }
-            if (e.Control && e.KeyCode == Keys.Y) {
+            if (e.KeyCode == Keys.F8) {
                 mainForm_.ExecOneCallEmulator();
                 return true;
             }
-            if (e.Control && e.KeyCode == Keys.U) {
+            if (e.KeyCode == Keys.F9) {
                 mainForm_.ExecAllEmulator();
                 return true;
             }

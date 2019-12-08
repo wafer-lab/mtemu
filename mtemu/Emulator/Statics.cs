@@ -47,7 +47,7 @@ namespace mtemu
         JNZ,
         JMP,
         JNXT,
-        EXIT,
+        END,
         CLNZ,
         CALL,
         RET,

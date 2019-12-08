@@ -216,42 +216,47 @@ namespace mtemu
 
         private void DebugMenuItemClick_(object sender, EventArgs e)
         {
+            int diff = commandsPanel.Margin.Right + debugPanel.Margin.Left + debugPanel.Width;
+
             if (debugPanel.Visible) {
                 debugPanel.Hide();
-                Width -= debugPanel.Width;
-                infoPanel.Left -= debugPanel.Width;
-                memoryForm_.Left -= debugPanel.Width;
-                stackForm_.Left -= debugPanel.Width;
                 debugMenuItem.Text = debugMenuPrefix + " (показать)";
+
+                Width -= diff;
+                infoPanel.Left -= diff;
             }
             else {
                 debugPanel.Show();
-                Width += debugPanel.Width;
-                infoPanel.Left += debugPanel.Width;
-                memoryForm_.Left += debugPanel.Width;
-                stackForm_.Left += debugPanel.Width;
                 debugMenuItem.Text = debugMenuPrefix + " (скрыть)";
+
+                Width += diff;
+                infoPanel.Left += diff;
             }
+
+            MemoryFormMove_();
+            StackFormMove_();
         }
 
         private void InfoMenuItemClick_(object sender, EventArgs e)
         {
+            int marginOfLeftElem = debugPanel.Visible ? debugPanel.Margin.Right : commandsPanel.Margin.Right;
+            int diff = marginOfLeftElem + infoPanel.Margin.Left + infoPanel.Width;
+
             if (infoPanel.Visible) {
                 infoPanel.Hide();
-                Width -= infoPanel.Width;
-                infoPanel.Left -= infoPanel.Width;
-                memoryForm_.Left -= infoPanel.Width;
-                stackForm_.Left -= infoPanel.Width;
                 infoMenuItem.Text = infoMenuPrefix + " (показать)";
+
+                Width -= diff;
             }
             else {
                 infoPanel.Show();
-                Width += infoPanel.Width;
-                infoPanel.Left += infoPanel.Width;
-                memoryForm_.Left += infoPanel.Width;
-                stackForm_.Left += infoPanel.Width;
                 infoMenuItem.Text = infoMenuPrefix + " (скрыть)";
+
+                Width += diff;
             }
+
+            MemoryFormMove_();
+            StackFormMove_();
         }
     }
 }

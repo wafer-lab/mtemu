@@ -518,11 +518,21 @@ namespace mtemu
         private bool DefaultKeyDown_(KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.Up) {
-                ChangeCommand_(selected_ - 1, selectedColor_);
+                if (e.Shift) {
+                    MoveUpCommand_();
+                }
+                else {
+                    ChangeCommand_(selected_ - 1, selectedColor_);
+                }
                 return true;
             }
             if (e.Control && e.KeyCode == Keys.Down) {
-                ChangeCommand_(selected_ + 1, selectedColor_);
+                if (e.Shift) {
+                    MoveDownCommand_();
+                }
+                else {
+                    ChangeCommand_(selected_ + 1, selectedColor_);
+                }
                 return true;
             }
             if (e.Control && e.KeyCode == Keys.Left) {
@@ -546,19 +556,19 @@ namespace mtemu
                 }
                 return true;
             }
-            if (e.Control && e.KeyCode == Keys.R) {
+            if (e.Control && e.KeyCode == Keys.F2) {
                 ResetEmulator();
                 return true;
             }
-            if (e.Control && e.KeyCode == Keys.T) {
+            if (e.KeyCode == Keys.F7) {
                 ExecOneEmulator();
                 return true;
             }
-            if (e.Control && e.KeyCode == Keys.Y) {
+            if (e.KeyCode == Keys.F8) {
                 ExecOneCallEmulator();
                 return true;
             }
-            if (e.Control && e.KeyCode == Keys.U) {
+            if (e.KeyCode == Keys.F9) {
                 ExecAllEmulator();
                 return true;
             }

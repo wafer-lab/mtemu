@@ -110,7 +110,9 @@ namespace mtemu
         private void SelectPrevCommand_(int index)
         {
             if (0 <= nextSelected_ && nextSelected_ < commandList.Items.Count) {
-                commandList.Items[nextSelected_].BackColor = enabledColor_;
+                if (commandList.Items[nextSelected_].BackColor == nextSelectedColor_) {
+                    commandList.Items[nextSelected_].BackColor = enabledColor_;
+                }
             }
             nextSelected_ = index;
             if (0 <= nextSelected_ && nextSelected_ < commandList.Items.Count) {

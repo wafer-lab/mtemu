@@ -234,6 +234,15 @@ namespace mtemu
             return commands_[i];
         }
 
+        private Command Prev_()
+        {
+            int i = GetIndex_(prevPC_);
+            if (i == -1) {
+                return incorrectCommand_;
+            }
+            return commands_[i];
+        }
+
         private Command Current_()
         {
             int i = GetIndex_(pc_);
@@ -253,11 +262,13 @@ namespace mtemu
                     return JumpResult.Address;
                 }
                 break;
+
             case JumpType.JMP:
                 pc_ = Current_().GetNextAddr();
                 return JumpResult.Address;
-            case JumpType.EXIT:
-                ++callIndex_;
+
+            case JumpType.END:
+                callIndex_ += Current_().GetDiffAddr() + 1;
                 if (calls_.Count > 0 && callIndex_ < calls_.Count) {
                     pc_ = calls_[callIndex_].GetAddress();
                 }
@@ -265,6 +276,7 @@ namespace mtemu
                     end_ = true;
                 }
                 return JumpResult.Address;
+
             case JumpType.CLNZ:
                 if (!prevZ_) {
                     stack_[sp_] = pc_ + 1;
@@ -274,20 +286,24 @@ namespace mtemu
                     return JumpResult.Address;
                 }
                 break;
+
             case JumpType.CALL:
                 stack_[sp_] = pc_ + 1;
                 ++sp_;
                 sp_ %= stackSize_;
                 pc_ = Current_().GetNextAddr();
                 return JumpResult.Address;
+
             case JumpType.RET:
                 pc_ = stack_[sp_ - 1];
                 --sp_;
                 sp_ %= stackSize_;
                 return JumpResult.Address;
+
             case JumpType.JSP:
                 pc_ = stack_[sp_ - 1];
                 return JumpResult.Address;
+
             case JumpType.JSNZ:
                 if (!prevZ_) {
                     pc_ = stack_[sp_ - 1];
@@ -298,15 +314,18 @@ namespace mtemu
                     sp_ %= stackSize_;
                 }
                 break;
+
             case JumpType.PUSH:
                 stack_[sp_] = pc_ + 1;
                 ++sp_;
                 sp_ %= stackSize_;
                 break;
+
             case JumpType.POP:
                 --sp_;
                 sp_ %= stackSize_;
                 break;
+
             case JumpType.JSNC4:
                 if (!prevC4_) {
                     pc_ = stack_[sp_ - 1];
@@ -317,24 +336,28 @@ namespace mtemu
                     sp_ %= stackSize_;
                 }
                 break;
+
             case JumpType.JZ:
                 if (prevZ_) {
                     pc_ = Current_().GetNextAddr();
                     return JumpResult.Address;
                 }
                 break;
+
             case JumpType.JF3:
                 if (prevF3_) {
                     pc_ = Current_().GetNextAddr();
                     return JumpResult.Address;
                 }
                 break;
+
             case JumpType.JOVR:
                 if (prevOvr_) {
                     pc_ = Current_().GetNextAddr();
                     return JumpResult.Address;
                 }
                 break;
+
             case JumpType.JC4:
                 if (prevC4_) {
                     pc_ = Current_().GetNextAddr();
@@ -342,6 +365,7 @@ namespace mtemu
                 }
                 break;
             }
+
             ++pc_;
             return JumpResult.Next;
         }
@@ -727,13 +751,13 @@ namespace mtemu
 
         public ResultCode ExecOneCall()
         {
-            int oldCall = callIndex_;
+            int oldIndex = callIndex_;
             for (int i = 0; i < maxAutoCount_; ++i) {
                 ResultCode rc = ExecOne();
                 if (rc != ResultCode.Ok) {
                     return rc;
                 }
-                if (callIndex_ > oldCall || callIndex_ >= calls_.Count || prevPC_ == pc_) {
+                if (Prev_().GetJumpType() == JumpType.END || callIndex_ != oldIndex || prevPC_ == pc_) {
                     return ResultCode.Ok;
                 }
             }

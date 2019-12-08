@@ -156,6 +156,7 @@
             this.downButton.UseVisualStyleBackColor = true;
             this.downButton.Click += new System.EventHandler(this.DownButtonClick_);
             this.downButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
+            this.formToolTip.SetToolTip(this.downButton, "Ctrl + Shift + Down");
             //
             // upButton
             //
@@ -171,6 +172,7 @@
             this.upButton.UseVisualStyleBackColor = true;
             this.upButton.Click += new System.EventHandler(this.UpButtonClick_);
             this.upButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
+            this.formToolTip.SetToolTip(this.upButton, "Ctrl + Shift + Up");
             //
             // commentText
             //
@@ -278,7 +280,7 @@
             this.stepButton.TabIndex = 4;
             this.stepButton.TabStop = false;
             this.stepButton.Text = "Шаг";
-            this.formToolTip.SetToolTip(this.stepButton, "Ctrl + Y");
+            this.formToolTip.SetToolTip(this.stepButton, "F8");
             this.stepButton.UseVisualStyleBackColor = true;
             this.stepButton.Click += new System.EventHandler(this.StepButtonClick_);
             this.stepButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DefaultKeyDown_);
