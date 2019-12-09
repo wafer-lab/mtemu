@@ -13,8 +13,11 @@ namespace mtemu
                 if (i == 0) {
                     newLabel += $" = 0x{currentCommand_.GetNextAddr():X3}";
                 }
-                if (i == 0 || newLabel.Length <= 6) {
+                if (i == 0 || newLabel.Length <= 5) {
                     textLabels_[i].Font = new Font("Consolas", 10F);
+                }
+                else if (newLabel.Length <= 7) {
+                    textLabels_[i].Font = new Font("Consolas", 10F - newLabel.Length + 5);
                 }
                 else {
                     textLabels_[i].Font = new Font("Consolas", 10F - newLabel.Length + 6);

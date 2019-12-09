@@ -202,8 +202,8 @@ namespace mtemu
                     "",
                     "PT|Inc",
                     "F",
-                    "RA",
-                    "RB",
+                    "PtrHigh",
+                    "PtrLow",
                     "",
                 }
             },
@@ -214,8 +214,8 @@ namespace mtemu
                     "",
                     "PT",
                     "F",
-                    "RA",
-                    "RB",
+                    "Port",
+                    "",
                     "",
                 }
             },
@@ -226,8 +226,8 @@ namespace mtemu
                     "",
                     "PT",
                     "F",
-                    "RA",
-                    "RB",
+                    "A",
+                    "B",
                     "",
                 }
             },
@@ -238,7 +238,7 @@ namespace mtemu
                     "",
                     "PT",
                     "F",
-                    "RA",
+                    "A",
                     "",
                     "",
                 }
@@ -251,7 +251,7 @@ namespace mtemu
                     "PT",
                     "F",
                     "",
-                    "RB",
+                    "B",
                     "",
                 }
             },

@@ -331,6 +331,7 @@ namespace mtemu
                     i02ListView,
                     i68ListView,
                     cc4Text,
+                    cc8Text,
                     cc9Text,
 
                     psListView,
