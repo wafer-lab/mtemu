@@ -142,6 +142,7 @@ namespace mtemu
             SetOut_(yText, emulator_.GetY(), asNew);
             SetOut_(spText, $"0x{emulator_.GetSP():X1}", asNew);
             SetOut_(mpText, $"0x{emulator_.GetMP():X2}", asNew);
+            SetOut_(portText, $"{emulator_.GetPort()}", asNew);
 
             int pc = emulator_.GetPC();
             if (pc == -1) {

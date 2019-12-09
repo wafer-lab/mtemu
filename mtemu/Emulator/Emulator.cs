@@ -10,7 +10,7 @@ namespace mtemu
     {
         private PortExtender portExtender_;
 
-        private int prevPC_;
+        private int prevPc_;
         private int pc_;
         private int callIndex_;
         private bool end_;
@@ -28,9 +28,9 @@ namespace mtemu
         private int mp_;
         private int[] memory_ = new int[memSize_];
 
-        private int dev_ptr_;
+        private int devPtr_;
         // reserved for future use
-        private int dev_if_;
+        private int devIf_;
 
         private int prevRegA_;
         private int prevRegB_;
@@ -57,7 +57,7 @@ namespace mtemu
 
         public void Reset()
         {
-            prevPC_ = -1;
+            prevPc_ = -1;
             pc_ = -1;
             callIndex_ = -1;
             end_ = false;
@@ -227,7 +227,7 @@ namespace mtemu
 
         public Command ExecutedCommand()
         {
-            int i = GetIndex_(prevPC_);
+            int i = GetIndex_(prevPc_);
             if (i == -1) {
                 return incorrectCommand_;
             }
@@ -236,7 +236,7 @@ namespace mtemu
 
         private Command Prev_()
         {
-            int i = GetIndex_(prevPC_);
+            int i = GetIndex_(prevPc_);
             if (i == -1) {
                 return incorrectCommand_;
             }
@@ -254,7 +254,7 @@ namespace mtemu
 
         private JumpResult Jump_()
         {
-            prevPC_ = pc_;
+            prevPc_ = pc_;
             switch (Current_().GetJumpType()) {
             case JumpType.JNZ:
                 if (!prevZ_) {
@@ -548,7 +548,7 @@ namespace mtemu
 
         private PortExtender.InPort GetInPort(DataPointerType type)
         {
-            var val = dev_ptr_ << 2;
+            var val = devPtr_ << 2;
 
             switch (type) {
             case DataPointerType.LOW_4_BIT:
@@ -572,7 +572,7 @@ namespace mtemu
 
         private PortExtender.OutPort GetOutPort(DataPointerType type)
         {
-            var val = dev_ptr_ << 2;
+            var val = devPtr_ << 2;
 
             switch (type) {
             case DataPointerType.LOW_4_BIT:
@@ -596,8 +596,8 @@ namespace mtemu
 
         private void SetDevicePtr_()
         {
-            dev_ptr_ = Current_().GetRawValue(WordType.A);
-            dev_if_ = 0;
+            devPtr_ = Current_().GetRawValue(WordType.A);
+            devIf_ = 0;
         }
 
         private void LoadData_()
@@ -757,7 +757,7 @@ namespace mtemu
                 if (rc != ResultCode.Ok) {
                     return rc;
                 }
-                if (Prev_().GetJumpType() == JumpType.END || callIndex_ != oldIndex || prevPC_ == pc_) {
+                if (Prev_().GetJumpType() == JumpType.END || callIndex_ != oldIndex || prevPc_ == pc_) {
                     return ResultCode.Ok;
                 }
             }
@@ -771,7 +771,7 @@ namespace mtemu
                 if (rc != ResultCode.Ok) {
                     return rc;
                 }
-                if (callIndex_ >= calls_.Count || prevPC_ == pc_) {
+                if (callIndex_ >= calls_.Count || prevPc_ == pc_) {
                     return ResultCode.Ok;
                 }
             }
@@ -780,7 +780,7 @@ namespace mtemu
 
         public int GetPrevIndex()
         {
-            return GetIndex_(prevPC_);
+            return GetIndex_(prevPc_);
         }
 
         public int GetNextIndex()
@@ -819,6 +819,12 @@ namespace mtemu
         {
             return mp_;
         }
+
+        public string GetPort()
+        {
+            return Command.GetPortName(devPtr_);
+        }
+
         public int GetMemValue(int index)
         {
             return memory_[index];

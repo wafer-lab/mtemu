@@ -160,8 +160,6 @@ namespace mtemu
 
         private static int length_ = 10;
 
-        private static string dev_ptr_str_ = "";
-
         // Numbers of text boxes
         private static Dictionary<WordType, int> wordIndexes_ =
             new Dictionary<WordType, int>
@@ -387,6 +385,16 @@ namespace mtemu
         public static string[][] GetItems(WordType listIndex)
         {
             return items_[listIndex];
+        }
+
+        public static string GetPortName(int number)
+        {
+            var items = items_[WordType.DEVICE];
+            if (number < 0 || number >= items.Length) {
+                return "ERROR";
+            }
+
+            return items[number][2];
         }
 
         public static Command GetDefault()

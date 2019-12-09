@@ -185,6 +185,8 @@
             this.commandsPanel = new System.Windows.Forms.Panel();
             this.deviceInfoBox = new System.Windows.Forms.TextBox();
             this.йцукенToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.portLabel = new System.Windows.Forms.Label();
+            this.portText = new System.Windows.Forms.TextBox();
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
             this.memoryPanel.SuspendLayout();
@@ -256,6 +258,8 @@
             // outputPanel
             //
             this.outputPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.outputPanel.Controls.Add(this.portLabel);
+            this.outputPanel.Controls.Add(this.portText);
             this.outputPanel.Controls.Add(this.yLabel);
             this.outputPanel.Controls.Add(this.yText);
             this.outputPanel.Controls.Add(this.mpLabel);
@@ -282,7 +286,7 @@
             // yLabel
             //
             this.yLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.yLabel.Location = new System.Drawing.Point(118, 89);
+            this.yLabel.Location = new System.Drawing.Point(75, 89);
             this.yLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
             this.yLabel.Name = "yLabel";
             this.yLabel.Size = new System.Drawing.Size(40, 15);
@@ -294,7 +298,7 @@
             //
             this.yText.BackColor = System.Drawing.SystemColors.Control;
             this.yText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.yText.Location = new System.Drawing.Point(118, 107);
+            this.yText.Location = new System.Drawing.Point(75, 107);
             this.yText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.yText.MaxLength = 4;
             this.yText.Name = "yText";
@@ -310,7 +314,7 @@
             // mpLabel
             //
             this.mpLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.mpLabel.Location = new System.Drawing.Point(142, 135);
+            this.mpLabel.Location = new System.Drawing.Point(75, 135);
             this.mpLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
             this.mpLabel.Name = "mpLabel";
             this.mpLabel.Size = new System.Drawing.Size(40, 15);
@@ -322,7 +326,7 @@
             //
             this.mpText.BackColor = System.Drawing.SystemColors.Control;
             this.mpText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.mpText.Location = new System.Drawing.Point(142, 154);
+            this.mpText.Location = new System.Drawing.Point(75, 154);
             this.mpText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.mpText.MaxLength = 4;
             this.mpText.Name = "mpText";
@@ -338,7 +342,7 @@
             // spLabel
             //
             this.spLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.spLabel.Location = new System.Drawing.Point(84, 135);
+            this.spLabel.Location = new System.Drawing.Point(17, 135);
             this.spLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
             this.spLabel.Name = "spLabel";
             this.spLabel.Size = new System.Drawing.Size(40, 15);
@@ -350,7 +354,7 @@
             //
             this.spText.BackColor = System.Drawing.SystemColors.Control;
             this.spText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.spText.Location = new System.Drawing.Point(84, 154);
+            this.spText.Location = new System.Drawing.Point(17, 154);
             this.spText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.spText.MaxLength = 4;
             this.spText.Name = "spText";
@@ -366,7 +370,7 @@
             // pcLabel
             //
             this.pcLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.pcLabel.Location = new System.Drawing.Point(22, 135);
+            this.pcLabel.Location = new System.Drawing.Point(138, 88);
             this.pcLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
             this.pcLabel.Name = "pcLabel";
             this.pcLabel.Size = new System.Drawing.Size(40, 15);
@@ -377,7 +381,7 @@
             // pcText
             //
             this.pcText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.pcText.Location = new System.Drawing.Point(17, 154);
+            this.pcText.Location = new System.Drawing.Point(133, 107);
             this.pcText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.pcText.MaxLength = 4;
             this.pcText.Name = "pcText";
@@ -393,7 +397,7 @@
             // fLabel
             //
             this.fLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.fLabel.Location = new System.Drawing.Point(40, 89);
+            this.fLabel.Location = new System.Drawing.Point(17, 89);
             this.fLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
             this.fLabel.Name = "fLabel";
             this.fLabel.Size = new System.Drawing.Size(40, 15);
@@ -405,7 +409,7 @@
             //
             this.fText.BackColor = System.Drawing.SystemColors.Control;
             this.fText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.fText.Location = new System.Drawing.Point(40, 107);
+            this.fText.Location = new System.Drawing.Point(17, 107);
             this.fText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.fText.MaxLength = 4;
             this.fText.Name = "fText";
@@ -2155,6 +2159,32 @@
             this.йцукенToolStripMenuItem.Name = "йцукенToolStripMenuItem";
             this.йцукенToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             //
+            // portLabel
+            //
+            this.portLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
+            this.portLabel.Location = new System.Drawing.Point(138, 135);
+            this.portLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
+            this.portLabel.Name = "portLabel";
+            this.portLabel.Size = new System.Drawing.Size(40, 15);
+            this.portLabel.TabIndex = 5;
+            this.portLabel.Text = "Port";
+            this.portLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            //
+            // portText
+            //
+            this.portText.Font = new System.Drawing.Font("Consolas", 10F);
+            this.portText.Location = new System.Drawing.Point(133, 154);
+            this.portText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
+            this.portText.MaxLength = 4;
+            this.portText.Name = "portText";
+            this.portText.ReadOnly = true;
+            this.portText.Size = new System.Drawing.Size(50, 23);
+            this.portText.TabIndex = 6;
+            this.portText.TabStop = false;
+            this.portText.Text = "PORT0";
+            this.portText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.portText.WordWrap = false;
+            //
             // MainForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -2371,6 +2401,8 @@
         private System.Windows.Forms.Label cc1TextLabel;
         private System.Windows.Forms.TextBox cc3Text;
         private System.Windows.Forms.TextBox deviceInfoBox;
+        private System.Windows.Forms.Label portLabel;
+        private System.Windows.Forms.TextBox portText;
     }
 }
 

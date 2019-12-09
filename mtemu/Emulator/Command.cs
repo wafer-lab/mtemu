@@ -109,8 +109,7 @@ namespace mtemu
                 break;
 
             case ViewType.DEVICE_POINTER:
-                dev_ptr_str_ = GetItem_(WordType.DEVICE)[2];
-                res += $"Interface={ dev_ptr_str_ }";
+                res += $"Interface={ GetItem_(WordType.DEVICE)[2] }";
                 break;
 
             case ViewType.LOAD_HIGH_4BIT:
@@ -145,13 +144,13 @@ namespace mtemu
                 case FuncType.STORE_DEVICE:
                     switch (GetPointerType()) {
                     case DataPointerType.LOW_4_BIT:
-                        res += $"LOW({ dev_ptr_str_ })=РОН({ GetRawValue(WordType.B) })";
+                        res += $"LOW(DEV_PORT)=РОН({ GetRawValue(WordType.B) })";
                         break;
                     case DataPointerType.HIGH_4_BIT:
-                        res += $"HIGH({ dev_ptr_str_ })=РОН({ GetRawValue(WordType.A) })";
+                        res += $"HIGH(DEV_PORT)=РОН({ GetRawValue(WordType.A) })";
                         break;
                     case DataPointerType.FULL_8_BIT:
-                        res += $"{ dev_ptr_str_ }=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
+                        res += $"DEV_PORT=(РОН({ GetRawValue(WordType.A) })<<4)+РОН({ GetRawValue(WordType.B) })";
                         break;
                     }
                     break;
@@ -159,14 +158,14 @@ namespace mtemu
                 case FuncType.LOAD_DEVICE:
                     switch (GetPointerType()) {
                     case DataPointerType.LOW_4_BIT:
-                        res += $"РОН({ GetRawValue(WordType.B) })=LOW({ dev_ptr_str_ })";
+                        res += $"РОН({ GetRawValue(WordType.B) })=LOW(DEV_PORT)";
                         break;
                     case DataPointerType.HIGH_4_BIT:
-                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH({ dev_ptr_str_ })";
+                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH(DEV_PORT)";
                         break;
                     case DataPointerType.FULL_8_BIT:
-                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH({ dev_ptr_str_ })";
-                        res += $"; РОН({ GetRawValue(WordType.B) })=LOW({ dev_ptr_str_ })";
+                        res += $"РОН({ GetRawValue(WordType.A) })=HIGH(DEV_PORT)";
+                        res += $"; РОН({ GetRawValue(WordType.B) })=LOW(DEV_PORT)";
                         break;
                     }
                     break;
