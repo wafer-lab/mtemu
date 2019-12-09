@@ -660,6 +660,13 @@ namespace mtemu
 
                     portExtender_.WritePort(outPort, pointerType, tmp_w);
                 }
+                else {
+                    System.Windows.Forms.MessageBox.Show(
+                        "Вы - еблан, у Вас проблема с кодом (генетическим)!\nПроверьтесь у врача!\nТакие долбоёбы не должны размножаться!",
+                        "Невозможно записать в это устройство",
+                        System.Windows.Forms.MessageBoxButtons.OK,
+                        System.Windows.Forms.MessageBoxIcon.Error);
+                }
                 break;
             case FuncType.LOAD_DEVICE:
                 PortExtender.InPort inPort = GetInPort(pointerType);
@@ -678,6 +685,14 @@ namespace mtemu
                         regCommon_[b] = Helpers.LowNibble(tmp_r);
                         break;
                     }
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show(
+                        "Вы - еблан, у Вас проблема с кодом (генетическим)!\nПроверьтесь у врача!\nТакие долбоёбы не должны размножаться!",
+                        "Невозможно прочитать из этого устройства",
+                        System.Windows.Forms.MessageBoxButtons.OK,
+                        System.Windows.Forms.MessageBoxIcon.Error);
                 }
                 break;
             }
