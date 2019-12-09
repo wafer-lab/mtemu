@@ -22,7 +22,7 @@ namespace mtemu
         private int[] stack_ = new int[stackSize_];
 
         private int regQ_;
-        private int[] regCommon_ = new int[regSize_];
+        private int[] regCommon_;
 
         private IncType inc_;
         private int mp_;
@@ -64,8 +64,10 @@ namespace mtemu
 
             sp_ = 0;
             regQ_ = 0;
+            regCommon_ = new int[regSize_];
             inc_ = IncType.NO;
             mp_ = 0;
+            devPtr_ = -1;
 
             prevRegA_ = 0;
             prevRegB_ = 0;
@@ -548,6 +550,10 @@ namespace mtemu
 
         private PortExtender.InPort GetInPort(DataPointerType type)
         {
+            if (devPtr_ == -1) {
+                return PortExtender.InPort.PORT_UNKNOWN;
+            }
+
             var val = devPtr_ << 2;
 
             switch (type) {
@@ -572,6 +578,10 @@ namespace mtemu
 
         private PortExtender.OutPort GetOutPort(DataPointerType type)
         {
+            if (devPtr_ == -1) {
+                return PortExtender.OutPort.PORT_UNKNOWN;
+            }
+
             var val = devPtr_ << 2;
 
             switch (type) {
@@ -665,7 +675,8 @@ namespace mtemu
                         "Вы - еблан, у Вас проблема с кодом (генетическим)!\nПроверьтесь у врача!\nТакие долбоёбы не должны размножаться!",
                         "Невозможно записать в это устройство",
                         System.Windows.Forms.MessageBoxButtons.OK,
-                        System.Windows.Forms.MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBoxIcon.Error
+                    );
                 }
                 break;
             case FuncType.LOAD_DEVICE:
@@ -686,13 +697,13 @@ namespace mtemu
                         break;
                     }
                 }
-                else
-                {
+                else {
                     System.Windows.Forms.MessageBox.Show(
                         "Вы - еблан, у Вас проблема с кодом (генетическим)!\nПроверьтесь у врача!\nТакие долбоёбы не должны размножаться!",
                         "Невозможно прочитать из этого устройства",
                         System.Windows.Forms.MessageBoxButtons.OK,
-                        System.Windows.Forms.MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBoxIcon.Error
+                    );
                 }
                 break;
             }

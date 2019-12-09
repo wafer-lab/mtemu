@@ -109,7 +109,7 @@ namespace mtemu
                 break;
 
             case ViewType.DEVICE_POINTER:
-                res += $"Interface={ GetItem_(WordType.DEVICE)[2] }";
+                res += $"Interface={ GetPortName(GetSelIndex(WordType.DEVICE)) }";
                 break;
 
             case ViewType.LOAD_HIGH_4BIT:

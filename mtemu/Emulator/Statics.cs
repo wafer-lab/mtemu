@@ -353,10 +353,10 @@ namespace mtemu
             },
             {
                 WordType.DEVICE, new string[][] {
-                    new string[] {"","0000","PORT0"},
-                    new string[] {"","0001","PORT1"},
-                    new string[] {"","0010","PORT2"},
-                    new string[] {"","0011","PORT3"},
+                    new string[] {"","0000","PORT0 (IN)"},
+                    new string[] {"","0001","PORT1 (IN)"},
+                    new string[] {"","0010","PORT2 (OUT)"},
+                    new string[] {"","0011","PORT3 (OUT)"},
                 }
             },
         };
@@ -391,10 +391,10 @@ namespace mtemu
         {
             var items = items_[WordType.DEVICE];
             if (number < 0 || number >= items.Length) {
-                return "ERROR";
+                return "NONE";
             }
 
-            return items[number][2];
+            return $"PORT{number}";
         }
 
         public static Command GetDefault()
