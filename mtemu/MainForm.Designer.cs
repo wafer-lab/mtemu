@@ -34,6 +34,8 @@
             this.cc0Text = new System.Windows.Forms.TextBox();
             this.currentLabel = new System.Windows.Forms.Label();
             this.outputPanel = new System.Windows.Forms.Panel();
+            this.portLabel = new System.Windows.Forms.Label();
+            this.portText = new System.Windows.Forms.TextBox();
             this.yLabel = new System.Windows.Forms.Label();
             this.yText = new System.Windows.Forms.TextBox();
             this.mpLabel = new System.Windows.Forms.Label();
@@ -185,8 +187,6 @@
             this.commandsPanel = new System.Windows.Forms.Panel();
             this.deviceInfoBox = new System.Windows.Forms.TextBox();
             this.йцукенToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.portLabel = new System.Windows.Forms.Label();
-            this.portText = new System.Windows.Forms.TextBox();
             this.outputPanel.SuspendLayout();
             this.currentPanel.SuspendLayout();
             this.memoryPanel.SuspendLayout();
@@ -282,6 +282,32 @@
             this.outputPanel.Padding = new System.Windows.Forms.Padding(6);
             this.outputPanel.Size = new System.Drawing.Size(200, 187);
             this.outputPanel.TabIndex = 0;
+            //
+            // portLabel
+            //
+            this.portLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
+            this.portLabel.Location = new System.Drawing.Point(138, 135);
+            this.portLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
+            this.portLabel.Name = "portLabel";
+            this.portLabel.Size = new System.Drawing.Size(40, 15);
+            this.portLabel.TabIndex = 5;
+            this.portLabel.Text = "Port";
+            this.portLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            //
+            // portText
+            //
+            this.portText.Font = new System.Drawing.Font("Consolas", 10F);
+            this.portText.Location = new System.Drawing.Point(133, 154);
+            this.portText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
+            this.portText.MaxLength = 4;
+            this.portText.Name = "portText";
+            this.portText.ReadOnly = true;
+            this.portText.Size = new System.Drawing.Size(50, 23);
+            this.portText.TabIndex = 6;
+            this.portText.TabStop = false;
+            this.portText.Text = "PORT0";
+            this.portText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.portText.WordWrap = false;
             //
             // yLabel
             //
@@ -1427,12 +1453,12 @@
             // nameComColumn
             //
             this.nameComColumn.Text = "Команда";
-            this.nameComColumn.Width = 443;
+            this.nameComColumn.Width = 435;
             //
             // jumpComColumn
             //
             this.jumpComColumn.Text = "Jump";
-            this.jumpComColumn.Width = 82;
+            this.jumpComColumn.Width = 90;
             //
             // stepButton
             //
@@ -2158,32 +2184,6 @@
             //
             this.йцукенToolStripMenuItem.Name = "йцукенToolStripMenuItem";
             this.йцукенToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            //
-            // portLabel
-            //
-            this.portLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
-            this.portLabel.Location = new System.Drawing.Point(138, 135);
-            this.portLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
-            this.portLabel.Name = "portLabel";
-            this.portLabel.Size = new System.Drawing.Size(40, 15);
-            this.portLabel.TabIndex = 5;
-            this.portLabel.Text = "Port";
-            this.portLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            //
-            // portText
-            //
-            this.portText.Font = new System.Drawing.Font("Consolas", 10F);
-            this.portText.Location = new System.Drawing.Point(133, 154);
-            this.portText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
-            this.portText.MaxLength = 4;
-            this.portText.Name = "portText";
-            this.portText.ReadOnly = true;
-            this.portText.Size = new System.Drawing.Size(50, 23);
-            this.portText.TabIndex = 6;
-            this.portText.TabStop = false;
-            this.portText.Text = "PORT0";
-            this.portText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.portText.WordWrap = false;
             //
             // MainForm
             //

@@ -184,13 +184,13 @@ namespace mtemu
         {
             if (GetJumpType() == JumpType.END) {
                 if (GetDiffAddr() == 0) {
-                    return "END";
+                    return "LDNXT";
                 }
                 else if (GetDiffAddr() > 0) {
-                    return $"LDM +0x{GetDiffAddr():X3}";
+                    return $"LDNXT+0x{GetDiffAddr():X3}";
                 }
                 else {
-                    return $"LDM -0x{-GetDiffAddr():X3}";
+                    return $"LDNXT-0x{-GetDiffAddr():X3}";
                 }
             }
 
