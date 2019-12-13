@@ -672,7 +672,7 @@ namespace mtemu
                 }
                 else {
                     System.Windows.Forms.MessageBox.Show(
-                        "Вы - еблан, у Вас проблема с кодом (генетическим)!\nПроверьтесь у врача!\nТакие долбоёбы не должны размножаться!",
+                        "Вы - болван, у Вас проблема с кодом (генетическим), проверьтесь у врача!\nТакие упорствующие индивиды не должны размножаться!",
                         "Невозможно записать в это устройство",
                         System.Windows.Forms.MessageBoxButtons.OK,
                         System.Windows.Forms.MessageBoxIcon.Error
@@ -699,7 +699,7 @@ namespace mtemu
                 }
                 else {
                     System.Windows.Forms.MessageBox.Show(
-                        "Вы - еблан, у Вас проблема с кодом (генетическим)!\nПроверьтесь у врача!\nТакие долбоёбы не должны размножаться!",
+                        "Вы - болван, у Вас проблема с кодом (генетическим), проверьтесь у врача!\nТакие упорствующие индивиды не должны размножаться!",
                         "Невозможно прочитать из этого устройства",
                         System.Windows.Forms.MessageBoxButtons.OK,
                         System.Windows.Forms.MessageBoxIcon.Error
