@@ -16,6 +16,16 @@ namespace mtemu
             System.Diagnostics.Process.Start(linkLabel.Text);
         }
 
+        private void hackallcodeLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://t.me/hackallcode");
+        }
+
+        private void nan0_malLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://t.me/nan0_mal");
+        }
+
         private void CheckCode_()
         {
             var plainTextBytes = Encoding.UTF8.GetBytes(codeText.Text);

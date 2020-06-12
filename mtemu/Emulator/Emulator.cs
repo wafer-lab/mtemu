@@ -119,15 +119,15 @@ namespace mtemu
             p_ = prevP_;
         }
 
-        private int GetOffset_(Command last = null)
+        private int GetOffset_(int last)
         {
             int offset = 0;
-            foreach (Command curr in commands_) {
-                if (curr == last) {
+            for(int i = 0; i < commands_.Count; ++i) {
+                if (i == last) {
                     break;
                 }
-                if (curr.isOffset) {
-                    offset = curr.GetNextAddr();
+                if (commands_[i].isOffset) {
+                    offset = commands_[i].GetNextAddr();
                 }
                 else {
                     ++offset;
@@ -156,16 +156,17 @@ namespace mtemu
             return commands_[index];
         }
 
-        public bool AddCommand(Command command)
+        public bool AddCommand(int index, Command command)
         {
             if (!command.Check()) {
                 return false;
             }
-            command.SetNumber(GetOffset_());
+            command.SetNumber(GetOffset_(index));
             if (command.GetNumber() > programSize_) {
                 return false;
             }
-            commands_.Add(command);
+            commands_.Insert(index, command);
+            UpdateOffsets_(index);
             return true;
         }
 
@@ -277,7 +278,7 @@ namespace mtemu
                 else {
                     end_ = true;
                 }
-                return JumpResult.Address;
+                return JumpResult.Next;
 
             case JumpType.CLNZ:
                 if (!prevZ_) {
@@ -372,6 +373,94 @@ namespace mtemu
             return JumpResult.Next;
         }
 
+        private void CountFlags_(FuncType alu)
+        {
+            bool c0 = (int) alu >= 8;
+
+            int r = r_;
+            int s = s_;
+            switch (alu) {
+            case FuncType.S_MINUS_R_MINUS_1:
+            case FuncType.S_MINUS_R:
+            case FuncType.NO_R_AND_S:
+            case FuncType.R_XOR_S:
+                r = Helpers.Mask(~r);
+                break;
+            case FuncType.R_MINUS_S_MINUS_1:
+            case FuncType.R_MINUS_S:
+                s = Helpers.Mask(~s);
+                break;
+            }
+
+            int p = r | s;
+            int g = r & s;
+            bool p30 = p == 15;
+            bool g30 = g > 0;
+
+            switch (alu) {
+            case FuncType.R_PLUS_S:
+            case FuncType.R_PLUS_S_PLUS_1:
+            case FuncType.S_MINUS_R_MINUS_1:
+            case FuncType.S_MINUS_R:
+            case FuncType.R_MINUS_S_MINUS_1:
+            case FuncType.R_MINUS_S:
+                p_ = !p30;
+
+                bool g1 = Helpers.IsBitSet(g, 1) || (Helpers.IsBitSet(p, 1) && Helpers.IsBitSet(g, 0));
+                bool g2 = Helpers.IsBitSet(g, 2) || (Helpers.IsBitSet(p, 2) && g1);
+                bool g3 = Helpers.IsBitSet(g, 3) || (Helpers.IsBitSet(p, 3) && g2);
+                g_ = !g3;
+
+                bool c1 = Helpers.IsBitSet(g, 0) || (Helpers.IsBitSet(p, 0) && c0);
+                bool c2 = Helpers.IsBitSet(g, 1) || (Helpers.IsBitSet(p, 1) && c1);
+                bool c3 = Helpers.IsBitSet(g, 2) || (Helpers.IsBitSet(p, 2) && c2);
+                bool c4 = Helpers.IsBitSet(g, 3) || (Helpers.IsBitSet(p, 3) && c3);
+                c4_ = c4;
+                ovr_ = c3 != c4;
+
+                break;
+            case FuncType.R_OR_S:
+                p_ = false;
+                g_ = p30;
+                c4_ = !p30 || c0;
+                ovr_ = c4_;
+                break;
+            case FuncType.R_AND_S:
+            case FuncType.NO_R_AND_S:
+                p_ = false;
+                g_ = !g30;
+                c4_ = g30 || c0;
+                ovr_ = c4_;
+                break;
+            case FuncType.R_XOR_S:
+            case FuncType.R_EQ_S:
+                p_ = g30;
+
+                bool g_1 = Helpers.IsBitSet(g, 1) || (Helpers.IsBitSet(p, 1) && Helpers.IsBitSet(p, 0));
+                bool g_2 = Helpers.IsBitSet(g, 2) || (Helpers.IsBitSet(p, 2) && g_1);
+                bool g_3 = Helpers.IsBitSet(g, 3) || (Helpers.IsBitSet(p, 3) && g_2);
+                g_ = g_3;
+
+                bool c4_1 = Helpers.IsBitSet(g, 1) || (Helpers.IsBitSet(p, 1) && Helpers.IsBitSet(p, 0) && (Helpers.IsBitSet(g, 0) || !c0));
+                bool c4_2 = Helpers.IsBitSet(g, 2) || (Helpers.IsBitSet(p, 2) && c4_1);
+                bool c4_3 = Helpers.IsBitSet(g, 3) || (Helpers.IsBitSet(p, 3) && c4_2);
+                c4_ = !c4_3;
+
+                p = Helpers.Mask(~p);
+                g = Helpers.Mask(~g);
+                bool ovr_0 = Helpers.IsBitSet(p, 0) || (Helpers.IsBitSet(g, 0) && c0);
+                bool ovr_1 = Helpers.IsBitSet(p, 1) || (Helpers.IsBitSet(g, 1) && ovr_0);
+                bool ovr_2 = Helpers.IsBitSet(p, 2) || (Helpers.IsBitSet(g, 2) && ovr_1);
+                bool ovr_3 = Helpers.IsBitSet(p, 3) || (Helpers.IsBitSet(g, 3) && ovr_2);
+                ovr_ = ovr_2 != ovr_3;
+
+                break;
+            }
+
+            f3_ = Helpers.IsBitSet(f_, Command.WORD_SIZE - 1);
+            z_ = f_ == 0;
+        }
+
         private void ExecMtCommand_()
         {
             FromType from = Current_().GetFromType();
@@ -430,16 +519,16 @@ namespace mtemu
                 f_ = r_ + s_ + 1;
                 break;
             case FuncType.S_MINUS_R_MINUS_1:
-                f_ = s_ - r_ - 1;
+                f_ = s_ + Helpers.Mask(~r_);
                 break;
             case FuncType.S_MINUS_R:
-                f_ = s_ - r_;
+                f_ = s_ + Helpers.Mask(~r_) + 1;
                 break;
             case FuncType.R_MINUS_S_MINUS_1:
-                f_ = r_ - s_ - 1;
+                f_ = r_ + Helpers.Mask(~s_);
                 break;
             case FuncType.R_MINUS_S:
-                f_ = r_ - s_;
+                f_ = r_ + Helpers.Mask(~s_) + 1;
                 break;
             case FuncType.R_OR_S:
                 f_ = r_ | s_;
@@ -457,14 +546,9 @@ namespace mtemu
                 f_ = Helpers.Mask(~(r_ ^ s_));
                 break;
             }
-
-            f3_ = Helpers.IsBitSet(f_, Command.WORD_SIZE - 1);
-            g_ = f3_;
-            c4_ = Helpers.IsBitSet(f_, Command.WORD_SIZE);
-            ovr_ = c4_ != f3_;
-            p_ = ovr_;
             f_ = Helpers.Mask(f_);
-            z_ = f_ == 0;
+
+            CountFlags_(alu);
 
             int qLow = Helpers.GetBit(regQ_, 0);
             int qHigh = Helpers.GetBit(regQ_, Command.WORD_SIZE - 1);
@@ -936,9 +1020,9 @@ namespace mtemu
             return calls_[index];
         }
 
-        public void AddCall(Call call)
+        public void AddCall(int index, Call call)
         {
-            calls_.Add(call);
+            calls_.Insert(index, call);
         }
 
         public void UpdateCall(int index, Call call)

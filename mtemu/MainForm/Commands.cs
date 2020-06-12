@@ -165,12 +165,17 @@ namespace mtemu
             isProgramSaved_ = false;
             isCommandSaved_ = true;
 
-            if (!emulator_.AddCommand(new Command(currentCommand_))) {
+            int index = selected_ + 1;
+            if (!emulator_.AddCommand(index, new Command(currentCommand_))) {
                 IncorrectCommandDialog();
                 return;
             }
-            commandList.Items.Add(CommandToItems(emulator_.LastCommand()));
-            ChangeCommand_(commandList.Items.Count - 1, selectedColor_);
+            commandList.Items.Insert(index, CommandToItems(emulator_.GetCommand(index)));
+
+            for (int i = index; i < emulator_.CommandsCount(); ++i) {
+                commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
+            }
+            ChangeCommand_(index, selectedColor_);
         }
 
         private void SaveCommand_()
@@ -188,7 +193,7 @@ namespace mtemu
                 for (int i = number; i < emulator_.CommandsCount(); ++i) {
                     commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
                 }
-                SelectCommand_(number, selectedColor_);
+                ChangeCommand_(number, selectedColor_);
             }
         }
 

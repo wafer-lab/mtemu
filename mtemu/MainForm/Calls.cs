@@ -124,9 +124,14 @@ namespace mtemu
             isProgramSaved_ = false;
             isCallSaved_ = true;
 
-            emulator_.AddCall(new Call(currentCall_));
-            callsForm_.callList.Items.Add(CallToItems(emulator_.LastCall()));
-            ChangeCall_(callsForm_.callList.Items.Count - 1, selectedColor_);
+            int index = selectedCall_ + 1;
+            emulator_.AddCall(index, new Call(currentCall_));
+            callsForm_.callList.Items.Insert(index, CallToItems(emulator_.GetCall(index)));
+
+            for (int i = index; i < emulator_.CallsCount(); ++i) {
+                callsForm_.callList.Items[i] = CallToItems(emulator_.GetCall(i));
+            }
+            ChangeCall_(index, selectedColor_);
         }
 
         public void SaveCall()
@@ -140,7 +145,7 @@ namespace mtemu
                 for (int i = number; i < emulator_.CallsCount(); ++i) {
                     callsForm_.callList.Items[i] = CallToItems(emulator_.GetCall(i));
                 }
-                SelectCall_(number, selectedColor_);
+                ChangeCall_(number, selectedColor_);
             }
         }
 
