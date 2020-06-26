@@ -193,7 +193,7 @@ namespace mtemu
                 for (int i = number; i < emulator_.CommandsCount(); ++i) {
                     commandList.Items[i] = CommandToItems(emulator_.GetCommand(i));
                 }
-                ChangeCommand_(number, selectedColor_);
+                ChangeCommand_(number, selectedColor_, true);
             }
         }
 

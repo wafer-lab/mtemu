@@ -189,7 +189,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 17);
             this.label4.TabIndex = 18;
-            this.label4.Text = "1.0.1";
+            this.label4.Text = "1.0.2";
             // 
             // HelpForm
             // 

@@ -122,7 +122,7 @@ namespace mtemu
         private int GetOffset_(int last)
         {
             int offset = 0;
-            for(int i = 0; i < commands_.Count; ++i) {
+            for (int i = 0; i < commands_.Count; ++i) {
                 if (i == last) {
                     break;
                 }
@@ -255,122 +255,129 @@ namespace mtemu
             return commands_[i];
         }
 
-        private JumpResult Jump_()
+        private int GetStackAddr_(int sp)
+        {
+            return (sp_ + stackSize_) % stackSize_;
+        }
+
+        private void Jump_()
         {
             prevPc_ = pc_;
+
             switch (Current_().GetJumpType()) {
-            case JumpType.JNZ:
-                if (!prevZ_) {
-                    pc_ = Current_().GetNextAddr();
-                    return JumpResult.Address;
-                }
-                break;
-
-            case JumpType.JMP:
-                pc_ = Current_().GetNextAddr();
-                return JumpResult.Address;
-
             case JumpType.END:
                 callIndex_ += Current_().GetDiffAddr() + 1;
                 if (calls_.Count > 0 && callIndex_ < calls_.Count) {
                     pc_ = calls_[callIndex_].GetAddress();
+                    return;
                 }
-                else {
-                    end_ = true;
-                }
-                return JumpResult.Next;
+                end_ = true;
+                return;
 
-            case JumpType.CLNZ:
-                if (!prevZ_) {
-                    stack_[sp_] = pc_ + 1;
-                    ++sp_;
-                    sp_ %= stackSize_;
-                    pc_ = Current_().GetNextAddr();
-                    return JumpResult.Address;
-                }
-                break;
-
-            case JumpType.CALL:
-                stack_[sp_] = pc_ + 1;
-                ++sp_;
-                sp_ %= stackSize_;
+            case JumpType.JMP:
                 pc_ = Current_().GetNextAddr();
-                return JumpResult.Address;
+                return;
 
-            case JumpType.RET:
-                pc_ = stack_[sp_ - 1];
-                --sp_;
-                sp_ %= stackSize_;
-                return JumpResult.Address;
+            case JumpType.JNXT:
+                ++pc_;
+                return;
 
-            case JumpType.JSP:
-                pc_ = stack_[sp_ - 1];
-                return JumpResult.Address;
-
-            case JumpType.JSNZ:
+            case JumpType.JNZ:
                 if (!prevZ_) {
-                    pc_ = stack_[sp_ - 1];
-                    return JumpResult.Address;
+                    pc_ = Current_().GetNextAddr();
+                    break;
                 }
-                else {
-                    --sp_;
-                    sp_ %= stackSize_;
-                }
-                break;
-
-            case JumpType.PUSH:
-                stack_[sp_] = pc_ + 1;
-                ++sp_;
-                sp_ %= stackSize_;
-                break;
-
-            case JumpType.POP:
-                --sp_;
-                sp_ %= stackSize_;
-                break;
-
-            case JumpType.JSNC4:
-                if (!prevC4_) {
-                    pc_ = stack_[sp_ - 1];
-                    return JumpResult.Address;
-                }
-                else {
-                    --sp_;
-                    sp_ %= stackSize_;
-                }
+                ++pc_;
                 break;
 
             case JumpType.JZ:
                 if (prevZ_) {
                     pc_ = Current_().GetNextAddr();
-                    return JumpResult.Address;
+                    break;
                 }
+                ++pc_;
                 break;
 
             case JumpType.JF3:
                 if (prevF3_) {
                     pc_ = Current_().GetNextAddr();
-                    return JumpResult.Address;
+                    break;
                 }
+                ++pc_;
                 break;
 
             case JumpType.JOVR:
                 if (prevOvr_) {
                     pc_ = Current_().GetNextAddr();
-                    return JumpResult.Address;
+                    break;
                 }
+                ++pc_;
                 break;
 
             case JumpType.JC4:
                 if (prevC4_) {
                     pc_ = Current_().GetNextAddr();
-                    return JumpResult.Address;
+                    break;
                 }
+                ++pc_;
+                break;
+
+            case JumpType.CALL:
+                stack_[sp_] = pc_ + 1;
+                sp_ = GetStackAddr_(sp_ + 1);
+                pc_ = Current_().GetNextAddr();
+                return;
+
+            case JumpType.RET:
+                sp_ = GetStackAddr_(sp_ - 1);
+                pc_ = stack_[sp_];
+                return;
+
+            case JumpType.JSP:
+                pc_ = stack_[GetStackAddr_(sp_ - 1)];
+                return;
+
+            case JumpType.PUSH:
+                stack_[sp_] = pc_ + 1;
+                sp_ = GetStackAddr_(sp_ + 1);
+                ++pc_;
+                return;
+
+            case JumpType.POP:
+                sp_ = GetStackAddr_(sp_ - 1);
+                ++pc_;
+                return;
+
+            case JumpType.CLNZ:
+                if (!prevZ_) {
+                    stack_[sp_] = pc_ + 1;
+                    sp_ = GetStackAddr_(sp_ + 1);
+                    pc_ = Current_().GetNextAddr();
+                    break;
+                }
+                ++pc_;
+                break;
+
+            case JumpType.JSNZ:
+                if (!prevZ_) {
+                    pc_ = stack_[GetStackAddr_(sp_ - 1)];
+                    break;
+                }
+                sp_ = GetStackAddr_(sp_ - 1);
+                ++pc_;
+                break;
+
+            case JumpType.JSNC4:
+                if (!prevC4_) {
+                    pc_ = stack_[GetStackAddr_(sp_ - 1)];
+                    break;
+                }
+                sp_ = GetStackAddr_(sp_ - 1);
+                ++pc_;
                 break;
             }
 
-            ++pc_;
-            return JumpResult.Next;
+            RestoreFlags();
         }
 
         private void CountFlags_(FuncType alu)
@@ -850,10 +857,7 @@ namespace mtemu
                 break;
             }
 
-            // Update to new flags only if jump next
-            if (Jump_() != JumpResult.Next) {
-                RestoreFlags();
-            }
+            Jump_();
             pc_ %= programSize_;
 
             return ResultCode.Ok;

@@ -145,7 +145,7 @@ namespace mtemu
                 for (int i = number; i < emulator_.CallsCount(); ++i) {
                     callsForm_.callList.Items[i] = CallToItems(emulator_.GetCall(i));
                 }
-                ChangeCall_(number, selectedColor_);
+                ChangeCall_(number, selectedColor_, true);
             }
         }
 
