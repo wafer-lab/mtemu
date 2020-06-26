@@ -118,6 +118,7 @@
             this.addrComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.nameComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.jumpComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.binComColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.stepButton = new System.Windows.Forms.Button();
             this.autoButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
@@ -178,6 +179,7 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.formToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.viewButton = new System.Windows.Forms.Button();
             this.infoPanel = new System.Windows.Forms.Panel();
             this.debugPanel = new System.Windows.Forms.Panel();
             this.commandsPanel = new System.Windows.Forms.Panel();
@@ -1419,7 +1421,8 @@
             this.firstComColumn,
             this.addrComColumn,
             this.nameComColumn,
-            this.jumpComColumn});
+            this.jumpComColumn,
+            this.binComColumn});
             this.commandList.Cursor = System.Windows.Forms.Cursors.Hand;
             this.commandList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.commandList.FullRowSelect = true;
@@ -1457,8 +1460,13 @@
             // 
             // jumpComColumn
             // 
-            this.jumpComColumn.Text = "Jump";
+            this.jumpComColumn.Text = "Прыжок";
             this.jumpComColumn.Width = 90;
+            // 
+            // binComColumn
+            // 
+            this.binComColumn.Text = "Бинарный вид";
+            this.binComColumn.Width = 0;
             // 
             // stepButton
             // 
@@ -2069,6 +2077,19 @@
             this.saveFileDialog.DefaultExt = "mte";
             this.saveFileDialog.Filter = "Программа для MT (*.mte)|*.mte|Бинарный файл (*.bin)|*.bin|Все файлы (*.*)|*.*";
             // 
+            // viewButton
+            // 
+            this.viewButton.Font = new System.Drawing.Font("Consolas", 10F);
+            this.viewButton.Location = new System.Drawing.Point(497, 7);
+            this.viewButton.Margin = new System.Windows.Forms.Padding(4);
+            this.viewButton.Name = "viewButton";
+            this.viewButton.Size = new System.Drawing.Size(104, 24);
+            this.viewButton.TabIndex = 0;
+            this.viewButton.TabStop = false;
+            this.viewButton.Text = "Сменить вид";
+            this.viewButton.UseVisualStyleBackColor = true;
+            this.viewButton.Click += new System.EventHandler(this.ViewButtonClick_);
+            // 
             // infoPanel
             // 
             this.infoPanel.Controls.Add(this.caListView);
@@ -2102,6 +2123,7 @@
             // 
             // commandsPanel
             // 
+            this.commandsPanel.Controls.Add(this.viewButton);
             this.commandsPanel.Controls.Add(this.led3);
             this.commandsPanel.Controls.Add(this.listLabel);
             this.commandsPanel.Controls.Add(this.led0);
@@ -2403,6 +2425,8 @@
         private System.Windows.Forms.TextBox deviceInfoBox;
         private System.Windows.Forms.Label portLabel;
         private System.Windows.Forms.TextBox portText;
+        private System.Windows.Forms.Button viewButton;
+        private System.Windows.Forms.ColumnHeader binComColumn;
     }
 }
 

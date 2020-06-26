@@ -127,11 +127,18 @@ namespace mtemu
         {
             string number = "";
             string jump = "";
+            string raw = "";
             if (!command.isOffset) {
                 number = $"0x{command.GetNumber():X3}";
                 jump = command.GetJumpName();
+                for (int i = 0; i < command.GetLength(); ++i) {
+                    raw += $"{Helpers.IntToBinary(command[i], 4)} ";
+                }
             }
-            ListViewItem lv = new ListViewItem(new string[] { "", number, command.GetName(), jump });
+            else {
+                raw = command.GetName();
+            }
+            ListViewItem lv = new ListViewItem(new string[] { "", number, command.GetName(), jump, raw });
             if (command.isOffset) {
                 lv.Font = new Font("Consolas", 10F, FontStyle.Italic | FontStyle.Underline);
             }
@@ -253,6 +260,15 @@ namespace mtemu
             isProgramSaved_ = false;
         }
 
+        private void ChangeView_()
+        {
+            for (int i = 0; i < commandList.Columns.Count; ++i) {
+                int t = commandList.Columns[i].Width;
+                commandList.Columns[i].Width = commandsListWidths_[i];
+                commandsListWidths_[i] = t;
+            }
+        }
+
         private void AddButtonClick_(object sender, EventArgs e)
         {
             AddCommand_();
@@ -276,6 +292,11 @@ namespace mtemu
         private void DownButtonClick_(object sender, EventArgs e)
         {
             MoveDownCommand_();
+        }
+
+        private void ViewButtonClick_(object sender, EventArgs e)
+        {
+            ChangeView_();
         }
 
         ////////////////////

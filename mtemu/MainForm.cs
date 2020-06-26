@@ -56,6 +56,7 @@ namespace mtemu
         private Dictionary<WordType, ListView> listViewes_;
         private PictureBox[] leds_;
         private bool[] ledClicked_;
+        private int[] commandsListWidths_;
 
         bool stickCallsForm_;
         CallsForm callsForm_;
@@ -141,6 +142,7 @@ namespace mtemu
 
             // Command list
             Helpers.DoubleBuffered(commandList, true);
+            commandsListWidths_ = new int[] { 0, 47, 0, 0, 525 };
 
             // Info lists
             listViewes_ = new Dictionary<WordType, ListView> {

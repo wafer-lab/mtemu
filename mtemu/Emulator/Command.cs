@@ -268,6 +268,11 @@ namespace mtemu
             set { words_[i] = Helpers.Mask(value); }
         }
 
+        public int GetLength()
+        {
+            return length_;
+        }
+
         public string GetLabel(int textIndex)
         {
             return labels_[GetCommandView()][textIndex];

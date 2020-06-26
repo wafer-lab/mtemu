@@ -223,7 +223,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mtemu.ico" />
-    <None Include="Resources\ОА МТ1804.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
