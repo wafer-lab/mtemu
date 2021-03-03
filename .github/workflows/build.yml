@@ -33,5 +33,5 @@ jobs:
           sudo chmod 755 mtemu/bin/Debug/mtemu.exe
       - uses: actions/upload-artifact@v2
         with:
-          name: executable
+          name: mtemu
           path: mtemu/bin/Debug/mtemu.exe
