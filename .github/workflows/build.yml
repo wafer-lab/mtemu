@@ -1,17 +1,21 @@
 name: build
 
-on: push
+on:
+  push:
+    paths-ignore:
+      - '**.md'
 
 jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
       - name: Prepare DotNetSDK
         run: |
           sudo apt-get update -y
           sudo apt-get install -y wget
           wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-          dpkg -i packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
           sudo apt-get update -y
           sudo apt-get install -y apt-transport-https
           sudo apt-get update -y
@@ -20,7 +24,7 @@ jobs:
         run: |
           sudo apt-get install -y gnupg ca-certificates
           sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-          echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | tee /etc/apt/sources.list.d/mono-official-stable.list
+          echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
           sudo apt-get update -y
           sudo apt-get install -y mono-roslyn
       - name: Build
