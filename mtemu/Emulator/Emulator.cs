@@ -91,8 +91,6 @@ namespace mtemu
             prevOvr_ = false;
             prevG_ = false;
             prevP_ = false;
-            
-            stack_ = new int[stackSize_];
         }
 
         public Emulator(PortExtender portExtender)
