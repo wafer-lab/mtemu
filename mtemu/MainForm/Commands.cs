@@ -148,8 +148,8 @@ namespace mtemu
         private void CommandListSelectedIndexChanged_(object sender, EventArgs e)
         {
             if (commandList.SelectedIndices.Count != 0) {
-                ChangeCommand_(commandList.SelectedIndices[0], selectedColor_);
                 emulator_.SetPC(commandList.SelectedIndices[0]);
+                ChangeCommand_(commandList.SelectedIndices[0], selectedColor_);
             }
         }
 
