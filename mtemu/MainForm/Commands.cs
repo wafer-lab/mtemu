@@ -149,6 +149,7 @@ namespace mtemu
         {
             if (commandList.SelectedIndices.Count != 0) {
                 ChangeCommand_(commandList.SelectedIndices[0], selectedColor_);
+                emulator_.SetPC(commandList.SelectedIndices[0]);
             }
         }
 
