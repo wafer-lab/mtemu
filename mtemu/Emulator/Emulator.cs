@@ -11,14 +11,14 @@ namespace mtemu
         private PortExtender portExtender_;
 
         private int prevPc_;
-        private int pc_;
+        private int pc_;        // Pointer command
         private int callIndex_;
         private bool end_;
 
         private List<Command> commands_ = new List<Command>();
         private List<Call> calls_ = new List<Call>();
 
-        private int sp_;
+        private int sp_;        // Stack pointer
         private int[] stack_ = new int[stackSize_];
 
         private int regQ_;
@@ -257,7 +257,7 @@ namespace mtemu
 
         private int GetStackAddr_(int sp)
         {
-            return (sp_ + stackSize_) % stackSize_;
+            return (sp + stackSize_) % stackSize_;
         }
 
         private void Jump_()
