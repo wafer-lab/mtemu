@@ -149,6 +149,8 @@ namespace mtemu
         {
             if (commandList.SelectedIndices.Count != 0) {
                 emulator_.SetPC(commandList.SelectedIndices[0]);
+                pcText.Text = $"0x{emulator_.GetPC():X3}";
+                pcText.BackColor = changedColor_;
                 ChangeCommand_(commandList.SelectedIndices[0], selectedColor_);
             }
         }
